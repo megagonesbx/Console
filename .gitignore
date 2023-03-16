@@ -1,0 +1,45 @@
+# BACKEND
+Condominium.Console.Backend/node_modules
+Condominium.Console.Backend/.env
+Condominium.Console.Backend/dist
+
+# Compiled output
+Condominium.Console.Frontend/dist
+Condominium.Console.Frontend/tmp
+Condominium.Console.Frontend/out-tsc
+Condominium.Console.Frontend/bazel-out
+
+# Node
+Condominium.Console.Frontend/node_modules
+Condominium.Console.Frontend/npm-debug.log
+Condominium.Console.Frontend/yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+Condominium.Console.Frontend/.vscode/*
+Condominium.Console.Frontend/!.vscode/settings.json
+Condominium.Console.Frontend/!.vscode/tasks.json
+Condominium.Console.Frontend/!.vscode/launch.json
+Condominium.Console.Frontend/!.vscode/extensions.json
+Condominium.Console.Frontend/.history/*
+
+# Miscellaneous
+Condominium.Console.Frontend/.angular/cache
+.sass-cache/
+Condominium.Console.Frontend/connect.lock
+Condominium.Console.Frontend/coverage
+Condominium.Console.Frontend/libpeerconnection.log
+testem.log
+Condominium.Console.Frontend/typings
+
+# System files
+Condominium.Console.Frontend/.DS_Store
+Condominium.Console.Frontend/Thumbs.db
