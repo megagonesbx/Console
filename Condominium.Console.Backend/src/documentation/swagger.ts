@@ -8,7 +8,26 @@ const swaggerDefinition: OAS3Definition = {
     },
     servers: [
         { url: "http://localhost:3000", description: "local" }
-    ]
+    ],
+    components: {
+        schemas: {
+            ErrorResponse: {
+                type: "object",
+                required: ["field", "message"],
+                properties: {
+                    field: { type: "string" },
+                    message: {
+                        type: "object",
+                        required: ["requiredType", "warnings"],
+                        properties: {
+                            requiredType: { type: "string" },
+                            warnings: { type: "warnings" }
+                        }
+                    }
+                }
+            }
+        }
+    }
 };
 
 const options: OAS3Options = {

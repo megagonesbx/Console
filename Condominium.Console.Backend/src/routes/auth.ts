@@ -2,6 +2,9 @@ import { Router } from "express";
 
 import { register, login } from '../controllers';
 
+import { validateFields } from '../middlewares/validate-fields';
+import { loginValidatonRules } from "../validators/auth";
+
 const router = Router();
 
 router.post(
@@ -11,6 +14,8 @@ router.post(
 
 router.post(
     '/login',
+    loginValidatonRules(),
+    validateFields,
     login
 );
 
