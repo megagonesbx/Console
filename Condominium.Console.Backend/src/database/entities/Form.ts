@@ -3,14 +3,14 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('form')
 export class FormData {
   @PrimaryGeneratedColumn()
-  id!: number;
+  Id!: number;
 
   @Column({ nullable: false })
-  name!: string;
+  Name!: string;
 
   @Column({ nullable: false })
-  paymentNumber!: number;
+  PaymentNumber!: number;
 
   @Column({ unique: true, nullable: false })
-  dpi!: string;
+  DPI!: string;
 }

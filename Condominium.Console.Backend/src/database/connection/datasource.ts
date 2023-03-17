@@ -17,7 +17,8 @@ import {
     PaymentData, 
     RoleData, 
     UserData, 
-    VisitorData 
+    VisitorData,
+    FormData
 } from '../entities';
 
 
@@ -37,6 +38,10 @@ class GenericDataSource {
             entities: [UserData, HouseData, PaymentData, VisitorData, RoleData, IncidentData, FormData, DonationsData],
             options: {
                 useUTC: true
+            },
+            extra: {
+                "validateConnection": false,
+                "trustServerCertificate": true
             }
         };
 
