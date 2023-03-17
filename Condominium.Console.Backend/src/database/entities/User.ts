@@ -1,17 +1,19 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
-import { RoleData } from './index';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('user')
+@Entity('UserData')
 export class UserData {
   @PrimaryGeneratedColumn()
   id!: number;
 
   @Column({ nullable: false })
-  displayName!: string;
+  DisplayName!: string;
 
   @Column({ unique: true, nullable: false })
-  email!: string;
+  Email!: string;
 
-  @ManyToOne(() => RoleData, roleData => roleData.id)
-  role!: RoleData;
+  @Column({ nullable: false })
+  Role!: number;
+
+  @Column({ nullable: false })
+  Password!: string;
 }

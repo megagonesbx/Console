@@ -2,11 +2,12 @@ import express, { Application} from "express";
 import cors from "cors";
 import Swagger from "swagger-ui-express";
 
-import { Auth } from '../routes';
+import { Auth, User } from '../routes';
 
 import { PORT } from '../config';
 import { openApiConfig } from "../documentation";
 import { GenericDataSource } from "../database/connection";
+import { UserService } from '../services/user.service';
 
 export class Server {
     private app: Application;
@@ -14,7 +15,8 @@ export class Server {
 
     private paths = {
         auth: "/api/auth",
-        docs: "/api/docs"
+        docs: "/api/docs",
+        user: "/api/user"
     };
 
     constructor() {
@@ -26,10 +28,14 @@ export class Server {
         this.dbConnection();
     };
 
-    private dbConnection() {
+    private async dbConnection() {
         try {
             const generic = new GenericDataSource.default();
-            generic.ping()
+            await generic.ping();
+
+            this.app.locals.userService = await new UserService(generic.getClient());
+
+            console.log('DB CONNECTED')
         } catch (error) {
             console.log('[ERROR] [DBCONNECTION] ',error)
         }
@@ -42,6 +48,7 @@ export class Server {
 
     private routes() {
         this.app.use(this.paths.auth, Auth.default);
+        this.app.use(this.paths.user, User.default);
         this.app.use(this.paths.docs, Swagger.serve, Swagger.setup(openApiConfig));
     };
 
