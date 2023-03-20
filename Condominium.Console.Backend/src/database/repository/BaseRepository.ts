@@ -58,9 +58,9 @@ class BaseRepository<T extends ObjectLiteral> {
         return updated
     }
 
-    async deleteById(id: number | string) {
-        const deleted = await this.repository.delete(id)
-        return deleted
+    async delete(where: FindOptionsWhere<T>) {
+        const deleted = await this.repository.delete(where)
+        return deleted;
     }
 
     async getAll() {

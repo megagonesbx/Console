@@ -37,7 +37,7 @@ export const getUser = async (_req: Request, _res: Response) => {
         const { userId } = _req.params;
 
         const userService: UserService = _req.app.locals.userService;
-        const userDB = await userService.getRecordById(parseInt(userId));
+        const userDB = await userService.getRecord(parseInt(userId));
 
         if (!userDB) {
             return _res.status(404).json({
@@ -65,7 +65,7 @@ export const updateUser = async (_req: Request, _res: Response) => {
     try {
 
         const userService: UserService = _req.app.locals.userService;
-        const userDB = await userService.getRecordById(id);
+        const userDB = await userService.getRecord(id);
 
         if (!userDB) {
             return _res.status(404).json({
@@ -81,7 +81,7 @@ export const updateUser = async (_req: Request, _res: Response) => {
         }
 
         userDB.DisplayName = `${firstName} ${lastName}`;
-        
+
         const updated = await userService.updateRecord(id, userDB);
 
         if (!updated) {
@@ -92,6 +92,31 @@ export const updateUser = async (_req: Request, _res: Response) => {
 
         return _res.status(200).json({
             statusCode: 200
+        });
+
+    } catch (error) {
+        return _res.status(500).json({
+            statusCode: 500
+        });
+    }
+};
+
+export const deleteUser = async (_req: Request, _res: Response) => {
+    try {
+
+        const { userId } = _req.params;
+
+        const userService: UserService = _req.app.locals.userService;
+        const deleted = await userService.deleteRecord(parseInt(userId));
+
+        if (!deleted) {
+            return _res.status(400).json({
+                statusCode: 400
+            });
+        }
+
+        return _res.status(201).json({
+            statusCode: 201
         });
 
     } catch (error) {

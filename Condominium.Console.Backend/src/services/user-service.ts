@@ -32,7 +32,7 @@ export class UserService {
         }
     };
 
-    async getRecordById(id: number) {
+    async getRecord(id: number) {
         try {
             const user : UserData | null = await this.userRepository.findOne({ id });
             if (!user) return null;
@@ -46,7 +46,9 @@ export class UserService {
 
     async deleteRecord(id: number): Promise<boolean> {
         try {
-            await this.userRepository.deleteById(id);
+            const deleted = await this.userRepository.delete({ id: id });
+            if (!deleted || deleted.affected == 0) return false;
+
             return true;
         } catch (error) {
             return false;

@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { createUser, getUser, updateUser } from '../controllers';
+import { createUser, deleteUser, getUser, updateUser } from '../controllers';
 
 import { validateFields } from '../middlewares/validate-fields';
 import { createUserValidationRules, getUserValidationRules, updateUserValidationRules } from "../validators";
@@ -26,6 +26,13 @@ router.put(
     updateUserValidationRules(),
     validateFields,
     updateUser
+);
+
+router.delete(
+    '/:userId',
+    getUserValidationRules(),
+    validateFields,
+    deleteUser
 )
 
 export default router;
