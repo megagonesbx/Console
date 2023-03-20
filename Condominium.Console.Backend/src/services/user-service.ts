@@ -21,9 +21,11 @@ export class UserService {
         }
     }
 
-    async updateRecord(id: number, user: Partial<UserData>): Promise<boolean> {
+    async updateRecord(_id: number, user: Partial<UserData>): Promise<boolean> {
         try {
-            await this.userRepository.update({ id }, user);
+            const { id, ...userDB } = user;
+
+            await this.userRepository.update({ id: _id }, userDB);
             return true;
         } catch (error) {
             return false;
@@ -32,15 +34,23 @@ export class UserService {
 
     async getRecordById(id: number) {
         try {
-            const userDB : UserData | null = await this.userRepository.findOne({ id });
-            if (!userDB) return null;
-
-            const { Password, ...user } = userDB;
+            const user : UserData | null = await this.userRepository.findOne({ id });
+            if (!user) return null;
 
             return user;
-            
+
         } catch (error) {
             return null;
         }
     };
+
+    async deleteRecord(id: number): Promise<boolean> {
+        try {
+            await this.userRepository.deleteById(id);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    };
+
 };
