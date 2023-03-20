@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import { validationResult } from "express-validator";
-import { FieldValidationError } from "../types";
+import { FieldValidationError } from "../typings";
 
 export const validateFields = async (_req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(_req);

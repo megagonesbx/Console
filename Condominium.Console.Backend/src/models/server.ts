@@ -7,7 +7,7 @@ import { Auth, User } from '../routes';
 import { PORT } from '../config';
 import { openApiConfig } from "../documentation";
 import { GenericDataSource } from "../database/connection";
-import { UserService } from '../services/user.service';
+import { UserService } from '../services/user-service';
 
 export class Server {
     private app: Application;

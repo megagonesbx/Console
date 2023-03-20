@@ -1,5 +1,5 @@
 import { check, header } from 'express-validator';
-import { FieldIdValidationMessage, FieldValidationMessage } from '../../types';
+import { FieldIdValidationMessage, FieldValidationMessage } from '../../typings';
 
 export const genericStringRule = (
     field: string | string[],
@@ -67,4 +67,14 @@ export const genericHeaderRule = (
     (required) ? headerRule.exists() : headerRule.optional();
     headerRule.notEmpty().isString();
     return headerRule;
+};
+
+export const genericQueryParamIdRule = (
+    field: string | string[],
+    message: FieldIdValidationMessage,
+    required: boolean = true
+) => {
+    const integerRule = check(field, message);
+    (required) ? integerRule.exists() : integerRule.optional();
+    return integerRule.toInt().isInt();
 };
