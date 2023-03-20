@@ -9,6 +9,7 @@ import {
     UpdateResult
 } from 'typeorm'
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity'
+import { PaginationResult } from '../../typings';
 
 class BaseRepository<T extends ObjectLiteral> {
     private readonly repository: Repository<T>
@@ -22,18 +23,22 @@ class BaseRepository<T extends ObjectLiteral> {
         order: FindOptionsOrder<T>,
         take = 10,
         skip = 0
-    ) {
+    ): Promise<PaginationResult<T>> {
         const [result, total] = await this.repository.findAndCount({
             where,
-            order: order,
+            order,
             take,
             skip
-        })
+        });
+
+        const pageCount = Math.ceil(total / take);
 
         return {
             data: result,
-            count: total
-        }
+            count: total,
+            pageCount: pageCount,
+            currentPage: skip / take + 1
+        };
     }
 
     async findOne(
@@ -61,11 +66,6 @@ class BaseRepository<T extends ObjectLiteral> {
     async delete(where: FindOptionsWhere<T>) {
         const deleted = await this.repository.delete(where)
         return deleted;
-    }
-
-    async getAll() {
-        const allData = await this.repository.find()
-        return allData
     }
 }
 

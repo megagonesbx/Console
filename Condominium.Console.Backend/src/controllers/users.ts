@@ -125,3 +125,28 @@ export const deleteUser = async (_req: Request, _res: Response) => {
         });
     }
 };
+
+export const getUsers = async (_req: Request, _res: Response) => {
+    try {
+        
+        const { roleId, pageSize = 10, page = 1 } = _req.body;
+
+        const userService: UserService = _req.app.locals.userService;
+        const { data, totalItems, currentPage, totalPages } = await userService.getRecords(roleId, page, pageSize);
+
+        return _res.status(200).json({
+            data,
+            count: totalItems,
+            page: currentPage,
+            pages: totalPages,
+            statusCode: 200
+        }); 
+
+    } catch (error) {
+        return _res.status(400).json({
+            data: [],
+            count: 0,
+            statusCode: 400
+        });
+    }
+};

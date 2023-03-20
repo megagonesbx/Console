@@ -34,7 +34,7 @@ export class UserService {
 
     async getRecord(id: number) {
         try {
-            const user : UserData | null = await this.userRepository.findOne({ id });
+            const user: UserData | null = await this.userRepository.findOne({ id });
             if (!user) return null;
 
             return user;
@@ -55,4 +55,34 @@ export class UserService {
         }
     };
 
+    async getRecords(roleId: number, page: number, size: number) {
+        try {
+            const skip = (page - 1) * size;
+            const take = size;
+            let where = {};
+
+            if (roleId > 0) {
+                where = { Role: roleId }
+            }
+
+            const { data, count } = await this.userRepository.findWithPagination(
+                where,
+                {
+                    createdAt: 'DESC'
+                },
+                take,
+                skip);
+
+            const pagination = {
+                data: data,
+                totalItems: count,
+                currentPage: page,
+                totalPages: Math.ceil(count / size)
+            };
+
+            return pagination;
+        } catch (error) {
+            throw error;
+        }
+    }
 };
