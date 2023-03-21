@@ -3,7 +3,7 @@ import { Router } from "express";
 import { createUser, deleteUser, getUser, getUsers, updateUser } from '../controllers';
 
 import { validateFields } from '../middlewares/validate-fields';
-import { createUserValidationRules, getUserValidationRules, updateUserValidationRules } from "../validators";
+import { createUserValidationRules, getUsersValidationRules, getUserValidationRules, updateUserValidationRules } from "../validators";
 
 const router = Router();
 
@@ -37,6 +37,8 @@ router.delete(
 
 router.post(
     '/users',
+    getUsersValidationRules(),
+    validateFields,
     getUsers
 )
 

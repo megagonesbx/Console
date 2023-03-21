@@ -59,3 +59,27 @@ export const updateUserValidationRules = (additionalRules: any = null) => {
         ...newRules
     ]
 };
+
+export const getUsersValidationRules = (additionalRules: any = null) => {
+    const newRules = additionalRules || [];
+
+    return [
+        genericIntegerRule(
+            "roleId",
+            {
+                requiredType: "integer",
+                warnings: "This field doesn't exist, is not a integer or is empty."
+            }
+        ),
+        genericIntegerRule(
+            ["pageSize", "page"],
+            {
+                requiredType: "integer",
+                warnings: "This field doesn't exist, is not a integer or is empty."
+            },
+            {},
+            false
+        ),
+        ...newRules
+    ]
+};
