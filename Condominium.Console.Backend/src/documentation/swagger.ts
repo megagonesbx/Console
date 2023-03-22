@@ -25,6 +25,17 @@ const swaggerDefinition: OAS3Definition = {
                         }
                     }
                 }
+            },
+            UserModel: {
+                type: "object",
+                required: ["Id", "DisplayName", "Email", "Role", "CreatedAt"],
+                properties: {
+                    Id: { type: "integer" },
+                    DisplayName: { type: "string" },
+                    Email: { type: "string" },
+                    Role: { type: "integer" },
+                    CreatedAt: { type: "date" }
+                }
             }
         }
     }
