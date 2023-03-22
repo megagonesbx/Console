@@ -27,15 +27,23 @@ const router = Router();
  *           application/json:
  *             example:
  *               user:
- *                 DisplayName: John Smith
- *                 Role: 2
- *                 Email: john.smith@example.com
- *                 CreatedAt: 2023-03-20 06:00:00.000
+ *                 displayName: John Smith
+ *                 role: 2
+ *                 email: john.smith@example.com
+ *                 createdAt: 2023-03-20 06:00:00.000
  *               statusCode: 200
  *       404:
  *         description: User not found
  *       422:
  *         description: Fields Error
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                errors:
+ *                  type: object
+ *                  example: {"errors":[{"field":"email","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or must be greater than 0."}}]}
  */
 router.get(
     '/:userId',
@@ -63,23 +71,23 @@ router.get(
  *                - Role
  *                - Password
  *              properties:
- *               FirstName:
+ *               firstName:
  *                   type: string
  *                   description: First user name.
  *                   example: John
- *               LastName:
+ *               lastName:
  *                   type: string
  *                   description: Last user name.
  *                   example: Smith
- *               Role:
+ *               role:
  *                   type: Integer
  *                   description: Role Id
  *                   example: 2
- *               Email:
+ *               email:
  *                   type: string
  *                   description: User email.
  *                   example: john.smith@example.com
- *               Password:
+ *               password:
  *                   type: string
  *                   description: User password.
  *                   example: 87G!8g3xrF3Hif@H!5&Xx$QkbT8
@@ -100,6 +108,14 @@ router.get(
  *         description: User not found
  *       422:
  *         description: Fields Error
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                errors:
+ *                  type: object
+ *                  example: {"errors":[{"field":"email","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or must be greater than 0."}}]}
  */
 router.post(
     '/create',
@@ -121,33 +137,33 @@ router.post(
  *            schema:
  *              type: object
  *              required:
- *                - FirstName
- *                - LastName
- *                - Email
- *                - Role
- *                - Password
+ *                - firstName
+ *                - lastName
+ *                - email
+ *                - role
+ *                - password
  *              properties:
- *               FirstName:
+ *               firstName:
  *                   type: string
  *                   description: First user name.
  *                   example: John
- *               LastName:
+ *               lastName:
  *                   type: string
  *                   description: Last user name.
  *                   example: Smith
- *               Role:
+ *               role:
  *                   type: Integer
  *                   description: Role Id
  *                   example: 2
- *               Email:
+ *               email:
  *                   type: string
  *                   description: User email.
  *                   example: john.smith@example.com
- *               Password:
+ *               password:
  *                   type: string
  *                   description: User password.
  *                   example: 87G!8g3xrF3Hif@H!5&Xx$QkbT8
- *               Id:
+ *               id:
  *                   type: integer
  *                   example: 1
  *                  
@@ -169,7 +185,7 @@ router.post(
  *              properties:
  *                errors:
  *                  type: object
- *                  example: {"errors":[{"field":"Id","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or must be greater than 0."}}]}
+ *                  example: {"errors":[{"field":"id","message":{"requiredType":"integer","warnings":"The field does not exist, is not a integer or must be greater than 0."}}]}
  */
 router.put(
     '/update',
@@ -231,7 +247,7 @@ router.delete(
  *            schema:
  *              type: object
  *              required:
- *                - Role
+ *                - roleId
  *              properties:
  *               roleId:
  *                   type: integer
@@ -241,7 +257,7 @@ router.delete(
  *                   type: integer
  *                   description: Number of documents per page, by default is 10 documents per page
  *                   example: 15
- *               Page:
+ *               page:
  *                   type: Integer
  *                   description: Number of page, by default will be the page number 1
  *                   example: 1

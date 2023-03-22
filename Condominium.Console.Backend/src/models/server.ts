@@ -7,7 +7,7 @@ import { Auth, User } from '../routes';
 import { PORT } from '../config';
 import { openApiConfig } from "../documentation";
 import { GenericDataSource } from "../database/connection";
-import { UserService } from '../services/user-service';
+import { UserService, AuthService } from '../services';
 
 export class Server {
     private app: Application;
@@ -34,6 +34,7 @@ export class Server {
             await generic.ping();
 
             this.app.locals.userService = await new UserService(generic.getClient());
+            this.app.locals.authService = await new AuthService(generic.getClient());
 
             console.log('DB CONNECTED')
         } catch (error) {
