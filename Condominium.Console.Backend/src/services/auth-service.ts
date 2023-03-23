@@ -8,12 +8,12 @@ export class AuthService {
         this.authRepository = new BaseRepository.default(datasource, UserData);
     };
 
-    async getRecord(email: string): Promise<string | null> {
+    async getRecord(email: string): Promise<{ Password: string, id: number } | null> {
         try {
-            const user: UserData | null = await this.authRepository.findOne({ Email: email });
+            const user: { Password: string, id: number } | null = await this.authRepository.findOne({ Email: email }, false, ["Password", "id"]);
             if (!user) return null;
 
-            return user.Password;
+            return user;
         } catch (error) {
             return null;
         }

@@ -43,10 +43,12 @@ class BaseRepository<T extends ObjectLiteral> {
 
     async findOne(
         where: Array<FindOptionsWhere<T>> | FindOptionsWhere<T> | undefined,
-        cache = false
+        cache = false,
+        select: string[] = []
     ) {
         const data = await this.repository.findOne({
             where,
+            select,
             cache: cache
         })
 

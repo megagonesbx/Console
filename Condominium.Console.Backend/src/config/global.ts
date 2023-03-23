@@ -1,7 +1,8 @@
 import 'dotenv/config';
 
 const PORT = process.env.PORT || "3000";
-const TOKEN = process.env.TOKEN = "x-token";
+const TOKEN = process.env.TOKEN || "x-token";
+const SECRETKEY = process.env.SECRETKEY || "";
 
 
 // SQL Database
@@ -22,5 +23,6 @@ export {
     SQL_PASSWORD,
     SQL_DATABASE,
     SQL_LOGGING,
-    SQL_CACHE 
+    SQL_CACHE,
+    SECRETKEY
 };
