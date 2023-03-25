@@ -18,4 +18,15 @@ export class AuthService {
             return null;
         }
     };
+
+    async getSession(id: number): Promise<UserData | null> {
+        try {
+            const user = await this.authRepository.findOne({ id }, false, ["Role", "id", "DisplayName", "Email"]);
+            if (!user) return null;
+
+            return user;
+        } catch (error) {
+            return null;
+        }
+    };
 };

@@ -1,8 +1,8 @@
 import { Router } from "express";
 
-import { login } from '../controllers';
+import { getSession, login } from '../controllers';
 
-import { validateFields } from '../middlewares';
+import { validateFields, validateJWT } from '../middlewares';
 import { loginValidatonRules } from "../validators/auth";
 
 const router = Router();
@@ -58,5 +58,12 @@ router.post(
     validateFields,
     login
 );
+
+router.get(
+    '/session',
+    validateJWT,
+    validateFields,
+    getSession
+)
 
 export default router;
