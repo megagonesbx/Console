@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { compareSync } from "bcrypt";
 import { AuthService } from '../services';
-import { generateJWT } from "../helpers";
+import { generateJWT, getMenuByRole } from "../helpers";
 
 export const login = async (_req: Request, _res: Response) => {
     
@@ -28,6 +28,7 @@ export const login = async (_req: Request, _res: Response) => {
 
         return _res.status(200).json({
             token,
+            menu: getMenuByRole(user.Role),
             statusCode: 200
         });
         
