@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { createUser, deleteUser, getUser, getUsers, updateUser } from '../controllers';
 
-import { validateFields, validateJWT } from '../middlewares';
+import { validateAdminRole, validateFields, validateJWT } from '../middlewares';
 import { createUserValidationRules, getUsersValidationRules, getUserValidationRules, updateUserValidationRules } from "../validators";
 
 const router = Router();
@@ -49,6 +49,7 @@ router.get(
     '/:userId',
     getUserValidationRules(),
     validateJWT,
+    validateAdminRole,
     validateFields,
     getUser
 );
@@ -122,6 +123,7 @@ router.post(
     '/create',
     createUserValidationRules(),
     validateJWT,
+    validateAdminRole,
     validateFields,
     createUser
 );
@@ -193,6 +195,7 @@ router.put(
     '/update',
     updateUserValidationRules(),
     validateJWT,
+    validateAdminRole,
     validateFields,
     updateUser
 );
@@ -234,6 +237,7 @@ router.delete(
     '/:userId',
     getUserValidationRules(),
     validateJWT,
+    validateAdminRole,
     validateFields,
     deleteUser
 )
@@ -293,6 +297,7 @@ router.post(
     '/users',
     getUsersValidationRules(),
     validateJWT,
+    validateAdminRole,
     validateFields,
     getUsers
 )
