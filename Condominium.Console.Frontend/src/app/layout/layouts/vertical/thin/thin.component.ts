@@ -5,6 +5,7 @@ import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/components/navigation';
 import { Navigation } from 'app/core/navigation/navigation.types';
 import { NavigationService } from 'app/core/navigation/navigation.service';
+import { AuthService } from 'app/core/auth/auth.service';
 
 @Component({
     selector     : 'thin-layout',
@@ -25,7 +26,8 @@ export class ThinLayoutComponent implements OnInit, OnDestroy
         private _router: Router,
         private _navigationService: NavigationService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _fuseNavigationService: FuseNavigationService
+        private _fuseNavigationService: FuseNavigationService,
+        private __authService: AuthService
     )
     {
     }
@@ -97,5 +99,10 @@ export class ThinLayoutComponent implements OnInit, OnDestroy
             // Toggle the opened status
             navigation.toggle();
         }
+    }
+
+    async signOut() {
+        await this.__authService.signOut();
+        this._router.navigate(['sign-in']);
     }
 }
