@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { compareSync } from "bcrypt";
 import { AuthService } from '../services';
 import { generateJWT, getMenuByRole } from "../helpers";
+import { UserData } from '../database/entities/User';
 
 export const login = async (_req: Request, _res: Response) => {
 
@@ -9,7 +10,7 @@ export const login = async (_req: Request, _res: Response) => {
 
     try {
         const authService: AuthService = _req.app.locals.authService;
-        const user = await authService.getRecord(email);
+        const user: UserData | null = await authService.getRecord(email);
 
         if (!user) {
             return _res.status(404).json({
@@ -25,9 +26,18 @@ export const login = async (_req: Request, _res: Response) => {
         }
 
         const token = await generateJWT(JSON.stringify(user.id));
+        
+        const userDB = {
+            id: user.id,
+            email: user.Email,
+            name: user.DisplayName,
+            role: user.Role,
+            createdAt: user.createdAt
+        };
 
         return _res.status(200).json({
             token,
+            user: userDB,
             menu: getMenuByRole(user.Role),
             statusCode: 200
         });

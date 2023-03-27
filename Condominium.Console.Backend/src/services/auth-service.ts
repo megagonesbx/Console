@@ -8,9 +8,9 @@ export class AuthService {
         this.authRepository = new BaseRepository.default(datasource, UserData);
     };
 
-    async getRecord(email: string): Promise<{ Password: string, id: number, Role: number } | null> {
+    async getRecord(email: string): Promise<UserData | null> {
         try {
-            const user: { Password: string, id: number, Role: number } | null = await this.authRepository.findOne({ Email: email }, false, ["Password", "id", "Role"]);
+            const user: UserData | null = await this.authRepository.findOne({ Email: email }, false);
             if (!user) return null;
 
             return user;
