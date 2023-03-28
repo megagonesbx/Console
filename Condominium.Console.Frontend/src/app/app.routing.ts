@@ -8,18 +8,8 @@ import { InitialDataResolver } from 'app/app.resolvers';
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 export const appRoutes: Route[] = [
-
-    // Redirect empty path to '/example'
-    { path: '', pathMatch: 'full', redirectTo: 'example' },
-
-    // Redirect signed in user to the '/example'
-    //
-    // After the user signs in, the sign in page will redirect the user to the 'signed-in-redirect'
-    // path. Below is another redirection for that path to redirect the user to the desired
-    // location. This is a small convenience to keep all main routes together here on this file.
-    { path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'example' },
-
-    // Auth routes for guests
+    { path: '', pathMatch: 'full', redirectTo: 'usuarios' },
+    { path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'usuarios' },
     {
         path: '',
         canActivate: [NoAuthGuard],
@@ -32,7 +22,6 @@ export const appRoutes: Route[] = [
             { path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule) }
         ]
     },
-    // Admin routes
     {
         path: '',
         component: LayoutComponent,
@@ -40,7 +29,11 @@ export const appRoutes: Route[] = [
             initialData: InitialDataResolver,
         },
         children: [
-            { path: 'example', loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule) },
+            { path: 'usuarios', loadChildren: () => import('app/modules/admin/users/users.module').then(m => m.UsersModule) },
+            { path: 'residentes', loadChildren: () => import('app/modules/admin/residents/residents.module').then(m => m.ResidentsModule) },
+            { path: 'donaciones', loadChildren: () => import('app/modules/admin/donations/donations.module').then(m => m.DonationsModule) },
+            { path: 'planilla', loadChildren: () => import('app/modules/admin/forms/forms.module').then(m => m.FormsModule) },
+            { path: 'residentes-solventes', loadChildren: () => import('app/modules/admin/solvents/solvents.module').then(m => m.SolventsModule) },
         ]
-    }
+    },
 ];
