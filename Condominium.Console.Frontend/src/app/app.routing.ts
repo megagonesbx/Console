@@ -4,9 +4,6 @@ import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
 
-// @formatter:off
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 export const appRoutes: Route[] = [
     { path: '', pathMatch: 'full', redirectTo: 'usuarios' },
     { path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'usuarios' },
@@ -36,4 +33,15 @@ export const appRoutes: Route[] = [
             { path: 'residentes-solventes', loadChildren: () => import('app/modules/admin/solvents/solvents.module').then(m => m.SolventsModule) },
         ]
     },
+    {
+        path: 'operador',
+        component: LayoutComponent,
+        resolve: {
+            initialData: InitialDataResolver,
+        },
+        children: [
+            { path: 'visitas', loadChildren: () => import('app/modules/operator/visits/visits.module').then(m => m.VisitsModule) },
+            { path: 'reportes-incidentes', loadChildren: () => import('app/modules/operator/reports/reports.module').then(m => m.ReportsModule) }
+        ]
+    }
 ];
