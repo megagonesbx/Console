@@ -36,7 +36,7 @@ export const login = async (_req: Request, _res: Response) => {
         };
 
         return _res.status(200).json({
-            token,
+            'x-token': token,
             user: userDB,
             menu: getMenuByRole(user.Role),
             statusCode: 200

@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, ReplaySubject, tap } from 'rxjs';
 import { User } from 'app/core/user/user.types';
+import { FuseNavigationItem } from '@fuse/components/navigation';
 
 @Injectable({
     providedIn: 'root'
 })
-export class UserService
-{
+export class UserService {
     private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
+    public _menu: ReplaySubject<FuseNavigationItem[]> = new ReplaySubject<FuseNavigationItem[]>(null);
 
     /**
      * Constructor
      */
-    constructor(private _httpClient: HttpClient)
-    {
+    constructor(private _httpClient: HttpClient) {
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -26,15 +26,34 @@ export class UserService
      *
      * @param value
      */
-    set user(value: User)
-    {
+    set user(value: User) {
         // Store the value
         this._user.next(value);
     }
 
-    get user$(): Observable<User>
-    {
+    set menuStorage(menu: FuseNavigationItem[]) {
+        localStorage.setItem('menu', JSON.stringify(menu));
+    }
+
+    get menuStorage$() {
+        return JSON.parse(localStorage.getItem('menu'));
+    }
+
+    get user$(): Observable<User> {
         return this._user.asObservable();
+    }
+
+    /**
+     * Setter & getter for menu
+     */
+    set menu(value: FuseNavigationItem[]) {
+        this._menu.next(value);
+    }
+
+    loadMenu() {
+        const menu = this.menuStorage$ || [];
+        this._menu.next(menu);
+        return this._menu.asObservable();
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -44,8 +63,7 @@ export class UserService
     /**
      * Get the current logged in user data
      */
-    get(): Observable<User>
-    {
+    get(): Observable<User> {
         return this._httpClient.get<User>('api/common/user').pipe(
             tap((user) => {
                 this._user.next(user);
@@ -58,9 +76,8 @@ export class UserService
      *
      * @param user
      */
-    update(user: User): Observable<any>
-    {
-        return this._httpClient.patch<User>('api/common/user', {user}).pipe(
+    update(user: User): Observable<any> {
+        return this._httpClient.patch<User>('api/common/user', { user }).pipe(
             map((response) => {
                 this._user.next(response);
             })
