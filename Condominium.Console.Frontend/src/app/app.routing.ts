@@ -1,6 +1,9 @@
 import { Route } from '@angular/router';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
+import { getMainRoute } from './utils/menu';
+
+const mainRoute = getMainRoute();
 
 export const appRoutes: Route[] = [
     // TODO: VALIDATE THE PATH / TO REDIRECT TO THE MAIN ROUTE THAT DEPENDS ABOUT THE USER ROLE
@@ -57,5 +60,7 @@ export const appRoutes: Route[] = [
             { path: '', pathMatch: 'full', redirectTo: 'pagos' },
             { path: '**', pathMatch: 'full', redirectTo: 'pagos' }
         ]
-    }
+    },
+    { path: '', pathMatch: 'full', redirectTo: `${mainRoute}` },
+    { path: '**', pathMatch: 'full', redirectTo: `${mainRoute}` }
 ];
