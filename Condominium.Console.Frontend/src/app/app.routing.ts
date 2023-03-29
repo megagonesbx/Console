@@ -1,19 +1,19 @@
 import { Route } from '@angular/router';
-import { AuthGuard } from 'app/core/auth/guards/auth.guard';
-import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
 
 export const appRoutes: Route[] = [
     // TODO: VALIDATE THE PATH / TO REDIRECT TO THE MAIN ROUTE THAT DEPENDS ABOUT THE USER ROLE
     {
-        path: '',
+        path: 'auth',
         component: LayoutComponent,
         data: {
             layout: 'empty'
         },
         children: [
-            { path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule) }
+            { path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule) },
+            { path: '', pathMatch: 'full', redirectTo: 'sign-in' },
+            { path: '**', pathMatch: 'full', redirectTo: 'sign-in' }
         ]
     },
     {
@@ -29,7 +29,7 @@ export const appRoutes: Route[] = [
             { path: 'planilla', loadChildren: () => import('app/modules/admin/forms/forms.module').then(m => m.FormsModule) },
             { path: 'residentes-solventes', loadChildren: () => import('app/modules/admin/solvents/solvents.module').then(m => m.SolventsModule) },
             { path: '', pathMatch: 'full', redirectTo: 'usuarios' },
-            { path: '**', pathMatch: 'full', redirectTo: 'usuarios' },
+            { path: '**', pathMatch: 'full', redirectTo: 'usuarios' }
         ]
     },
     {

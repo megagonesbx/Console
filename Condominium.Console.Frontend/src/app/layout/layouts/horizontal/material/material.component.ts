@@ -99,6 +99,7 @@ export class MaterialLayoutComponent implements OnInit, OnDestroy {
 */
     async signOut() {
         await this._authService.signOut();
-        this._router.navigate(['sign-in']);
+        // this._router.navigate(['sign-in']);
+        this._router.navigate(['auth']);
     }
 }

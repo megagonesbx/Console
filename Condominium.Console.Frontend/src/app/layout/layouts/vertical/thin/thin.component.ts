@@ -103,6 +103,7 @@ export class ThinLayoutComponent implements OnInit, OnDestroy
 
     async signOut() {
         await this.__authService.signOut();
-        this._router.navigate(['sign-in']);
+        // this._router.navigate(['sign-in']);
+        this._router.navigate(['auth']);
     }
 }
