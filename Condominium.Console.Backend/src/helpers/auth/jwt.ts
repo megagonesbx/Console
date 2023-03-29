@@ -36,31 +36,31 @@ export const getMenuByRole = (role: number): MenuItem[] => {
                             id: 'apps.administrador.users',
                             title: 'Usuarios',
                             type: 'basic',
-                            link: '/usuarios'
+                            link: '/administrador/usuarios'
                         },
                         {
                             id: 'apps.administrador.residents',
                             title: 'Residentes',
                             type: 'basic',
-                            link: '/residentes'
+                            link: '/administrador/residentes'
                         },
                         {
                             id: 'apps.administrador.donations',
                             title: 'Donaciones',
                             type: 'basic',
-                            link: '/donaciones'
+                            link: '/administrador/donaciones'
                         },
                         {
                             id: 'apps.administrador.form',
                             title: 'Planilla',
                             type: 'basic',
-                            link: '/planilla'
+                            link: '/administrador/planilla'
                         },
                         {
                             id: 'apps.administrador.solvent',
                             title: 'Residentes solventes',
                             type: 'basic',
-                            link: '/residentes-solventes'
+                            link: '/administrador/residentes-solventes'
                         }
                     ]
                 },
@@ -74,13 +74,13 @@ export const getMenuByRole = (role: number): MenuItem[] => {
                             id: 'apps.operador.visits',
                             title: 'Visitas',
                             type: 'basic',
-                            link: '/visitas'
+                            link: '/operador/visitas'
                         },
                         {
                             id: 'apps.operador.reports',
                             title: 'Reportes',
                             type: 'basic',
-                            link: '/reportes'
+                            link: '/operador/reportes'
                         }
                     ]
                 },
@@ -94,13 +94,13 @@ export const getMenuByRole = (role: number): MenuItem[] => {
                             id: 'apps.residente.payments',
                             title: 'Realizar pago',
                             type: 'basic',
-                            link: '/pagos'
+                            link: '/residente/pagos'
                         },
                         {
                             id: 'apps.residente.history',
                             title: 'Historial de pagos',
                             type: 'basic',
-                            link: '/historial-pagos'
+                            link: '/residente/historial-pagos'
                         }
                     ]
                 }
@@ -119,13 +119,13 @@ export const getMenuByRole = (role: number): MenuItem[] => {
                             id: 'apps.operador.visits',
                             title: 'Visitas',
                             type: 'basic',
-                            link: '/visitas'
+                            link: '/operador/visitas'
                         },
                         {
                             id: 'apps.operador.reports',
                             title: 'Reportes',
                             type: 'basic',
-                            link: '/reportes'
+                            link: '/operador/reportes'
                         }
                     ]
                 }
@@ -144,13 +144,13 @@ export const getMenuByRole = (role: number): MenuItem[] => {
                             id: 'apps.residente.payments',
                             title: 'Realizar pago',
                             type: 'basic',
-                            link: '/pagos'
+                            link: '/residente/pagos'
                         },
                         {
                             id: 'apps.residente.history',
                             title: 'Historial de pagos',
                             type: 'basic',
-                            link: '/historial-pagos'
+                            link: '/residente/historial-pagos'
                         }
                     ]
                 }

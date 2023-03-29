@@ -5,12 +5,9 @@ import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
 
 export const appRoutes: Route[] = [
-    { path: '', pathMatch: 'full', redirectTo: 'usuarios' },
-    { path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'usuarios' },
+    // TODO: VALIDATE THE PATH / TO REDIRECT TO THE MAIN ROUTE THAT DEPENDS ABOUT THE USER ROLE
     {
         path: '',
-        canActivate: [NoAuthGuard],
-        canActivateChild: [NoAuthGuard],
         component: LayoutComponent,
         data: {
             layout: 'empty'
@@ -20,7 +17,7 @@ export const appRoutes: Route[] = [
         ]
     },
     {
-        path: '',
+        path: 'administrador',
         component: LayoutComponent,
         resolve: {
             initialData: InitialDataResolver,
@@ -31,6 +28,8 @@ export const appRoutes: Route[] = [
             { path: 'donaciones', loadChildren: () => import('app/modules/admin/donations/donations.module').then(m => m.DonationsModule) },
             { path: 'planilla', loadChildren: () => import('app/modules/admin/forms/forms.module').then(m => m.FormsModule) },
             { path: 'residentes-solventes', loadChildren: () => import('app/modules/admin/solvents/solvents.module').then(m => m.SolventsModule) },
+            { path: '', pathMatch: 'full', redirectTo: 'usuarios' },
+            { path: '**', pathMatch: 'full', redirectTo: 'usuarios' },
         ]
     },
     {
@@ -41,7 +40,22 @@ export const appRoutes: Route[] = [
         },
         children: [
             { path: 'visitas', loadChildren: () => import('app/modules/operator/visits/visits.module').then(m => m.VisitsModule) },
-            { path: 'reportes-incidentes', loadChildren: () => import('app/modules/operator/reports/reports.module').then(m => m.ReportsModule) }
+            { path: 'reportes-incidentes', loadChildren: () => import('app/modules/operator/reports/reports.module').then(m => m.ReportsModule) },
+            { path: '', pathMatch: 'full', redirectTo: 'visitas' },
+            { path: '**', pathMatch: 'full', redirectTo: 'visitas' },
+        ]
+    },
+    {
+        path: 'residente',
+        component: LayoutComponent,
+        resolve: {
+            initialData: InitialDataResolver,
+        },
+        children: [
+            { path: 'pagos', loadChildren: () => import('app/modules/resident/payments/payments.module').then(m => m.PaymentsModule) },
+            { path: 'historial-pagos', loadChildren: () => import('app/modules/resident/history/history.module').then(m => m.HistoryModule) },
+            { path: '', pathMatch: 'full', redirectTo: 'pagos' },
+            { path: '**', pathMatch: 'full', redirectTo: 'pagos' }
         ]
     }
 ];

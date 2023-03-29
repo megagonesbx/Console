@@ -76,7 +76,8 @@ export class AuthSignInComponent implements OnInit {
             (res) => {
 
                 if (res.statusCode === 200) {
-                    return this._router.navigate(['/example']);
+                    const mainRoute = res.menu[0].children[0].link;
+                    return this._router.navigate([mainRoute]);
                 }
 
             },
