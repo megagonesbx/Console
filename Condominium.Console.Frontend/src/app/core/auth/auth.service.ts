@@ -119,14 +119,10 @@ export class AuthService {
      * Sign out
      */
     signOut(): Observable<any> {
-        
         localStorage.removeItem('x-token');
         localStorage.removeItem('menu');
         this._authenticated = false;
         this._signInService._authenticated = false;
-        
-        console.log(this._signInService._authenticated);
-        
         return of(true);
     }
 

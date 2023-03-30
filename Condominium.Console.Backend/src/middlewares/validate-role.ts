@@ -14,7 +14,7 @@ export const validateAdminRole = async (_req: Request, _res: Response, next: Nex
                 statusCode: 400
             });
         };
-
+ 
         if (user.Role !== 1) {
             return _res.status(401).json({
                 message: "[ERROR][ROLE] Forbidden",

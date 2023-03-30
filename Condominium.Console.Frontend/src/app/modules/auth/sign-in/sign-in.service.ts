@@ -29,7 +29,7 @@ export class SignInService {
     localStorage.setItem('x-token', token);
   }
 
-  get accessToken(): string {
+  get getAccessToken(): string {
     return localStorage.getItem('x-token') ?? '';
   }
 
@@ -51,14 +51,15 @@ export class SignInService {
     );
   };
 
-  getSession() {
-    return this.http.get(`${this.path}/session`).pipe(
-      map((res: ILogin) => {
+  getSession(): Observable<number> {
+    return this.http.get(`${this.path}/session`, { headers: { 'x-token': this.getAccessToken }}).pipe(
+      map((res: ILogin) => {        
         this._userService.user = res.user;
         this._userService.menu = res.menu;
         this._userService.menuStorage = res.menu;
+        return res.statusCode;
       }),
-      catchError((err) => of(err))
+      catchError((err) => of(500))
     );
   };
 
