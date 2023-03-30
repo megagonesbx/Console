@@ -80,7 +80,7 @@ export const getMenuByRole = (role: number): MenuItem[] => {
                             id: 'apps.operador.reports',
                             title: 'Reportes',
                             type: 'basic',
-                            link: '/operador/reportes'
+                            link: '/operador/reportes-incidentes'
                         }
                     ]
                 },
@@ -125,7 +125,7 @@ export const getMenuByRole = (role: number): MenuItem[] => {
                             id: 'apps.operador.reports',
                             title: 'Reportes',
                             type: 'basic',
-                            link: '/operador/reportes'
+                            link: '/operador/reportes-incidentes'
                         }
                     ]
                 }

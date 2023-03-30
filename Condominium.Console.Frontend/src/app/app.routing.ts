@@ -2,6 +2,7 @@ import { Route } from '@angular/router';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
 import { getMainRoute } from './utils/menu';
+import { AdminGuard } from './modules/auth/admin.guard';
 
 const mainRoute = getMainRoute();
 
@@ -21,16 +22,17 @@ export const appRoutes: Route[] = [
     },
     {
         path: 'administrador',
+        // canActivateChild: [AdminGuard],
         component: LayoutComponent,
         resolve: {
             initialData: InitialDataResolver,
         },
         children: [
-            { path: 'usuarios', loadChildren: () => import('app/modules/admin/users/users.module').then(m => m.UsersModule) },
-            { path: 'residentes', loadChildren: () => import('app/modules/admin/residents/residents.module').then(m => m.ResidentsModule) },
-            { path: 'donaciones', loadChildren: () => import('app/modules/admin/donations/donations.module').then(m => m.DonationsModule) },
-            { path: 'planilla', loadChildren: () => import('app/modules/admin/forms/forms.module').then(m => m.FormsModule) },
-            { path: 'residentes-solventes', loadChildren: () => import('app/modules/admin/solvents/solvents.module').then(m => m.SolventsModule) },
+            { path: 'usuarios', canActivate: [AdminGuard], loadChildren: () => import('app/modules/admin/users/users.module').then(m => m.UsersModule) },
+            { path: 'residentes', canActivate: [AdminGuard], loadChildren: () => import('app/modules/admin/residents/residents.module').then(m => m.ResidentsModule) },
+            { path: 'donaciones', canActivate: [AdminGuard], loadChildren: () => import('app/modules/admin/donations/donations.module').then(m => m.DonationsModule) },
+            { path: 'planilla', canActivate: [AdminGuard], loadChildren: () => import('app/modules/admin/forms/forms.module').then(m => m.FormsModule) },
+            { path: 'residentes-solventes', canActivate: [AdminGuard], loadChildren: () => import('app/modules/admin/solvents/solvents.module').then(m => m.SolventsModule) },
             { path: '', pathMatch: 'full', redirectTo: 'usuarios' },
             { path: '**', pathMatch: 'full', redirectTo: 'usuarios' }
         ]

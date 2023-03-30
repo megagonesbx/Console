@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from 'app/core/user/user.service';
-import { throwError, switchMap, of, Observable } from 'rxjs';
+import { switchMap, of, Observable, map, catchError } from 'rxjs';
 import { ILogin } from 'app/interfaces';
 const base_url = environment.base_url;
 
@@ -53,15 +53,12 @@ export class SignInService {
 
   getSession() {
     return this.http.get(`${this.path}/session`).pipe(
-
-      switchMap((response: ILogin) => {
-
-        this._userService.user = response.user;
-        this._userService.menu = response.menu;
-        this._userService.menuStorage = response.menu;
-
-        return of(response);
-      })
+      map((res: ILogin) => {
+        this._userService.user = res.user;
+        this._userService.menu = res.menu;
+        this._userService.menuStorage = res.menu;
+      }),
+      catchError((err) => of(err))
     );
   };
 

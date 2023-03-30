@@ -64,8 +64,17 @@ export const getSession = async (_req: Request, _res: Response) => {
             });    
         }
 
+        const userDB = {
+            id: user.id,
+            email: user.Email,
+            name: user.DisplayName,
+            role: user.Role,
+            createdAt: user.createdAt
+        };
+
         return _res.status(200).json({
-            user,
+            user: userDB,
+            'x-token': _req.params['x-token'],
             menu: getMenuByRole(user.Role),
             statusCode: 200
         });
