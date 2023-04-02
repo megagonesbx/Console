@@ -2,7 +2,6 @@ import { Route } from '@angular/router';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
 import { getMainRoute } from './utils/menu';
-import { AdminGuard } from './modules/auth/admin.guard';
 import { AuthGuard } from './modules/auth/auth.guard';
 
 const mainRoute = getMainRoute();
@@ -23,7 +22,7 @@ export const appRoutes: Route[] = [
     },
     {
         path: 'administrador',
-        // canActivateChild: [AdminGuard],
+        canActivate: [AuthGuard],
         component: LayoutComponent,
         resolve: {
             initialData: InitialDataResolver,
