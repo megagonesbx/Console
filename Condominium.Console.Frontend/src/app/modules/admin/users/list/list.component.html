@@ -1,3 +1,76 @@
-<div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
-<ng-template #noProducts>
-</ng-template>  
+<ng-container *ngIf="users$ | async as users">
+    <ng-container *ngIf="users.length > 0; else nousers">
+        <div class="grid">
+            <!-- Header -->
+            <div
+                class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                matSort
+                matSortDisableClear
+            >
+                <div class="hidden sm:block"></div>
+                <div [mat-sort-header]="'name'">Nombre</div>
+                <div class="hidden sm:block" [mat-sort-header]="'price'">Email</div>
+                <div class="hidden lg:block" [mat-sort-header]="'stock'">Rol</div>
+                <div class="hidden sm:block">Opciones</div>
+            </div>
+            <!-- Header -->
+
+            <ng-container *ngIf="(users$ | async) as users">
+                <ng-container *ngFor="let user of users; trackBy: trackByFn">
+                    <div class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
+
+                        <!-- IMAGE -->
+                        <div class="flex items-center">
+                            <div class="relative flex flex-0 items-center justify-center w-12 h-12 mr-6 rounded overflow-hidden border">
+                                <div class="flex items-center justify-center w-full h-full text-xs font-semibold leading-none text-center uppercase">
+                                    NO THUMB
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /IMAGE -->
+
+                        <!-- DISPLAYNAME -->
+                        <div class="truncate">
+                            {{ user.DisplayName }}
+                        </div>
+                        <!-- /DISPLAYNAME -->
+
+                        <!-- EMAIL -->
+                        <div class="truncate">
+                            {{ user.Email }}
+                        </div>
+                        <!-- /EMAIL -->
+
+                        <!-- ROLE -->
+                        <div class="truncate">
+                            {{ translateRole(user.Role) }}
+                        </div>
+                        <!-- /ROLE -->
+
+                        <!-- OPTIONS -->
+                        <div>
+                            <button
+                                class="min-w-10 min-h-7 h-7 px-2 leading-6"
+                                mat-stroked-button>
+                                <mat-icon
+                                    class="icon-size-5"
+                                    [svgIcon]="'heroicons_solid:chevron-down'"></mat-icon>
+                            </button>
+                        </div>
+                        <!-- OPTIONS -->
+
+                    </div>
+                </ng-container>
+            </ng-container>
+
+        </div>
+
+        <mat-paginator
+            class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+            [ngClass]="{'pointer-events-none': loading}"
+            [length]="users.length"
+            [pageSizeOptions]="[5, 10, 25]">
+        </mat-paginator>
+
+    </ng-container>
+</ng-container>

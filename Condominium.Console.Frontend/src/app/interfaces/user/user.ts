@@ -32,3 +32,12 @@ export interface INewUserResponse {
     user: User;
     statusCode: number;
 };
+
+export interface UsersPagination {
+    length: number;
+    size: number;
+    page: number;
+    lastPage?: number;
+    startIndex?: number;
+    endInded?: number;
+}

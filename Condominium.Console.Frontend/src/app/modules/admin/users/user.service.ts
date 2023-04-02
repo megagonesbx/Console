@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { INewUser, IUser, Users } from 'app/interfaces';
+import { INewUser, IUser, Users, User } from 'app/interfaces';
 import { environment } from 'environments/environment';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, map, of, BehaviorSubject } from 'rxjs';
 import { INewUserResponse } from '../../../interfaces/user/user';
 const base_url = environment.base_url;
 
@@ -11,10 +11,15 @@ const base_url = environment.base_url;
 })
 export class UserService {
 
+  private _users: BehaviorSubject<User[] | null> = new BehaviorSubject(null);
   private path: string;
 
   constructor(private _http: HttpClient) {
     this.path = `${base_url}/user`
+  }
+
+  get users$(): Observable<User[]> {
+    return this._users.asObservable();
   }
 
   getUsers(request: { roleId: number, page: number, pageSize: number }): Observable<Users | null> {
@@ -22,6 +27,7 @@ export class UserService {
       map((res: IUser) => {
 
         if (res.statusCode && res.statusCode == 200) {
+          this._users.next(res.data);
           return {
             users: res.data,
             total: res.count,
