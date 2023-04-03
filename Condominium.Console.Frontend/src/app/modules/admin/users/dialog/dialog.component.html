@@ -1,0 +1,55 @@
+<ng-container *ngIf="newUser; else updateUser">
+
+    <h2 mat-dialog-title>Datos de usuario</h2>
+
+    <form [formGroup]="userForm" (ngSubmit)="createUser()">
+      <mat-form-field>
+        <input matInput placeholder="Nombre" formControlName="firstName">
+        <mat-error *ngIf="userForm.get('firstName').invalid && userForm.get('firstName').touched">
+          Este campo es requerido.
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput placeholder="Apellido" formControlName="lastName">
+        <mat-error *ngIf="userForm.get('lastName').invalid && userForm.get('lastName').touched">
+          Este campo es requerido.
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <mat-select placeholder="Rol" formControlName="role">
+          <mat-option value="1">Administrador</mat-option>
+          <mat-option value="2">Operador</mat-option>
+          <mat-option value="3">Residente</mat-option>
+        </mat-select>
+        <mat-error *ngIf="userForm.get('role').invalid && userForm.get('role').touched">
+          Este campo es requerido.
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput placeholder="Email" formControlName="email">
+        <mat-error *ngIf="userForm.get('email').invalid && userForm.get('email').touched">
+          Este campo es requerido y debe ser un correo electrónico válido.
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput type="password" placeholder="Contraseña" formControlName="password">
+        <mat-error *ngIf="userForm.get('password').invalid && userForm.get('password').touched">
+          Este campo es requerido.
+        </mat-error>
+      </mat-form-field>
+  
+      <div mat-dialog-actions>
+        <button mat-button type="button" (click)="onCancel()">Cancelar</button>
+        <button mat-button type="submit" [disabled]="userForm.invalid">Guardar</button>
+      </div>
+  
+    </form>
+</ng-container>
+
+<ng-template #updateUser>
+    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no products!</div>
+</ng-template>

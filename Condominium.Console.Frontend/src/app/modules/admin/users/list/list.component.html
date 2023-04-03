@@ -51,11 +51,17 @@
                         <div>
                             <button
                                 class="min-w-10 min-h-7 h-7 px-2 leading-6"
-                                mat-stroked-button>
-                                <mat-icon
-                                    class="icon-size-5"
-                                    [svgIcon]="'heroicons_solid:chevron-down'"></mat-icon>
+                                mat-stroked-button
+                                (click)="openDialog(user)">
+                                <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
                             </button>
+
+                            <button
+                                class="min-w-10 min-h-7 h-7 px-2 leading-6 ml-2"
+                                mat-stroked-button>
+                                <mat-icon svgIcon="heroicons_outline:user-remove"></mat-icon>
+                            </button>
+
                         </div>
                         <!-- OPTIONS -->
 
@@ -69,7 +75,8 @@
             class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
             [ngClass]="{'pointer-events-none': loading}"
             [length]="users.length"
-            [pageSizeOptions]="[5, 10, 25]">
+            [pageSize]="10"
+            [pageSizeOptions]="[10, 15, 25]">
         </mat-paginator>
 
     </ng-container>

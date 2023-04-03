@@ -17,15 +17,20 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { SharedModule } from 'app/shared/shared.module';
+import { MatDialogModule } from '@angular/material/dialog';
+
 import { ListComponent } from './list/list.component';
+import { UserDialogComponent } from './dialog/dialog.component';
+import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
   declarations: [ 
-    UsersComponent, ListComponent
+    UsersComponent, 
+    ListComponent, 
+    UserDialogComponent
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     UsersRoutingModule,
     MatButtonModule,
     MatCheckboxModule,
@@ -40,6 +45,7 @@ import { ListComponent } from './list/list.component';
     MatSelectModule,
     MatSlideToggleModule,
     MatTooltipModule,
+    MatDialogModule,
   ]
 })
 export class UsersModule { }

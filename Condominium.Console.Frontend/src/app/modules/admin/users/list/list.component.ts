@@ -6,6 +6,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { User } from 'app/interfaces';
 import { translateRole } from 'app/utils';
+import { MatDialog } from '@angular/material/dialog';
+import { UserDialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'user-list',
@@ -19,8 +21,8 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private _unsubscribeAll: ReplaySubject<number> = new ReplaySubject(1);
 
-  @ViewChild(MatPaginator) private _paginator: MatPaginator;
-  @ViewChild(MatSort) private _sort: MatSort;
+  @ViewChild(MatPaginator) public _paginator: MatPaginator;
+  @ViewChild(MatSort) public _sort: MatSort;
 
   public users$: Observable<User[]>;
   public users: User[] = [];
@@ -28,8 +30,9 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   public loading: boolean;
   public pageSize: number = 0;
   public page: number = 1;
+  public diameter: number = 100;
 
-  constructor(private _userService: UserService, private _changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private _userService: UserService, private _changeDetectorRef: ChangeDetectorRef, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -47,15 +50,22 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  openDialog(user: User) {
+    const dialogRef = this.dialog.open(UserDialogComponent, {
+      width: '250px',
+      data: { user }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getUsers();
+    });
+  }
+
   translateRole(role: number): string {
     return translateRole(role);
   }
-
+  
   ngAfterViewInit(): void {
-    if (this._sort && this._paginator) {
-      console.log('OK');
-      
-    }
   }
 
   ngOnDestroy(): void {

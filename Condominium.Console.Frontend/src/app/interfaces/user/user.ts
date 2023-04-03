@@ -39,5 +39,5 @@ export interface UsersPagination {
     page: number;
     lastPage?: number;
     startIndex?: number;
-    endInded?: number;
+    endIndex: number;
 }
