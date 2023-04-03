@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UserDialogComponent } from './dialog/dialog.component';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-users',
@@ -9,7 +10,7 @@ import { UserDialogComponent } from './dialog/dialog.component';
 })
 export class UsersComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private _userService: UserService) { }
 
   ngOnInit(): void {
   }
@@ -18,6 +19,8 @@ export class UsersComponent implements OnInit {
     const dialogRef = this.dialog.open(UserDialogComponent, {
       width: '500px'
     });
+
+    dialogRef.afterClosed().subscribe(res => this._userService.foo());
   }
 
 }

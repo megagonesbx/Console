@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { INewUser, IUser, Users, User } from 'app/interfaces';
+import { INewUser, IUser, Users, User, INewUserResponse } from 'app/interfaces';
 import { environment } from 'environments/environment';
-import { Observable, catchError, map, of, BehaviorSubject } from 'rxjs';
-import { INewUserResponse } from '../../../interfaces/user/user';
+import { Observable, catchError, map, of, BehaviorSubject, Subject } from 'rxjs';
 const base_url = environment.base_url;
 
 @Injectable({
@@ -11,6 +10,7 @@ const base_url = environment.base_url;
 })
 export class UserService {
 
+  private fooSubject = new Subject<void>();
   private _users: BehaviorSubject<User[] | null> = new BehaviorSubject(null);
   private path: string;
 
@@ -75,6 +75,14 @@ export class UserService {
       }
     }
   }
+
+  foo(): void {
+    this.fooSubject.next();
+  }
+
+  get onFoo() {
+    return this.fooSubject.asObservable();
+  };
   // INTERNAL
 
 }
