@@ -52,10 +52,7 @@ export class UserService {
   updateUser(user: INewUser) {
     return this._http.put(`${this.path}/update`, user, this.getHeaders).pipe(
       map((res: { statusCode: number }) => (res) ? res.statusCode : 500),
-      catchError(err => {
-        console.log(err)
-        return of(err.status)
-      })
+      catchError(err => of(err.status))
     )
   }
 

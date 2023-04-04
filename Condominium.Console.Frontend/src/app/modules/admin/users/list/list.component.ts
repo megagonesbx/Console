@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, OnDestroy, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { UserService } from '../user.service';
-import { ReplaySubject, takeUntil, Observable, merge, switchMap, map } from 'rxjs';
+import { Subject, takeUntil, Observable, merge, switchMap, map } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { User } from 'app/interfaces';
@@ -20,7 +20,7 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 })
 export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  private _unsubscribeAll: ReplaySubject<number> = new ReplaySubject(1);
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   @ViewChild(MatPaginator) public _paginator: MatPaginator;
   @ViewChild(MatSort) public _sort: MatSort;

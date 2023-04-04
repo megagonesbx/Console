@@ -1,0 +1,97 @@
+<ng-container *ngIf="isNew">
+    <h2 mat-dialog-title>Datos de residencia</h2>
+
+    <form name="form" [formGroup]="form" (ngSubmit)="createResident()">
+        <mat-form-field>
+          <input matInput placeholder="Dirección" formControlName="homeAddress" (keydown)="onKeyDown($event)">
+          <mat-error *ngIf="form.get('homeAddress').invalid && form.get('homeAddress').touched">
+            Este campo es requerido.
+          </mat-error>
+        </mat-form-field>
+    
+        <mat-form-field>
+          <input matInput placeholder="Usuario" formControlName="ownerName" (keydown)="onKeyDown($event)">
+          <mat-error *ngIf="form.get('ownerName').invalid && form.get('ownerName').touched">
+            Este campo es requerido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Número de DPI" formControlName="ownerDPI" (keydown)="onKeyDown($event)">
+            <mat-error *ngIf="form.get('ownerDPI').invalid && form.get('ownerDPI').touched">
+              Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Número de teléfono" formControlName="phoneNumber" (keydown)="onKeyDown($event)">
+            <mat-error *ngIf="form.get('phoneNumber').invalid && form.get('phoneNumber').touched">
+              Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="Estado de la residencia" formControlName="solvent">
+                <mat-option *ngFor="let solvent of solventStatus" [value]="solvent.value">{{ solvent.description }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('solvent').invalid && form.get('solvent').touched">
+                Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+    
+        <div mat-dialog-actions>
+          <button mat-button type="button" (click)="onClose()">Cancelar</button>
+          <button mat-flat-button [color]="'primary'" type="submit" [disabled]="form.invalid || form.pristine">Crear</button>
+        </div>
+    
+      </form>
+</ng-container>
+
+<ng-container *ngIf="!isNew">
+    <h2 mat-dialog-title>Actualizar datos de residencia</h2>
+
+      <form name="form" [formGroup]="form" (ngSubmit)="updateResident()">
+        <mat-form-field>
+          <input matInput placeholder="Dirección" formControlName="homeAddress" (keydown)="onKeyDown($event)">
+          <mat-error *ngIf="form.get('homeAddress').invalid && form.get('homeAddress').touched">
+            Este campo es requerido.
+          </mat-error>
+        </mat-form-field>
+    
+        <mat-form-field>
+          <input matInput placeholder="Usuario" formControlName="ownerName" (keydown)="onKeyDown($event)">
+          <mat-error *ngIf="form.get('ownerName').invalid && form.get('ownerName').touched">
+            Este campo es requerido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Número de DPI" formControlName="ownerDPI" (keydown)="onKeyDown($event)">
+            <mat-error *ngIf="form.get('ownerDPI').invalid && form.get('ownerDPI').touched">
+              Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Número de teléfono" formControlName="phoneNumber" (keydown)="onKeyDown($event)">
+            <mat-error *ngIf="form.get('phoneNumber').invalid && form.get('phoneNumber').touched">
+              Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="Estado de la residencia" formControlName="solvent">
+                <mat-option *ngFor="let solvent of solventStatus" [value]="solvent.value">{{ solvent.description }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('solvent').invalid && form.get('solvent').touched">
+                Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+    
+        <div mat-dialog-actions>
+          <button mat-button type="button" (click)="onClose()">Cancelar</button>
+          <button mat-flat-button [color]="'primary'" type="submit" [disabled]="form.invalid || form.pristine">Actualizar</button>
+        </div>
+    
+      </form>
+</ng-container>

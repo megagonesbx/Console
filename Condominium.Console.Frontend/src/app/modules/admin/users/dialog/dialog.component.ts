@@ -66,7 +66,7 @@ export class UserDialogComponent implements OnInit {
   createUser() {
     if (this.userForm.invalid) return Object.values(this.userForm.controls).forEach(c => c.markAsTouched());
 
-    this._userService.createUser(this.userForm.value).subscribe(res => {
+    this._userService.createUser(this.userForm.value).pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
 
       if (res == 200) {
         this.onCancel();
