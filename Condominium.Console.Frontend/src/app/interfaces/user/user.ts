@@ -12,6 +12,7 @@ export interface User {
     Role: number;
     Email: string;
     CreatedAt: Date;
+    name?: string;
 }
 
 export interface Users {
@@ -26,7 +27,7 @@ export interface INewUser {
     lastName:  string;
     role:      number;
     email:     string;
-    password:  string;
+    password?:  string;
 }
 
 export interface INewUserResponse {

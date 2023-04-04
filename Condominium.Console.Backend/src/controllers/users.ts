@@ -61,7 +61,7 @@ export const getUser = async (_req: Request, _res: Response) => {
 
 export const updateUser = async (_req: Request, _res: Response) => {
 
-    const { id, firstName, lastName, password } = _req.body;
+    const { id, firstName, lastName, password, role } = _req.body;
     try {
 
         const userService: UserService = _req.app.locals.userService;
@@ -73,6 +73,12 @@ export const updateUser = async (_req: Request, _res: Response) => {
             });
         }
 
+        if (id == _req.uid) {
+            return _res.status(402).json({
+                statusCode: 402
+            });
+        }
+
         if (password) {
             const salt = genSaltSync();
             const saltedCurrentPassword = hashSync(password, salt);
@@ -81,6 +87,7 @@ export const updateUser = async (_req: Request, _res: Response) => {
         }
 
         userDB.DisplayName = `${firstName} ${lastName}`;
+        userDB.Role = role;
 
         const updated = await userService.updateRecord(id, userDB);
 
@@ -105,6 +112,12 @@ export const deleteUser = async (_req: Request, _res: Response) => {
     try {
 
         const { userId } = _req.params;
+
+        if (userId == _req.uid) {
+            return _res.status(402).json({
+                statusCode: 402
+            });
+        }
 
         const userService: UserService = _req.app.locals.userService;
         const deleted = await userService.deleteRecord(parseInt(userId));

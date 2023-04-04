@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { IAlert, User } from 'app/interfaces';
 import { UserService } from '../user.service';
+import { SnackBarService, roles, splitName } from 'app/utils';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-dialog',
@@ -12,65 +14,98 @@ import { UserService } from '../user.service';
 export class UserDialogComponent implements OnInit {
 
   public newUser: boolean = true;
-  public userForm: FormGroup; 
+  public userForm: FormGroup;
   public alert: IAlert;
+  public roles: { id: number, description: string }[] = []
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any, 
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private _formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<UserDialogComponent>,
-    private _userService: UserService
-  ) { }
+    private _userService: UserService,
+    private _snackBarService: SnackBarService
+  ) {
+    this.roles = roles;
+  }
 
   ngOnInit(): void {
     this.initForm();
 
+    if (this?.data?.user) {
+      this.newUser = false;
+      this.setForm(this?.data?.user);
+    }
   }
 
   initForm() {
     this.newUser = true;
     this.userForm = this._formBuilder.group({
+      id: [],
       firstName: ['', [Validators.required]],
-      lastName:  ['', [Validators.required]],
-      role:      ['', [Validators.required]],
-      email:     ['', [Validators.required, Validators.email]],
-      password:  ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      role: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
     })
   }
 
   setForm(user: User) {
-    this.newUser = false;
     this.userForm.patchValue({
-      firstName: [user.DisplayName, Validators.required],
-      lastName:  [user.DisplayName, Validators.required],
-      role:      [user.Role, Validators.required],
-      email:     [user.Email, [Validators.required, Validators.email]],
-      password:  [''],
-    })
+      id: user.id,
+      firstName: splitName(user.DisplayName)[0],
+      lastName: splitName(user.DisplayName)[1],
+      role: user.Role,
+      email: user.Email,
+      password: ''
+    });
+
+    this.userForm.controls.password.clearValidators();
   }
 
   createUser() {
     if (this.userForm.invalid) return Object.values(this.userForm.controls).forEach(c => c.markAsTouched());
 
-    
     this._userService.createUser(this.userForm.value).subscribe(res => {
 
       if (res == 200) {
-        this.alert = {
-          type: 'success',
-          message: 'El usuario ha sido creado exitósamente'
-        };
+        this.onCancel();
+        return this._snackBarService.open('El usuario se ha creado exitósamente');
       }
 
-      this.alert = {
-        type: 'error',
-        message: 'Ha ocurrido un error al crear el usuario.'
-      };
+      this.onCancel();
+      return this._snackBarService.open('Ha ocurrido un error al crear el usuario');
+    });
+  }
+
+  updateUser() {
+    if (this.userForm.invalid) return Object.values(this.userForm.controls).forEach(c => c.markAsTouched());
+
+    const { password, ...user } = this.userForm.value;
+    
+    if (password) {
+      user.password = password;
+    }
+
+    this._userService.updateUser(user).pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
+
+      if (res == 402) {
+        this.onCancel();
+        return this._snackBarService.open('No te puedes actualizar a ti mismo.');
+      } else if (res == 200) {
+        this.onCancel();
+        return this._snackBarService.open('Se ha actualizado el usuario.');
+      }
 
       this.onCancel();
-      return;
-
+      return this._snackBarService.open('Ha ocurrido un error al actualizar el usuario');
     });
+  }
+
+  onKeyDown(event: KeyboardEvent) {
+    if (event.code === 'Space') {
+      event.preventDefault();
+    }
   }
 
   onCancel() {

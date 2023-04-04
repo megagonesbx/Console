@@ -67,7 +67,7 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   openDialog(user: User) {
     const dialogRef = this.dialog.open(UserDialogComponent, {
-      width: '250px',
+      width: '500px',
       data: { user }
     });
 
@@ -101,10 +101,12 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (res === 'confirmed') {
         this._userService.deleteUser(userId).pipe(takeUntil(this._unsubscribeAll)).subscribe((code) => {
-
+          
           if (code == 201) {
             this.getUsers();
             return this._snackBarService.open('El usuario se ha eliminado.');
+          } else if (code == 402) {
+            return this._snackBarService.open('No te puedes eliminar a ti mismo.');
           }
 
           return this._snackBarService.open('Ha ocurrido en error al eliminar el usuario.');

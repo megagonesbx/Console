@@ -45,21 +45,24 @@ export class UserService {
   createUser(user: INewUser): Observable<number> {
     return this._http.post(`${this.path}/create`, user, this.getHeaders).pipe(
       map((res: INewUserResponse) => (res.statusCode) ? res.statusCode : 500),
-      catchError(err => of(500))
+      catchError(err => of(err.status))
     )
   }
 
   updateUser(user: INewUser) {
     return this._http.put(`${this.path}/update`, user, this.getHeaders).pipe(
       map((res: { statusCode: number }) => (res) ? res.statusCode : 500),
-      catchError(err => of(500))
+      catchError(err => {
+        console.log(err)
+        return of(err.status)
+      })
     )
   }
 
   deleteUser(id: number) {
     return this._http.delete(`${this.path}/${id}`, this.getHeaders).pipe(
       map((res: { statusCode: number }) => (res) ? res.statusCode : 500),
-      catchError(err => of(500))
+      catchError(err => of(err.status))
     )
   }
 

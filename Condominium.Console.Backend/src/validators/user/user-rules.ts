@@ -43,7 +43,7 @@ export const updateUserValidationRules = (additionalRules: any = null) => {
 
     return [
         genericStringRule(
-            ["firstName","lastName","password"],
+            ["firstName","lastName"],
             {
                 requiredType: "string",
                 warnings: "This field doesn't exist, is not a string or is empty."
@@ -55,6 +55,15 @@ export const updateUserValidationRules = (additionalRules: any = null) => {
                 requiredType: "int",
                 warnings: "This field doesn't exist, is not a integer or is empty."
             }
+        ),
+        genericStringRule(
+            'password',
+            {
+                requiredType: "string",
+                warnings: "This field doesn't exist, is not a string or is empty."
+            },
+            null,
+            false
         ),
         ...newRules
     ]
