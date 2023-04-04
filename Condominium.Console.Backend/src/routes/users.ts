@@ -58,7 +58,7 @@ router.get(
  * @swagger
  * /api/user/create:
  *   post:
- *     summary: Get user by Id
+ *     summary: Create user
  *     tags: [User]
  *     requestBody:
  *       required: true

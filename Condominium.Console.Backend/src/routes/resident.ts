@@ -6,6 +6,39 @@ import { createHouseValidationRules, getHouseValidationRules, getHousesValidatio
 
 const router = Router();
 
+/**
+ * @swagger
+ * /api/resident/{id}:
+ *   get:
+ *     summary: Get house by Id
+ *     tags: [Resident]
+ *     parameters:
+ *     - name: id
+ *       in: path
+ *       description: House ID.
+ *       required: true
+ *       schema:
+ *        type: string
+ *     responses:
+ *       200:
+ *         description:  
+ *         content:
+ *           application/json:
+ *             example:
+ *               statusCode: 200
+ *       404:
+ *         description: House not found
+ *       422:
+ *         description: Fields Error
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                errors:
+ *                  type: object
+ *                  example: {"errors":[{"field":"Id","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or is empty."}}]}
+ */
 router.get(
     '/:houseId',
     getHouseValidationRules(),
@@ -15,6 +48,67 @@ router.get(
     getResident
 );
 
+/**
+ * @swagger
+ * /api/resident/create:
+ *   post:
+ *     summary: Create house
+ *     tags: [Resident]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              required:
+ *                - homeAddress
+ *                - ownerName
+ *                - ownerDPI
+ *                - phoneNumber
+ *                - solvent
+ *              properties:
+ *               homeAddress:
+ *                   type: string
+ *                   description: Home address must be unique.
+ *                   example: Casa 1
+ *               ownerName:
+ *                   type: string
+ *                   description: Name of the owner
+ *                   example: Smith
+ *               phoneNumber:
+ *                   type: Integer
+ *                   description: Phone number about the owner
+ *                   example: 12346789
+ *               ownerDPI:
+ *                   type: string
+ *                   description: DPI number about the owner
+ *                   example: 1234567891234
+ *               solvent:
+ *                   type: boolean
+ *                   description: If the house is solvent
+ *                   example: false
+ *                  
+ *     responses:
+ *       200:
+ *         description:  
+ *         content:
+ *           application/json:
+ *             example:
+ *               id: 1
+ *               statusCode: 200
+ *       404:
+ *         description: House not found
+ *       422:
+ *         description: Fields Error
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                errors:
+ *                  type: object
+ *                  example: {"errors":[{"field":"ownerDPI","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or is empty."}}]}
+ */
 router.post(
     '/create',
     createHouseValidationRules(),
@@ -24,6 +118,70 @@ router.post(
     createResident
 );
 
+/**
+ * @swagger
+ * /api/resident/update:
+ *   put:
+ *     summary: Update house
+ *     tags: [Resident]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              required:
+ *                - homeAddress
+ *                - ownerName
+ *                - ownerDPI
+ *                - phoneNumber
+ *                - solvent
+ *              properties:
+ *               id:
+ *                   type: number
+ *                   description: House id to be updated
+ *                   example: 1
+ *               homeAddress:
+ *                   type: string
+ *                   description: Home address must be unique.
+ *                   example: Casa 1 Updated
+ *               ownerName:
+ *                   type: string
+ *                   description: Name of the owner
+ *                   example: Smith
+ *               phoneNumber:
+ *                   type: Integer
+ *                   description: Phone number about the owner
+ *                   example: 12346789
+ *               ownerDPI:
+ *                   type: string
+ *                   description: DPI number about the owner
+ *                   example: 00001111222333
+ *               solvent:
+ *                   type: boolean
+ *                   description: If the house is solvent
+ *                   example: true
+ *                  
+ *     responses:
+ *       200:
+ *         description:  
+ *         content:
+ *           application/json:
+ *             example:
+ *               statusCode: 200
+ *       404:
+ *         description: House not found
+ *       422:
+ *         description: Fields Error
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                errors:
+ *                  type: object
+ *                  example: {"errors":[{"field":"ownerDPI","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or is empty."}}]}
+ */
 router.put(
     '/update',
     updateHouseValidationRules(),
@@ -33,6 +191,39 @@ router.put(
     updateResident
 );
 
+/**
+ * @swagger
+ * /api/resident/{id}:
+ *   delete:
+ *     summary: Delete house by Id
+ *     tags: [Resident]
+ *     parameters:
+ *     - name: id
+ *       in: path
+ *       description: House ID.
+ *       required: true
+ *       schema:
+ *        type: string
+ *     responses:
+ *       200:
+ *         description:  
+ *         content:
+ *           application/json:
+ *             example:
+ *               statusCode: 200
+ *       404:
+ *         description: House not found
+ *       422:
+ *         description: Fields Error
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                errors:
+ *                  type: object
+ *                  example: {"errors":[{"field":"dpi","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or is empty."}}]}
+ */
 router.delete(
     '/:houseId',
     getHouseValidationRules(),
@@ -42,6 +233,57 @@ router.delete(
     deleteResident
 );
 
+/**
+ * @swagger
+ * /api/resident/residents:
+ *   post:
+ *     summary: Get houses paginated
+ *     tags: [Resident]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              required:
+ *                - dpi
+ *              properties:
+ *               dpi:
+ *                   type: string
+ *                   description: DPI to filter houses, if you want get all houses remove this property.
+ *                   example: 1234567891234
+ *               pageSize:
+ *                   type: integer
+ *                   description: Number of documents per page, by default is 10 documents per page
+ *                   example: 15
+ *               page:
+ *                   type: Integer
+ *                   description: Number of page, by default will be the page number 1
+ *                   example: 1
+ *     responses:
+ *       200:
+ *         description:  
+ *         content:
+ *           application/json:
+ *             example:
+ *               data: [{"homeAddress":"Casa 1","ownerName":"admin","ownerDPI":"3639933470703","phoneNumber":"55580040","solvent":false}]
+ *               count: 10 
+ *               page: 1
+ *               pages: 3
+ *               statusCode: 200
+ *       404:
+ *         description: User not found
+ *       422:
+ *         description: Fields Error
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                errors:
+ *                  type: object
+ *                  example: {"errors":[{"field":"dpi","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or is empty."}}]}
+ */
 router.post(
     '/residents',
     getHousesValidationRules(),

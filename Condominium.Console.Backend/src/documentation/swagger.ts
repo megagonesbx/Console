@@ -36,6 +36,18 @@ const swaggerDefinition: OAS3Definition = {
                     Role: { type: "integer" },
                     CreatedAt: { type: "date" }
                 }
+            },
+            HouseModel: {
+                type: "object",
+                required: ["Id", "homeAddress", "ownerName", "ownerDPI", "phoneNumber", "solvent"],
+                properties: {
+                    Id: { type: "integer" },
+                    homeAddress: { type: "string" },
+                    ownerName: { type: "string" },
+                    ownerDPI: { type: "integer" },
+                    phoneNumber: { type: "date" },
+                    solvent: { type: "boolean" }
+                }
             }
         }
     }
