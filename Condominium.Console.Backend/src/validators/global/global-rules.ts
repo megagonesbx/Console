@@ -1,6 +1,6 @@
 import { TOKEN } from "../../config";
 import { genericHeaderRule, genericMongoIdRule } from "../../helpers";
-import { PARAM_LOCATION } from "../../types";
+import { PARAM_LOCATION } from "../../typings";
 
 export const genericMongoIdValidationRules = (additionalRules: any = null, extraFields: string | string[] = "id") => {
     const newRules = additionalRules || [];

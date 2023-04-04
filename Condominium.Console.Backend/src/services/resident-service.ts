@@ -63,7 +63,7 @@ export class ResidentService {
             let where = {};
 
             if (dpi > 0) {
-                where = { Role: dpi }
+                where = { ownerDPI: dpi }
             }
 
             const { data, count } = await this.residentRepository.findWithPagination(
