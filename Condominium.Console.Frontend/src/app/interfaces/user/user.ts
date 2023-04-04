@@ -7,6 +7,7 @@ export interface IUser {
 }
 
 export interface User {
+    id: number;
     DisplayName: string;
     Role: number;
     Email: string;

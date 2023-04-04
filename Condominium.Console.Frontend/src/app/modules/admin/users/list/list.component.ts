@@ -5,9 +5,10 @@ import { ReplaySubject, takeUntil, Observable, merge, switchMap, map } from 'rxj
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { User } from 'app/interfaces';
-import { translateRole } from 'app/utils';
+import { SnackBarService, translateRole } from 'app/utils';
 import { MatDialog } from '@angular/material/dialog';
 import { UserDialogComponent } from '../dialog/dialog.component';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 @Component({
   selector: 'user-list',
@@ -29,7 +30,7 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   public flashMessage: 'success' | 'error' | null = null;
   public loading: boolean;
   public diameter: number = 100;
-  
+
   // MAT PAGINATOR
   public pageSize: number = 10;
   public page: number = 1;
@@ -37,7 +38,13 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   public pages: number = 0;
   public pageSizeOptions: number[] = [10, 15, 25];
 
-  constructor(private _userService: UserService, private _changeDetectorRef: ChangeDetectorRef, public dialog: MatDialog) { }
+  constructor(
+    private _userService: UserService,
+    private _changeDetectorRef: ChangeDetectorRef,
+    public dialog: MatDialog,
+    public _fuseConfirmationService: FuseConfirmationService,
+    private _snackBarService: SnackBarService
+  ) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -75,10 +82,42 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
     })
   }
 
+  deleteUser(userId: number) {
+
+    const confirmation = this._fuseConfirmationService.open({
+      title: 'Eliminar usuario',
+      message: '¿Está seguro de eliminar el usuario?',
+      actions: {
+        confirm: {
+          label: 'Eliminar'
+        },
+        cancel: {
+          label: 'Cancelar'
+        }
+      }
+    });
+
+    confirmation.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
+
+      if (res === 'confirmed') {
+        this._userService.deleteUser(userId).pipe(takeUntil(this._unsubscribeAll)).subscribe((code) => {
+
+          if (code == 201) {
+            this.getUsers();
+            return this._snackBarService.open('El usuario se ha eliminado.');
+          }
+
+          return this._snackBarService.open('Ha ocurrido en error al eliminar el usuario.');
+        });  
+      }
+
+    });
+  }
+
   translateRole(role: number): string {
     return translateRole(role);
   }
-  
+
   ngAfterViewInit(): void {
     if (this._sort && this._paginator) {
       this._sort.sort({

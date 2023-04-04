@@ -71,7 +71,8 @@ export class UserService {
                     createdAt: 'DESC'
                 },
                 take,
-                skip);
+                skip,
+                ["Role", "id", "DisplayName", "Email"]);
 
             const pagination = {
                 data: data,

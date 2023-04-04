@@ -22,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ListComponent } from './list/list.component';
 import { UserDialogComponent } from './dialog/dialog.component';
 import { SharedModule } from 'app/shared/shared.module';
+import { SnackBarService } from 'app/utils';
 
 @NgModule({
   declarations: [ 
@@ -46,6 +47,9 @@ import { SharedModule } from 'app/shared/shared.module';
     MatSlideToggleModule,
     MatTooltipModule,
     MatDialogModule,
+  ],
+  providers: [
+    SnackBarService
   ]
 })
 export class UsersModule { }

@@ -22,13 +22,15 @@ class BaseRepository<T extends ObjectLiteral> {
         where: Array<FindOptionsWhere<T>> | FindOptionsWhere<T> | undefined,
         order: FindOptionsOrder<T>,
         take = 10,
-        skip = 0
+        skip = 0,
+        select: string[] = []
     ): Promise<PaginationResult<T>> {
         const [result, total] = await this.repository.findAndCount({
             where,
             order,
             take,
-            skip
+            skip,
+            select
         });
 
         const pageCount = Math.ceil(total / take);
