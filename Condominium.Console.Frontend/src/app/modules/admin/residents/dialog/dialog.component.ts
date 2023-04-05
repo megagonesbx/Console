@@ -1,10 +1,11 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ResidentsService } from '../residents.service';
-import { SnackBarService } from 'app/utils';
-import { IResident } from 'app/interfaces';
+import { SnackBarService, dpiValidator, guatemalaPhoneNumberValidator } from 'app/utils';
+import { IResident, User } from 'app/interfaces';
+import { UserService } from '../../users/user.service';
 
 @Component({
   selector: 'app-dialog',
@@ -17,19 +18,22 @@ import { IResident } from 'app/interfaces';
     }
   `]
 })
-export class ResidentDialogComponent implements OnInit, OnDestroy {
+export class ResidentDialogComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public isNew: boolean = true;
   public form: FormGroup;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   public solventStatus: { value: boolean, description: string }[] = [];
+  public users: User[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<ResidentDialogComponent>,
     private _residentService: ResidentsService,
-    private _snackBarService: SnackBarService
+    private _snackBarService: SnackBarService,
+    private _userService: UserService,
+    private _changeDetectorRef: ChangeDetectorRef
   ) {
     this.solventStatus = [
       {
@@ -45,11 +49,15 @@ export class ResidentDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initForm();
-
+    
     if (this?.data?.house) {
       this.isNew = false;
       this.setForm(this?.data?.house);
     };
+
+    setTimeout(() => {
+      this.getUsers();
+    }, 500)
   };
 
   initForm() {
@@ -57,10 +65,10 @@ export class ResidentDialogComponent implements OnInit, OnDestroy {
     this.form = this._formBuilder.group({
       id: [],
       homeAddress: ['', [Validators.required]],
-      ownerName: ['', [Validators.required]],
-      ownerDPI: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required]],
-      solvent: ['', [Validators.required]],
+      ownerName: [, [Validators.required]],
+      ownerDPI: ['', [Validators.required, dpiValidator]],
+      phoneNumber: ['', [Validators.required, guatemalaPhoneNumberValidator]],
+      solvent: [false, [Validators.required]],
     });
   };
 
@@ -99,6 +107,8 @@ export class ResidentDialogComponent implements OnInit, OnDestroy {
   updateResident() {
     if (this.form.invalid) return Object.values(this.form.controls).forEach(c => c.markAsTouched());
 
+    this.form.controls.phoneNumber.setValue(JSON.stringify(this.form.controls.phoneNumber.value));
+
     this._residentService.updateResident(this.form.value).pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
 
       if (res == 200) {
@@ -111,9 +121,21 @@ export class ResidentDialogComponent implements OnInit, OnDestroy {
     });
   };
 
+  getUsers() {
+    this._userService.getUsers({ roleId: 0, page: 1, pageSize: 100 }).pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
+
+      if (res) this.users = res.users;
+    
+    });
+  }
+
   onClose() {
     this.dialogRef.close();
   };
+
+  ngAfterViewInit(): void {
+    this._changeDetectorRef.detectChanges(); 
+  }
 
   ngOnDestroy(): void {
     this._unsubscribeAll.next(null);

@@ -22,6 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { SnackBarService } from 'app/utils';
+import { UserService } from '../users/user.service';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { SnackBarService } from 'app/utils';
     MatDialogModule,
   ],
   providers: [
-    SnackBarService
+    SnackBarService,
+    UserService
   ]
 })
 export class ResidentsModule { }
