@@ -2,12 +2,12 @@ import express, { Application} from "express";
 import cors from "cors";
 import Swagger from "swagger-ui-express";
 
-import { Auth, Resident, User } from '../routes';
+import { Auth, Resident, User, Donation } from '../routes';
 
 import { PORT } from '../config';
 import { openApiConfig } from "../documentation";
 import { GenericDataSource } from "../database/connection";
-import { UserService, AuthService, ResidentService } from '../services';
+import { UserService, AuthService, ResidentService, DonationService } from '../services';
 
 export class Server {
     private app: Application;
@@ -17,7 +17,8 @@ export class Server {
         auth: "/api/auth",
         docs: "/api/docs",
         user: "/api/user",
-        resident: "/api/resident"
+        resident: "/api/resident",
+        donation: "/api/donation"
     };
 
     constructor() {
@@ -37,6 +38,7 @@ export class Server {
             this.app.locals.userService = await new UserService(generic.getClient());
             this.app.locals.authService = await new AuthService(generic.getClient());
             this.app.locals.residentService = await new ResidentService(generic.getClient());
+            this.app.locals.donationService = await new DonationService(generic.getClient());
 
             console.log('DB CONNECTED')
         } catch (error) {
@@ -54,6 +56,7 @@ export class Server {
         this.app.use(this.paths.user, User.default);
         this.app.use(this.paths.docs, Swagger.serve, Swagger.setup(openApiConfig));
         this.app.use(this.paths.resident, Resident.default);
+        this.app.use(this.paths.donation, Donation.default)
     };
 
     public listen() {
