@@ -53,10 +53,7 @@ export class ResidentsService {
   updateResident(house: IResident) {
     return this.http.put(`${this.path}/update`, house, this.getHeaders).pipe(
       map((res: { id: number, statusCode: number }) => (res.statusCode) ? res.statusCode : 500),
-      catchError(err => {
-        console.log(err);
-        return of(err.status)
-      })
+      catchError(err => of(err.status))
     )
   }
 
