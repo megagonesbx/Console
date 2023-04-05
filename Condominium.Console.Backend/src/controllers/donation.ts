@@ -3,12 +3,11 @@ import { DonationService } from "../services";
 
 export const createDonation = async (_req: Request, _res: Response) => {
     try {
-        const { donationNumber, quantity, donationPhoto, description, utilization } = _req.body;
+        const { quantity, donationPhoto, description, utilization } = _req.body;
 
         const donationService: DonationService = _req.app.locals.donationService;
 
-        const id = await donationService.insertRecord({
-            donationNumber, 
+        const id = await donationService.insertRecord({ 
             quantity, 
             donationPhoto, 
             description, 

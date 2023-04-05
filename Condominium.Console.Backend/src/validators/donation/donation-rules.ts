@@ -52,7 +52,7 @@ export const updateDonationValidationRules = (additionalRules: any = null) => {
 
     return [
         genericIntegerRule(
-            ["id", "donationNumber", "quantity"],
+            ["id", "quantity"],
             {
                 requiredType: "integer",
                 warnings: "This field doesn't exist, is not a integer or must be greather than 0."
