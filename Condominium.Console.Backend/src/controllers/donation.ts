@@ -54,7 +54,7 @@ export const getDonation = async (_req: Request, _res: Response) => {
 
 export const updateDonation = async (_req: Request, _res: Response) => {
 
-    const { id, donationNumber, quantity, donationPhoto, description, utilization } = _req.body;
+    const { id, quantity, donationPhoto, description, utilization } = _req.body;
 
     try {
         const donationService: DonationService = _req.app.locals.donationService;
@@ -66,7 +66,6 @@ export const updateDonation = async (_req: Request, _res: Response) => {
             });
         };
 
-        donationDB.donationNumber = donationNumber;
         donationDB.quantity = quantity;
         donationDB.donationPhoto = donationPhoto;
         donationDB.description = description;

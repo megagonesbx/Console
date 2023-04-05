@@ -17,6 +17,7 @@ export class DonationService {
 
             return id;
         } catch (error) {
+            console.log(error);
             return 0;
         }
     };

@@ -1,12 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('donation')
+@Entity('DonationsData')
 export class DonationsData {
   @PrimaryGeneratedColumn()
   id!: number;
-
-  @Column({ unique: true, nullable: false })
-  donationNumber!: number;
 
   @Column({ nullable: false })
   quantity!: number;
