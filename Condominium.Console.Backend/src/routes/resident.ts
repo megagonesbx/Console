@@ -25,6 +25,13 @@ const router = Router();
  *         content:
  *           application/json:
  *             example:
+ *               house:
+ *                  id: 1
+ *                  homeAddress: Casa 1
+ *                  ownerName: Swagger
+ *                  ownerDPI: 3639933470703
+ *                  phoneNumber: 24106130
+ *                  solvent: true
  *               statusCode: 200
  *       404:
  *         description: House not found
@@ -266,7 +273,7 @@ router.delete(
  *         content:
  *           application/json:
  *             example:
- *               data: [{"homeAddress":"Casa 1","ownerName":"admin","ownerDPI":"3639933470703","phoneNumber":"55580040","solvent":false}]
+ *               data: [{"homeAddress":"Casa 1","ownerName":"admin","ownerDPI":"3639933470703","phoneNumber":"24106130","solvent":false}]
  *               count: 10 
  *               page: 1
  *               pages: 3
