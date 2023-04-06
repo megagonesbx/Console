@@ -40,7 +40,7 @@ export const getDonation = async (_req: Request, _res: Response) => {
         }
 
         return _res.status(200).json({
-            house: donationDB,
+            donation: donationDB,
             statusCode: 200
         });
 

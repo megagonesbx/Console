@@ -34,7 +34,7 @@ router.put(
 );
 
 router.delete(
-    '/:houseId',
+    '/:donationId',
     getDonationValidationRules(),
     validateJWT,
     validateAdminRole,
@@ -43,7 +43,7 @@ router.delete(
 );
 
 router.post(
-    '/residents',
+    '/donations',
     getDonationsValidationRules(),
     validateJWT,
     validateAdminRole,
