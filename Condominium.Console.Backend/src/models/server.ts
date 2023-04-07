@@ -4,11 +4,10 @@ import Swagger from "swagger-ui-express";
 
 import { Auth, Resident, User, Donation } from '../routes';
 
-import { PORT } from '../config';
+import { PORT, SQL_MAX_SIZE_IMAGE, SQL_PARAMETER_LIMIT_IMAGE } from '../config';
 import { openApiConfig } from "../documentation";
 import { GenericDataSource } from "../database/connection";
 import { UserService, AuthService, ResidentService, DonationService } from '../services';
-
 export class Server {
     private app: Application;
     private port: string;
@@ -48,8 +47,8 @@ export class Server {
 
     private middlewares() {
         this.app.use(cors());
-        this.app.use(express.json({ limit: '50mb' }));
-        this.app.use(express.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }))
+        this.app.use(express.json({ limit: SQL_MAX_SIZE_IMAGE }));
+        this.app.use(express.urlencoded({ limit: SQL_MAX_SIZE_IMAGE, extended: true, parameterLimit: SQL_PARAMETER_LIMIT_IMAGE }))
     };
 
     private routes() {
