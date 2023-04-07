@@ -99,7 +99,7 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
             return this._snackBarService.open('La residencia se ha eliminado.');
           }
 
-          return this._snackBarService.open('Ha ocurrido en error al eliminar la residencia.');
+          return this._snackBarService.open('Ha ocurrido un error al eliminar la residencia.');
         });  
       }
 

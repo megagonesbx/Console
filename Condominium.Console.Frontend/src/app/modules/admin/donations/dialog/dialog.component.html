@@ -24,7 +24,18 @@
             </mat-error>
         </mat-form-field>
 
-        <div>
+        <div class="aspect-w-9 aspect-h-6 mt-4">
+            <div class="flex items-center justify-center border rounded-lg bg-gray-50 dark:bg-card">  
+                <img *ngIf="base64Image" [src]="base64Image" class="donation-image">
+                <!-- <mat-icon *ngIf="!base64Image" class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon> -->
+                <div *ngIf="!base64Image" class="relative">
+                    <mat-icon class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                    <div class="bg-amber-600 doc-file">JPG</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
             <input 
                 type="file" 
                 name="image" 

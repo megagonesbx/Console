@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef, AfterContentInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -15,9 +15,21 @@ import { IDonation } from 'app/interfaces';
       width: 100%;
       margin-bottom: 10px;
     }
+
+    .donation-image {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .doc-file {
+      color: white;
+      text-align: center;
+      font-weight: bold;
+      font-style: italic;
+    }
   `]
 })
-export class DonationDialogComponent implements OnInit {
+export class DonationDialogComponent implements OnInit, AfterContentInit {
 
   public base64Image: string | undefined;
   public invalidExtention: boolean = false;
@@ -25,6 +37,7 @@ export class DonationDialogComponent implements OnInit {
   public isNew: boolean = true;
   public form: FormGroup;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  public showImage: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -41,7 +54,7 @@ export class DonationDialogComponent implements OnInit {
     if (this?.data?.donation) {
       this.isNew = false;
       this.setForm(this?.data?.donation);
-    }
+    };
   };
 
   initForm() {
@@ -139,4 +152,9 @@ export class DonationDialogComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
     }
   };
+
+  ngAfterContentInit() {
+    this.showImage = true;
+    this._changeDetectorRef.markForCheck();
+  }
 };
