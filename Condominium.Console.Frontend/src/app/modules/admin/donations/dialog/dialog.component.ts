@@ -60,6 +60,13 @@ export class DonationDialogComponent implements OnInit {
     };
   };
 
+  onlyPositiveNumbers(event: any) {
+    const inputValue = event.target.value + event.key;
+    if (isNaN(inputValue) || Number(inputValue) <= 0) {
+      event.preventDefault();
+    }
+  }
+
   setForm(donation: IDonation) {
     this.form.patchValue({
       id: donation.id,
@@ -108,7 +115,7 @@ export class DonationDialogComponent implements OnInit {
 
       // Size Filter Bytes
       const max_size = 2000000;
-      const allowed_types = ["image/png", "image/jpeg"];
+      const allowed_types = ["image/png", "image/jpeg", "image/jpg"];
 
       if (event.target.files[0].size > max_size) {
         this.invalidSize = true;
@@ -122,6 +129,8 @@ export class DonationDialogComponent implements OnInit {
 
       const reader = new FileReader();
       reader.onload = (e: any) => {
+        this.invalidSize = false;
+        this.invalidExtention = false;
         this.base64Image = e.target.result;
         this.form.addControl('donationPhoto', this._formBuilder.control(this.base64Image, [Validators.required]));
         this._changeDetectorRef.markForCheck();

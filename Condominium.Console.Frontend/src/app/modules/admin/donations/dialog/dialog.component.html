@@ -11,7 +11,7 @@
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput placeholder="Cantidad" formControlName="quantity">
+            <input matInput placeholder="Cantidad" formControlName="quantity" (keypress)="onlyPositiveNumbers($event)">
             <mat-error *ngIf="form.get('quantity').invalid && form.get('quantity').touched">
               Este campo es requerido.
             </mat-error>
