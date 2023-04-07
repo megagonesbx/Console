@@ -72,8 +72,6 @@ export class DonationDialogComponent implements OnInit {
   createDonation() {
     if (this.form.invalid || this.invalidExtention || this.invalidSize) return Object.values(this.form.controls).forEach(c => c.markAsTouched());
 
-    console.log(this.form.value)
-
     this._donationService.createDonation(this.form.value).pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
 
       if (res == 200) {
@@ -125,7 +123,7 @@ export class DonationDialogComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.base64Image = e.target.result;
-        this.form.addControl('imagePhoto', this._formBuilder.control(this.base64Image, [Validators.required]));
+        this.form.addControl('donationPhoto', this._formBuilder.control(this.base64Image, [Validators.required]));
         this._changeDetectorRef.markForCheck();
       };
 
