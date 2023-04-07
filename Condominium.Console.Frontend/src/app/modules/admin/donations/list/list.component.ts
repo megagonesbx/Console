@@ -72,6 +72,38 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  deleteDonation(id: number) {
+
+    const confirmation = this._fuseConfirmationService.open({
+      title: 'Eliminar donativo',
+      message: '¿Está seguro de eliminar el donativo?',
+      actions: {
+        confirm: {
+          label: 'Eliminar'
+        },
+        cancel: {
+          label: 'Cancelar'
+        }
+      }
+    });
+
+    confirmation.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
+
+      if (res === 'confirmed') {
+        this._donationService.deleteDonation(id).pipe(takeUntil(this._unsubscribeAll)).subscribe((code) => {
+          
+          if (code == 200) {
+            this.getDonations();
+            return this._snackBarService.open('El donativo se ha eliminado.');
+          }
+
+          return this._snackBarService.open('Ha ocurrido un error al eliminar el donativo.');
+        });  
+      }
+
+    });
+  }
+  
   onListenDialog() {
     this._donationService.onFoo.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.getDonations()
