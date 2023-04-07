@@ -29,11 +29,7 @@
                 type="file" 
                 name="image" 
                 (change)="onFileSelected($event)" 
-                formControlName="donationPhoto" 
                 accept=".jpeg,.jpg,.png"/>
-            <mat-error *ngIf="form.get('quantity').invalid && form.get('quantity').touched">
-                Este campo es requerido.
-            </mat-error>
             <mat-error *ngIf="invalidExtention">La imágen debe ser en extensión .jpg, .png o .jpeg</mat-error>
             <mat-error *ngIf="invalidSize">La imágen debe pesar menos o igual a 7mb</mat-error>
         </div>

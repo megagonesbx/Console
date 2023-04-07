@@ -49,7 +49,6 @@ export class DonationDialogComponent implements OnInit {
     this.form = this._formBuilder.group({
       id: [],
       quantity: ['', [Validators.required]],
-      donationPhoto: [, [Validators.required]],
       description: ['', [Validators.required]],
       utilization: ['', [Validators.required]]
     });
@@ -65,7 +64,6 @@ export class DonationDialogComponent implements OnInit {
     this.form.patchValue({
       id: donation.id,
       quantity: donation.quantity,
-      donationPhoto: donation.donationPhoto,
       description: donation.description,
       utilization: donation.utilization,
     });
@@ -73,6 +71,8 @@ export class DonationDialogComponent implements OnInit {
 
   createDonation() {
     if (this.form.invalid || this.invalidExtention || this.invalidSize) return Object.values(this.form.controls).forEach(c => c.markAsTouched());
+
+    console.log(this.form.value)
 
     this._donationService.createDonation(this.form.value).pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
 
@@ -106,33 +106,30 @@ export class DonationDialogComponent implements OnInit {
   };
 
   onFileSelected(event: any): void {
-    if (event.target.files && event.target.files.length) {
-      const file = event.target.files[0];
+    if (event.target.files && event.target.files[0]) {
 
-      // VALIDATE EXTENTION
-      if (file.type !== 'image/png' && file.type !== 'image/jpeg' && file.type !== 'image/jpg') {
-        this.invalidExtention = true;
-        return;
-      };
-  
-      // VALIDATE SIZE
-      if (file.size > 7 * 1024 * 1024) {
+      // Size Filter Bytes
+      const max_size = 2000000;
+      const allowed_types = ["image/png", "image/jpeg"];
+
+      if (event.target.files[0].size > max_size) {
         this.invalidSize = true;
         return;
       }
-  
+
+      if (!allowed_types.includes(event.target.files[0].type)) {
+        this.invalidExtention = true;
+        return;
+      }
+
       const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        // this.base64Image = reader.result as string;
-        this.form.patchValue({
-          donationPhoto: reader.result as string
-        });
-
+      reader.onload = (e: any) => {
+        this.base64Image = e.target.result;
+        this.form.addControl('imagePhoto', this._formBuilder.control(this.base64Image, [Validators.required]));
         this._changeDetectorRef.markForCheck();
-
-        console.log(this.form.value);
       };
+
+      reader.readAsDataURL(event.target.files[0]);
     }
   };
 };

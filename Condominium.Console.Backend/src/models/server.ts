@@ -1,6 +1,7 @@
 import express, { Application} from "express";
 import cors from "cors";
 import Swagger from "swagger-ui-express";
+import bodyParser from "body-parser";
 
 import { Auth, Resident, User, Donation } from '../routes';
 
@@ -49,6 +50,8 @@ export class Server {
     private middlewares() {
         this.app.use(cors());
         this.app.use(express.json());
+        this.app.use(bodyParser.json({ limit: '50mb' }));
+        this.app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000  }));
     };
 
     private routes() {
