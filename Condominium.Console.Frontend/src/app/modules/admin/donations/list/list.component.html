@@ -21,7 +21,13 @@
                     <!-- DONATION IMAGE -->
                     <div class="flex items-center">
                         <div class="relative flex flex-0 items-center justify-center w-12 h-12 mr-6 rounded overflow-hidden border">
-                            <div class="flex items-center justify-center w-full h-full text-xs font-semibold leading-none text-center uppercase">
+                            
+                            <img
+                                class="donation-photo-list"
+                                *ngIf="donation?.donationPhoto"
+                                [src]="donation?.donationPhoto">
+
+                            <div *ngIf="!donation?.donationPhoto" class="flex items-center justify-center w-full h-full text-xs font-semibold leading-none text-center uppercase">
                                 NO THUMB
                             </div>
                         </div>

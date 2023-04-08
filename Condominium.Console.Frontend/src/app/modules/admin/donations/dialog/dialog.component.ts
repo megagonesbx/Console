@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ChangeDetectorRef, AfterContentInit } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewChecked } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -27,9 +27,10 @@ import { IDonation } from 'app/interfaces';
       font-weight: bold;
       font-style: italic;
     }
-  `]
+  `],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DonationDialogComponent implements OnInit, AfterContentInit {
+export class DonationDialogComponent implements OnInit, AfterViewChecked {
 
   public base64Image: string | undefined;
   public invalidExtention: boolean = false;
@@ -38,6 +39,7 @@ export class DonationDialogComponent implements OnInit, AfterContentInit {
   public form: FormGroup;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   public showImage: boolean = false;
+  public noImageChanged: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -46,7 +48,9 @@ export class DonationDialogComponent implements OnInit, AfterContentInit {
     private _donationService: DonationsService,
     private _snackBarService: SnackBarService,
     private _changeDetectorRef: ChangeDetectorRef
-  ) { }
+  ) { 
+    this.base64Image = undefined;
+  }
 
   ngOnInit(): void {
     this.initForm();
@@ -81,12 +85,18 @@ export class DonationDialogComponent implements OnInit, AfterContentInit {
   }
 
   setForm(donation: IDonation) {
+    this.noImageChanged = true;
+
     this.form.patchValue({
       id: donation.id,
       quantity: donation.quantity,
       description: donation.description,
       utilization: donation.utilization,
     });
+
+    if (donation?.donationPhoto) {
+      this.base64Image = donation?.donationPhoto;
+    }
   };
 
   createDonation() {
@@ -145,7 +155,8 @@ export class DonationDialogComponent implements OnInit, AfterContentInit {
         this.invalidSize = false;
         this.invalidExtention = false;
         this.base64Image = e.target.result;
-        this.form.addControl('donationPhoto', this._formBuilder.control(this.base64Image, [Validators.required]));
+        this.form.addControl('donationPhoto', this._formBuilder.control(this.base64Image));
+        this.noImageChanged = false;
         this._changeDetectorRef.markForCheck();
       };
 
@@ -153,8 +164,7 @@ export class DonationDialogComponent implements OnInit, AfterContentInit {
     }
   };
 
-  ngAfterContentInit() {
-    this.showImage = true;
-    this._changeDetectorRef.markForCheck();
-  }
+  ngAfterViewChecked(): void {
+    this._changeDetectorRef.detectChanges();
+  };
 };
