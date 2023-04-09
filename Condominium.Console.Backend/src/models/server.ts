@@ -1,4 +1,4 @@
-import express, { Application} from "express";
+import express, { Application } from "express";
 import cors from "cors";
 import Swagger from "swagger-ui-express";
 
@@ -7,18 +7,11 @@ import { Auth, Resident, User, Donation } from '../routes';
 import { PORT, SQL_MAX_SIZE_IMAGE, SQL_PARAMETER_LIMIT_IMAGE } from '../config';
 import { openApiConfig } from "../documentation";
 import { GenericDataSource } from "../database/connection";
-import { UserService, AuthService, ResidentService, DonationService } from '../services';
+import { UserService, AuthService, ResidentService, DonationService, SpreadsheetService } from '../services';
+import { Path } from "../typings";
 export class Server {
     private app: Application;
-    private port: string;
-
-    private paths = {
-        auth: "/api/auth",
-        docs: "/api/docs",
-        user: "/api/user",
-        resident: "/api/resident",
-        donation: "/api/donation"
-    };
+    private port: string;    
 
     constructor() {
         this.app = express();
@@ -38,10 +31,11 @@ export class Server {
             this.app.locals.authService = await new AuthService(generic.getClient());
             this.app.locals.residentService = await new ResidentService(generic.getClient());
             this.app.locals.donationService = await new DonationService(generic.getClient());
+            this.app.locals.spreadsheedService = await new SpreadsheetService(generic.getClient());
 
-            console.log('DB CONNECTED')
+            console.log('DB CONNECTED');
         } catch (error) {
-            console.log('[ERROR] [DBCONNECTION] ',error)
+            console.log('[ERROR] [DBCONNECTION] ', error);
         }
     };
 
@@ -52,11 +46,11 @@ export class Server {
     };
 
     private routes() {
-        this.app.use(this.paths.auth, Auth.default);
-        this.app.use(this.paths.user, User.default);
-        this.app.use(this.paths.docs, Swagger.serve, Swagger.setup(openApiConfig));
-        this.app.use(this.paths.resident, Resident.default);
-        this.app.use(this.paths.donation, Donation.default)
+        this.app.use(Path.AUTH, Auth.default);
+        this.app.use(Path.USER, User.default);
+        this.app.use(Path.DOCS, Swagger.serve, Swagger.setup(openApiConfig));
+        this.app.use(Path.RESIDENT, Resident.default);
+        this.app.use(Path.DONATION, Donation.default)
     };
 
     public listen() {

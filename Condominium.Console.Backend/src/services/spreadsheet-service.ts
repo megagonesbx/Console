@@ -1,17 +1,17 @@
 import { DataSource } from 'typeorm';
 
-import { DonationsData, BaseRepository } from '../database';
+import { SpreadsheetData, BaseRepository } from '../database';
 
-export class DonationService {
-    private readonly donationRepository;
+export class SpreadsheetService {
+    private readonly spreadsheetRepository;
 
     constructor(datasource: DataSource) {
-        this.donationRepository = new BaseRepository.default(datasource, DonationsData);
+        this.spreadsheetRepository = new BaseRepository.default(datasource, SpreadsheetData);
     };
 
-    async insertRecord(donation: Partial<DonationsData>): Promise<number> {
+    async insertRecord(spreadsheet: Partial<SpreadsheetData>): Promise<number> {
         try {
-            const { identifiers } = await this.donationRepository.insert(donation);
+            const { identifiers } = await this.spreadsheetRepository.insert(spreadsheet);
             const { id } = identifiers[0]
             if (!id || +id <= 0) return 0
 
@@ -21,11 +21,11 @@ export class DonationService {
         }
     };
 
-    async updateRecord(_id: number, _donation: Partial<DonationsData>): Promise<boolean> {
+    async updateRecord(_id: number, _spreadsheet: Partial<SpreadsheetData>): Promise<boolean> {
         try {
-            const { id, ...donation } = _donation;
+            const { Id, ...spreadsheet } = _spreadsheet;
 
-            await this.donationRepository.update({ id: _id }, donation);
+            await this.spreadsheetRepository.update({ Id: _id }, spreadsheet);
             return true;
         } catch (error) {
             return false;
@@ -34,10 +34,8 @@ export class DonationService {
 
     async getRecord(id: number) {
         try {
-            const donation: DonationsData | null = await this.donationRepository.findOne({ id });
-            if (!donation) return null;
-
-            return donation;
+            const spreadsheet: SpreadsheetData | null = await this.spreadsheetRepository.findOne({ Id: id });
+            return (!spreadsheet) ? null : spreadsheet;
         } catch (error) {
             return null;
         }
@@ -45,10 +43,8 @@ export class DonationService {
 
     async deleteRecord(id: number): Promise<boolean> {
         try {
-            const deleted = await this.donationRepository.delete({ id });
-            if (!deleted || deleted.affected == 0) return false;
-
-            return true;
+            const deleted = await this.spreadsheetRepository.delete({ Id: id });
+            return (!deleted || deleted.affected == 0) ? false : true;
         } catch (error) {
             return false;
         }
@@ -59,10 +55,10 @@ export class DonationService {
             const skip = (page - 1) * size;
             const take = size;
 
-            const { data, count } = await this.donationRepository.findWithPagination(
+            const { data, count } = await this.spreadsheetRepository.findWithPagination(
                 {},
                 {
-                    id: 'DESC'
+                    Id: 'DESC'
                 },
                 take,
                 skip

@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('form')
-export class FormData {
+@Entity('FormData')
+export class SpreadsheetData {
   @PrimaryGeneratedColumn()
   Id!: number;
 

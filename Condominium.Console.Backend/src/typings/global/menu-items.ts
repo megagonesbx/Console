@@ -9,4 +9,4 @@ export interface MenuItem {
         type: 'basic';
         link: string;
     }>;
-}
+};
