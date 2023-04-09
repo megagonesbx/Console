@@ -12,13 +12,15 @@ export class SpreadsheetService {
     async insertRecord(spreadsheet: Partial<SpreadsheetData>): Promise<number> {
         try {
             const { identifiers } = await this.spreadsheetRepository.insert(spreadsheet);
-            const { id } = identifiers[0]
-            if (!id || +id <= 0) return 0
 
-            return id;
-        } catch (error) {
+            const { Id } = identifiers[0]
+            if (!Id || +Id <= 0) return 0
+
+            return Id;
+        } catch (error: any) {
+            if (error.code === "ER_DUP_ENTRY" && error.sqlMessage.includes("idx_form_data_dpi_paymentmonth")) return 2;
             return 0;
-        }
+        };
     };
 
     async updateRecord(_id: number, _spreadsheet: Partial<SpreadsheetData>): Promise<boolean> {

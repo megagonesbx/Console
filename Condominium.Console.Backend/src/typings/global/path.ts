@@ -3,5 +3,6 @@ export enum Path {
     DOCS = "/api/docs",
     USER = "/api/user",
     RESIDENT = "/api/resident",
-    DONATION = "/api/donation"
-}
+    DONATION = "/api/donation",
+    SPREADSHEET = "/api/spreadsheet"
+};
