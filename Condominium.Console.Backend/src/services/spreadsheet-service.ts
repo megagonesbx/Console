@@ -14,11 +14,10 @@ export class SpreadsheetService {
             const { identifiers } = await this.spreadsheetRepository.insert(spreadsheet);
 
             const { Id } = identifiers[0]
-            if (!Id || +Id <= 0) return 0
+            if (!Id || +Id <= 0) return 0;
 
             return Id;
         } catch (error: any) {
-            if (error.code === "ER_DUP_ENTRY" && error.sqlMessage.includes("idx_form_data_dpi_paymentmonth")) return 2;
             return 0;
         };
     };
@@ -52,13 +51,18 @@ export class SpreadsheetService {
         }
     };
 
-    async getRecords(page: number, size: number) {
+    async getRecords(page: number, size: number, dpi?: number) {
         try {
             const skip = (page - 1) * size;
             const take = size;
+            let where = {};
+
+            if (dpi && dpi > 0) {
+                where = { DPI: dpi }
+            }
 
             const { data, count } = await this.spreadsheetRepository.findWithPagination(
-                {},
+                where,
                 {
                     Id: 'DESC'
                 },
