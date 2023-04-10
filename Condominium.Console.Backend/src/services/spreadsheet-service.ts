@@ -29,6 +29,7 @@ export class SpreadsheetService {
             await this.spreadsheetRepository.update({ Id: _id }, spreadsheet);
             return true;
         } catch (error) {
+            console.log(error)
             return false;
         }
     };

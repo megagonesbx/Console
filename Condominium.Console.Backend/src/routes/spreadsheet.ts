@@ -1,12 +1,17 @@
 import { Router } from "express";
 
-import { createSpreadsheet } from "../controllers";
+import { createSpreadsheet, updateSpreadsheet } from "../controllers";
 
 const router = Router();
 
 router.post(
     '/create',
     createSpreadsheet
+);
+
+router.put(
+    '/update',
+    updateSpreadsheet
 );
 
 export default router;
