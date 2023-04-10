@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { SpreadsheetService } from "../services";
 import { validateSpreadsheet } from "../helpers";
+import { SpreadsheetData } from "../database";
 
 export const createSpreadsheet = async (_req: Request, _res: Response) => {
     try {
@@ -80,4 +81,79 @@ export const updateSpreadsheet = async (_req: Request, _res: Response) => {
             statusCode: 400
         });
     }
+};
+
+export const getSpreadsheet = async (_req: Request, _res: Response) => {
+    try {
+        const { spreadsheetId } = _req.params;
+        const spreadsheetService: SpreadsheetService = _req.app.locals.spreadsheetService;
+
+        const spreadSheetDB: SpreadsheetData | null = await spreadsheetService.getRecord(parseInt(spreadsheetId));
+
+        if (!spreadSheetDB) {
+            return _res.status(404).json({
+                statusCode: 404
+            });
+        };
+
+        return _res.status(200).json({
+            spreadSheet: spreadSheetDB,
+            statusCode: 200
+        });
+        
+    } catch (error) {
+        return _res.status(400).json({
+            statusCode: 400
+        });
+    };
+};
+
+export const deleteSpreadsheet = async (_req: Request, _res: Response) => {
+    try {
+        const { spreadsheetId } = _req.params;
+        const spreadsheetService: SpreadsheetService = _req.app.locals.spreadsheetService;
+
+        const isDeleted = await spreadsheetService.deleteRecord(parseInt(spreadsheetId));
+
+        if (!isDeleted) {
+            return _res.status(404).json({
+                statusCode: 404
+            });
+        };
+
+        return _res.status(200).json({
+            statusCode: 200
+        });
+        
+    } catch (error) {
+        return _res.status(400).json({
+            statusCode: 400
+        });
+    };
+};
+
+export const getSpreadsheets = async (_req: Request, _res: Response) => {
+
+    try {
+        const { dpi, pageSize = 10, page = 1 } = _req.body;
+        const spreadsheetService: SpreadsheetService = _req.app.locals.spreadsheetService;
+
+        const { data, totalItems, currentPage, totalPages } = await spreadsheetService.getRecords(page, pageSize, dpi);
+
+        return _res.status(200).json({
+            data,
+            count: totalItems,
+            page: currentPage,
+            pages: totalPages,
+            statusCode: 200
+        }); 
+        
+    } catch (error) {
+        return _res.status(400).json({
+            data: [],
+            count: 0,
+            statusCode: 400
+        });
+    }
+
 };
