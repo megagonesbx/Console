@@ -97,7 +97,7 @@ export const getSpreadsheet = async (_req: Request, _res: Response) => {
         };
 
         return _res.status(200).json({
-            spreadSheet: spreadSheetDB,
+            spreadsheet: spreadSheetDB,
             statusCode: 200
         });
         
