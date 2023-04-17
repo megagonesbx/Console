@@ -1,1 +1,76 @@
-<p>dialog works!</p>
+<ng-container *ngIf="isNew">
+    <h2 mat-dialog-title>Datos de planilla</h2>
+
+    <form name="form" [formGroup]="form" (ngSubmit)="createSpreadsheet()">
+        <mat-form-field>
+          <input matInput placeholder="Número de correlativo" formControlName="name" (keypress)="validateNumberInput($event)">
+          <mat-error *ngIf="form.get('name').invalid && form.get('name').touched">
+            Este campo es requerido.
+          </mat-error>
+        </mat-form-field>
+    
+        <mat-form-field>
+          <mat-select placeholder="Mes de pago correspondiente" formControlName="paymentMonth">
+            <mat-option *ngFor="let month of months" [value]="month.value">{{ month.description }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('paymentMonth').invalid && form.get('paymentMonth').touched">
+            Este campo es requerido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Número de DPI" formControlName="dpi" (keypress)="validateNumberInput($event)">
+            <mat-error *ngIf="form.get('dpi').invalid && form.get('dpi').touched">
+                <div *ngIf="form.get('dpi').hasError('required')">El DPI es requerido.</div>
+                <div *ngIf="form.get('dpi').hasError('invalidDpi')">El DPI es inválido.</div>
+            </mat-error>
+        </mat-form-field>
+    
+        <div mat-dialog-actions>
+          <button mat-button type="button" (click)="onClose()">Cancelar</button>
+          <button mat-flat-button [color]="'primary'" type="submit" [disabled]="form.invalid || form.pristine">Crear</button>
+        </div>
+      </form>
+</ng-container>
+
+<ng-container *ngIf="isNew">
+    <h2 mat-dialog-title>Actualizar datos de planilla</h2>
+
+    <form name="form" [formGroup]="form" (ngSubmit)="updateSpreadsheet()">
+        <mat-form-field>
+          <input matInput placeholder="Número de correlativo" formControlName="name" (keypress)="validateNumberInput($event)">
+          <mat-error *ngIf="form.get('name').invalid && form.get('name').touched">
+            Este campo es requerido.
+          </mat-error>
+        </mat-form-field>
+    
+        <mat-form-field>
+          <mat-select placeholder="Mes de pago correspondiente" formControlName="paymentMonth">
+            <mat-option *ngFor="let month of months" [value]="month.value">{{ month.description }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('paymentMonth').invalid && form.get('paymentMonth').touched">
+            Este campo es requerido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Número de DPI" formControlName="dpi" (keypress)="validateNumberInput($event)">
+            <mat-error *ngIf="form.get('dpi').invalid && form.get('dpi').touched">
+                <div *ngIf="form.get('dpi').hasError('required')">El DPI es requerido.</div>
+                <div *ngIf="form.get('dpi').hasError('invalidDpi')">El DPI es inválido.</div>
+            </mat-error>
+        </mat-form-field>
+    
+        <mat-form-field>
+            <input matInput readonly placeholder="Número de correlativo" formControlName="createdAt" (keypress)="validateNumberInput($event)">
+            <mat-error *ngIf="form.get('createdAt').invalid && form.get('createdAt').touched">
+              Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <div mat-dialog-actions>
+          <button mat-button type="button" (click)="onClose()">Cancelar</button>
+          <button mat-flat-button [color]="'primary'" type="submit" [disabled]="form.invalid || form.pristine">Actualizar</button>
+        </div>
+      </form>
+</ng-container>

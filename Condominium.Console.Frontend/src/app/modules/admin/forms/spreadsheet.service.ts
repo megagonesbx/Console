@@ -41,6 +41,27 @@ export class SpreadsheetService {
     );
   };
 
+  createSpreadsheet(spreadsheet: ISpreadsheet) {
+    return this.http.post(`${base_url}/${Path.SPREADSHEET}/create`, spreadsheet, this.getHeaders).pipe(
+      map((res: { id: number, statusCode: number }) => (res.statusCode) ? res.statusCode : 500),
+      catchError(err => of(err.status))
+    )
+  };
+
+  updateSpreadsheet(spreadsheet: ISpreadsheet) {
+    return this.http.put(`${base_url}/${Path.SPREADSHEET}/update`, spreadsheet, this.getHeaders).pipe(
+      map((res: { id: number, statusCode: number }) => (res.statusCode) ? res.statusCode : 500),
+      catchError(err => of(err.status))
+    )
+  };
+
+  deleteSpreadsheet(id: number) {
+    return this.http.delete(`${base_url}/${Path.SPREADSHEET}/${id}`, this.getHeaders).pipe(
+      map((res: { id: number, statusCode: number }) => (res.statusCode) ? res.statusCode : 500),
+      catchError(err => of(err.status))
+    )
+  };
+
   getMonths(): IMonth[] {
     return [
       {

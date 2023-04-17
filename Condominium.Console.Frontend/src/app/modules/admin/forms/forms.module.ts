@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsRoutingModule } from './forms-routing.module';
 import { FormsComponent } from './forms.component';
 import { ListComponent } from './list/list.component';
-import { DialogComponent } from './dialog/dialog.component';
+import { SpreadsheetDialogComponent } from './dialog/dialog.component';
 
 import { SharedModule } from 'app/shared/shared.module';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,7 +27,7 @@ import { SnackBarService } from 'app/utils';
   declarations: [
     FormsComponent,
     ListComponent,
-    DialogComponent
+    SpreadsheetDialogComponent
   ],
   imports: [
     SharedModule,
