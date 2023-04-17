@@ -61,12 +61,12 @@
             </mat-error>
         </mat-form-field>
     
-        <!-- <mat-form-field>
-            <input matInput readonly placeholder="Número de correlativo" formControlName="createdAt" (keypress)="validateNumberInput($event)">
+        <mat-form-field>
+            <input matInput placeholder="Número de correlativo" formControlName="createdAt" readonly>
             <mat-error *ngIf="form.get('createdAt').invalid && form.get('createdAt').touched">
               Este campo es requerido.
             </mat-error>
-        </mat-form-field> -->
+        </mat-form-field>
 
         <div mat-dialog-actions>
           <button mat-button type="button" (click)="onClose()">Cancelar</button>

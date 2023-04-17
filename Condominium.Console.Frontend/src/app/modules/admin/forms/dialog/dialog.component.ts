@@ -37,7 +37,6 @@ export class SpreadsheetDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initForm();
 
-    console.log(this.data)
     if (this?.data?.spreadsheet) {
       this.isNew = false;
       this.setForm(this?.data?.spreadsheet);
