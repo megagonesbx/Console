@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SpreadsheetService } from './spreadsheet.service';
+import { ReplaySubject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-forms',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormsComponent implements OnInit {
 
-  constructor() { }
+  private _unsubscribeAll: ReplaySubject<any> = new ReplaySubject();
+
+  constructor(private _spreadsheetService: SpreadsheetService) { }
 
   ngOnInit(): void {
   }
-
-}
+};
