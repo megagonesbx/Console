@@ -41,14 +41,14 @@
                         <button
                             class="min-w-10 min-h-7 h-7 px-2 leading-6"
                             mat-stroked-button
-                            >
+                            (click)="openDialog(spreadsheet)">
                             <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
                         </button>
     
                         <button
                             class="min-w-10 min-h-7 h-7 px-2 leading-6 ml-2"
                             mat-stroked-button
-                            >
+                            (click)="deleteSpreadsheet(spreadsheet.Id)">
                             <mat-icon svgIcon="heroicons_outline:user-remove"></mat-icon>
                         </button>
     

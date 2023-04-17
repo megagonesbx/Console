@@ -33,7 +33,7 @@
       </form>
 </ng-container>
 
-<ng-container *ngIf="isNew">
+<ng-container *ngIf="!isNew">
     <h2 mat-dialog-title>Actualizar datos de planilla</h2>
 
     <form name="form" [formGroup]="form" (ngSubmit)="updateSpreadsheet()">
