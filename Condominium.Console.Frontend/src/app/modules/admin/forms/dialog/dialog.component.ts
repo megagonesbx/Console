@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit, ChangeDetectorRef, Inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IMonth, ISpreadsheet } from 'app/interfaces';
 import { Subject, takeUntil } from 'rxjs';
-import { UserService } from '../../users/user.service';
-import { SnackBarService, dpiValidator } from 'app/utils';
+import { SnackBarService, dpiValidator, transformDate } from 'app/utils';
 import { SpreadsheetService } from '../spreadsheet.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -30,9 +29,7 @@ export class SpreadsheetDialogComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<SpreadsheetDialogComponent>,
     private _spreadsheetService: SpreadsheetService,
-    private _snackBarService: SnackBarService,
-    private _userService: UserService,
-    private _changeDetectorRef: ChangeDetectorRef
+    private _snackBarService: SnackBarService
   ) { 
     this.months = this._spreadsheetService.getMonths();
   }
@@ -40,6 +37,7 @@ export class SpreadsheetDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initForm();
 
+    console.log(this.data)
     if (this?.data?.spreadsheet) {
       this.isNew = false;
       this.setForm(this?.data?.spreadsheet);
@@ -52,25 +50,25 @@ export class SpreadsheetDialogComponent implements OnInit, OnDestroy {
       name: ['', Validators.required],
       dpi: ['', [Validators.required, dpiValidator]],
       paymentMonth: [1, Validators.required],
-      Id: [],
-      CreatedAt: []
+      id: [],
+      createdAt: []
     });
   };
 
-  setForm(spreadsheet: ISpreadsheet) {
+  setForm(spreadsheet: any) {
     this.form.patchValue({
-      name: spreadsheet.name,
-      dpi: spreadsheet.dpi,
-      paymentMonth: spreadsheet.paymentMonth,
-      Id: spreadsheet.id,
-      CreatedAt: spreadsheet.createdAt
+      name: spreadsheet.Name,
+      dpi: spreadsheet.DPI,
+      paymentMonth: spreadsheet.PaymentMonth,
+      id: spreadsheet.Id,
+      createdAt: this.parseDate(spreadsheet.CreatedAt)
     });
   };
 
   validateNumberInput(event: KeyboardEvent): void {
     const key = event.key;
 
-    if (isNaN(Number(key)) && key !== '.' && key !== ',' && key !== '-') {
+    if (isNaN(Number(key)) && key !== '.' && key !== ',' && key !== '-' && key !== ' ') {
       event.preventDefault();
     }
 
@@ -97,8 +95,34 @@ export class SpreadsheetDialogComponent implements OnInit, OnDestroy {
         return this._snackBarService.open('El pago se ha registrado exitósamente.');
       }
 
+      if (res === 403) {
+        return this._snackBarService.open('Ya existe un pago registrado con ese mes para ese DPI.');
+      }
+
       this.onClose();
       return this._snackBarService.open('Ha ocurrido un error al registrar el pago.');
     })
+  }
+
+  updateSpreadsheet() {
+    if (this.form.invalid) return Object.values(this.form.controls).forEach(c => c.markAsTouched());
+
+    this._spreadsheetService.updateSpreadsheet(this.form.value).pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
+      if (res == 200) {
+        this.onClose();
+        return this._snackBarService.open('El pago se ha registrado exitósamente.');
+      }
+
+      if (res === 403) {
+        return this._snackBarService.open('Ya existe un pago registrado con ese mes.');
+      }
+
+      this.onClose();
+      return this._snackBarService.open('Ha ocurrido un error al registrar el pago.');
+    })
+  }
+
+  parseDate(date: string): string {
+    return transformDate(date);
   }
 }

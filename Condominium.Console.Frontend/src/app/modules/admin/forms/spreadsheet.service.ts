@@ -52,7 +52,7 @@ export class SpreadsheetService {
     return this.http.put(`${base_url}/${Path.SPREADSHEET}/update`, spreadsheet, this.getHeaders).pipe(
       map((res: { id: number, statusCode: number }) => (res.statusCode) ? res.statusCode : 500),
       catchError(err => of(err.status))
-    )
+    );
   };
 
   deleteSpreadsheet(id: number) {
