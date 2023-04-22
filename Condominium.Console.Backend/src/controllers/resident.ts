@@ -144,11 +144,10 @@ export const getResidents = async (_req: Request, _res: Response) => {
 export const setSolvent = async (_req: Request, _res: Response) => {
     try {
 
-        const { residentId } = _req.body;
+        const { houseId } = _req.params;
 
         const residentService: ResidentService = _req.app.locals.residentService;
-
-        const solvent = await residentService.setSolventResident(residentId);
+        const solvent = await residentService.setSolventResident(parseInt(houseId));
 
         if (!solvent) {
             return _res.status(400).json({

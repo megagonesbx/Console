@@ -301,13 +301,21 @@ router.post(
 );
 
 router.patch(
-    '/solvent',
-    setSolvent
+    '/reset',
+    validateJWT,
+    validateAdminRole,
+    validateFields,
+    restartSolvent
 );
 
 router.patch(
-    '/reset',
-    restartSolvent
-)
+    '/solvent/:houseId',
+    getHouseValidationRules(),
+    validateJWT,
+    validateAdminRole,
+    validateFields,
+    setSolvent
+);
+
 
 export default router;
