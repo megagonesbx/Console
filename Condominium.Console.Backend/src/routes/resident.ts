@@ -300,6 +300,37 @@ router.post(
     getResidents
 );
 
+/**
+ * @swagger
+ * /api/resident/reset:
+ *   patch:
+ *     summary: Reset all residents to solvent in false.
+ *     tags: [Resident]
+ *     parameters:
+ *     - name: id
+ *       in: path
+ *       description: House ID.
+ *       required: true
+ *       schema:
+ *        type: string
+ *     responses:
+ *       200:
+ *         description:  
+ *         content:
+ *           application/json:
+ *             example:
+ *               statusCode: 200
+ *       422:
+ *         description: Fields Error
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                errors:
+ *                  type: object
+ *                  example: {"errors":[{"field":"houseId","message":{"location":"Query param","warnings":"The ID doesn't exist in the queryparam, is not a int or is empty."}}]}
+ */
 router.patch(
     '/reset',
     validateJWT,
@@ -308,6 +339,37 @@ router.patch(
     restartSolvent
 );
 
+/**
+ * @swagger
+ * /api/resident/solvent/{id}:
+ *   patch:
+ *     summary: Solvet house by Id
+ *     tags: [Resident]
+ *     parameters:
+ *     - name: id
+ *       in: path
+ *       description: House ID.
+ *       required: true
+ *       schema:
+ *        type: string
+ *     responses:
+ *       200:
+ *         description:  
+ *         content:
+ *           application/json:
+ *             example:
+ *               statusCode: 200
+ *       422:
+ *         description: Fields Error
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                errors:
+ *                  type: object
+ *                  example: {"errors":[{"field":"houseId","message":{"location":"Query param","warnings":"The ID doesn't exist in the queryparam, is not a int or is empty."}}]}
+ */
 router.patch(
     '/solvent/:houseId',
     getHouseValidationRules(),
