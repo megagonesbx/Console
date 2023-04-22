@@ -129,8 +129,8 @@ export const getResidents = async (_req: Request, _res: Response) => {
             page: currentPage,
             pages: totalPages,
             statusCode: 200
-        }); 
-        
+        });
+
     } catch (error) {
         return _res.status(400).json({
             data: [],
@@ -139,4 +139,52 @@ export const getResidents = async (_req: Request, _res: Response) => {
         });
     }
 
+};
+
+export const setSolvent = async (_req: Request, _res: Response) => {
+    try {
+
+        const { residentId } = _req.body;
+
+        const residentService: ResidentService = _req.app.locals.residentService;
+
+        const solvent = await residentService.setSolventResident(residentId);
+
+        if (!solvent) {
+            return _res.status(400).json({
+                statusCode: 400
+            });
+        }
+
+        return _res.status(200).json({
+            statusCode: 200
+        });
+
+    } catch (error) {
+        return _res.status(500).json({
+            statusCode: 500
+        });
+    };
+};
+
+export const restartSolvent = async (_req: Request, _res: Response) => {
+    try {
+
+        const residentService: ResidentService = _req.app.locals.residentService;
+        const wasUpdated = await residentService.resetSolvent();
+        
+        if (!wasUpdated) {
+            return _res.status(400).json({
+                statusCode: 400
+            });
+        }
+
+        return _res.status(200).json({
+            statusCode: 200
+        });
+    } catch (error) {
+        return _res.status(500).json({
+            statusCode: 500
+        });
+    }
 };

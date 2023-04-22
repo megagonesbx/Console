@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { getResident, getResidents, createResident, updateResident, deleteResident } from "../controllers/resident";
+import { getResident, getResidents, createResident, updateResident, deleteResident, setSolvent, restartSolvent } from "../controllers/resident";
 import { validateAdminRole, validateFields, validateJWT } from '../middlewares';
 import { createHouseValidationRules, getHouseValidationRules, getHousesValidationRules, updateHouseValidationRules } from "../validators";
 
@@ -299,5 +299,15 @@ router.post(
     validateFields,
     getResidents
 );
+
+router.patch(
+    '/solvent',
+    setSolvent
+);
+
+router.patch(
+    '/reset',
+    restartSolvent
+)
 
 export default router;

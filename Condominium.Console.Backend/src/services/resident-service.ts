@@ -88,4 +88,21 @@ export class ResidentService {
         }
     };
 
+    async setSolventResident(id: number): Promise<boolean> {
+        try {
+            await this.residentRepository.update({ id }, { solvent: true });
+            return true;
+        } catch (error) {
+            return false;
+        };
+    };
+
+    async resetSolvent(): Promise<boolean> {
+        try {
+            await this.residentRepository.update({}, { solvent: false });
+            return true;
+        } catch (error) {
+            return false;
+        };
+    };
 };
