@@ -1,0 +1,23 @@
+.inventory-grid-solvent {
+    grid-template-columns: 1fr 0.5fr 1fr;
+
+    @screen sm {
+        grid-template-columns: 1fr 1fr 0.5fr 1fr;
+    }
+
+    @screen md {
+        grid-template-columns: 1fr 1fr 0.5fr 1fr;
+    }
+
+    @screen lg {
+        grid-template-columns: 2fr 1fr 0.5fr 1fr;
+    }
+}
+
+.solvent {
+    color: green;
+}
+
+.pending {
+    color: red;
+}
