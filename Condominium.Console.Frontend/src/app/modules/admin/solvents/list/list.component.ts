@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
 import { ResidentsService } from '../../residents/residents.service';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, map, switchMap, takeUntil } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { IResident } from 'app/interfaces';
 import { fuseAnimations } from '@fuse/animations';
+import { merge } from 'lodash';
 
 @Component({
   selector: 'solvent-list',
@@ -14,7 +15,7 @@ import { fuseAnimations } from '@fuse/animations';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: fuseAnimations
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(MatPaginator) public _paginator: MatPaginator;
   @ViewChild(MatSort) public _sort: MatSort;
@@ -53,4 +54,31 @@ export class ListComponent implements OnInit {
       this._changeDetectorRef.markForCheck();
     });
   };
+
+  ngAfterViewInit(): void {
+    if (this._sort && this._paginator) {
+      this._sort.sort({
+        id: 'owner',
+        start: 'asc',
+        disableClear: true
+      });
+
+      this._changeDetectorRef.markForCheck();
+
+      merge(this._sort.sortChange, this._paginator.page).pipe(
+        switchMap(() => {
+          this.loading = true;
+          this.pageSize = this._paginator.pageSize
+
+          return this._residentService.getResidents({ page: this._paginator.pageIndex + 1, pageSize: this._paginator.pageSize });
+        }),
+        map(() => { this.loading = false, this._changeDetectorRef.markForCheck() })
+      ).pipe(takeUntil(this._unsubscribeAll)).subscribe();
+    };
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next(null);
+    this._unsubscribeAll.complete();
+  }
 }
