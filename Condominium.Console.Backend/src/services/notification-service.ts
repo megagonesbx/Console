@@ -29,7 +29,7 @@ export class NotificationService {
                 deleted: false
             }
 
-            const data = await this.notificationRepository.findAll(where, ["message","createdAt","viewed"])
+            const data = await this.notificationRepository.findAll(where, { createdAt: "DESC" }, ["message","createdAt","viewed"])
 
             if (!data.length) return null; 
 

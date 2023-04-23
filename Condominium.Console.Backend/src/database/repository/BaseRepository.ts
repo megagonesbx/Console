@@ -74,10 +74,12 @@ class BaseRepository<T extends ObjectLiteral> {
 
     async findAll(
         where: Array<FindOptionsWhere<T>> | FindOptionsWhere<T> | undefined,
+        order: FindOptionsOrder<T>,
         select: string[] = []): Promise<T[]> {
         return this.repository.find({
             where,
-            select
+            select,
+            order
         });
     };    
 }
