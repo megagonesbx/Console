@@ -27,13 +27,76 @@ export const sendNotification = async (_req: Request, _res: Response) => {
 };
 
 export const getNotifications = async (_req: Request, _res: Response) => {
-    _res.send("OK");
+    try {
+        const { email } = _req.params;
+
+        const notificationService: NotificationService = _req.app.locals.notificationService;
+        const notifications = await notificationService.getRecords(email);
+
+        if (!notifications?.length) {
+            return _res.status(404).json({
+                statusCode: 404
+            })
+        };
+
+        return _res.status(200).json({
+            statusCode: 200,
+            notifications
+        });
+
+    } catch (error) {
+        return _res.status(400).json({
+            statusCode: 400
+        })
+    }
 };
 
 export const updateNotification = async (_req: Request, _res: Response) => {
-    _res.send("OK");
+    try {
+
+        const { notificationId } = _req.params;
+
+        const notificationService: NotificationService = _req.app.locals.notificationService;
+        const updated = await notificationService.setViewed(parseInt(notificationId));
+
+        if (!updated) {
+            return _res.status(400).json({
+                statusCode: 400
+            })
+        }
+
+        return _res.status(200).json({
+            statusCode: 200
+        })
+
+    } catch (error) {
+        return _res.status(500).json({
+            statusCode: 500
+        })
+    }
 };
 
 export const deleteNotification = async (_req: Request, _res: Response) => {
-    _res.send("OK");
+    try {
+
+        const { notificationId } = _req.params;
+
+        const notificationService: NotificationService = _req.app.locals.notificationService;
+        const updated = await notificationService.setDeleted(parseInt(notificationId));
+
+        if (!updated) {
+            return _res.status(400).json({
+                statusCode: 400
+            })
+        };
+
+        return _res.status(200).json({
+            statusCode: 200
+        });
+
+    } catch (error) {
+        return _res.status(500).json({
+            statusCode: 500
+        });
+    }
 };
