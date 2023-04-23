@@ -9,14 +9,14 @@
         >
             <div>Dirección</div>
             <div class="hidden:sm">Dueño</div>
-            <div class="text-center">Solvente</div>
-            <div class="text-center">Enviar recordatorio</div>
+            <div class="text-center">Estado</div>
+            <div class="text-center">Opciones</div>
         </div>
         <!-- /HEADER -->
 
         <!-- MAIN -->
-        <ng-container *ngIf="(residents$ | async) as residents">
-            <ng-container *ngFor="let resident of residents; trackBy: trackByFn">
+        <ng-container *ngIf="(residents$ | async) as residents;">
+            <ng-container *ngFor="let resident of residents; trackBy: trackByFn; let i = index;">
                 <div class="inventory-grid-solvent grid items-center gap-4 py-3 px-6 md:px-8 border-b">
 
                     <div class="truncate">
@@ -35,11 +35,20 @@
                     <!-- OPTIONS -->
                     <div class="text-center">
                         <button
+                            matTooltip="Enviar notificación"
                             class="min-w-10 min-h-7 h-7 px-2 leading-6 ml-2"
                             mat-stroked-button>
                             <mat-icon svgIcon="mat_outline:mark_email_unread"></mat-icon>
                         </button>
     
+                        <button
+                            matTooltip="Marcar como solvente"
+                            class="min-w-10 min-h-7 h-7 px-2 leading-6 ml-2"
+                            mat-stroked-button
+                            [disabled]="resident?.solvent"
+                            (click)="setSolvent(resident?.id, i)">
+                            <mat-icon svgIcon="mat_outline:library_add_check"></mat-icon>
+                        </button>
                     </div>
                     <!-- OPTIONS -->
                 </div>

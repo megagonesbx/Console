@@ -6,6 +6,8 @@ import { MatSort } from '@angular/material/sort';
 import { IResident } from 'app/interfaces';
 import { fuseAnimations } from '@fuse/animations';
 import { merge } from 'lodash';
+import { SolventsService } from '../solvents.service';
+import { SnackBarService } from 'app/utils';
 
 @Component({
   selector: 'solvent-list',
@@ -34,7 +36,9 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private _residentService: ResidentsService,
-    private _changeDetectorRef: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef,
+    private _solventService: SolventsService,
+    private _snackbarService: SnackBarService
   ) { }
 
   ngOnInit(): void {
@@ -53,6 +57,18 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
       this.loading = false;
       this._changeDetectorRef.markForCheck();
     });
+  };
+
+  setSolvent(id: string, i: number) {
+    this._solventService.setSolventResident(id).pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
+
+      if (res == 200) {
+        this.getResidents();
+        return this._snackbarService.open('Se ha actualizado el estado de la residencia');
+      }
+
+      return this._snackbarService.open('Ha ocurrido un error al actualizar el estado de la residencia');
+    })
   };
 
   ngAfterViewInit(): void {
