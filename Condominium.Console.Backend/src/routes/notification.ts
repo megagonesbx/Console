@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { deleteNotification, getNotifications, sendNotification, updateNotification } from "../controllers";
-import { createNotificationValidationRules, getNotificationsValidationRules, notificationValidationRules } from "../validators";
+import { createNotificationValidationRules, notificationValidationRules, getNotificationsValidationRules } from "../validators";
 import { validateAdminRole, validateFields, validateJWT } from "../middlewares";
 
 const router = Router();

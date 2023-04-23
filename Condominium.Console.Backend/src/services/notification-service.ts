@@ -25,7 +25,7 @@ export class NotificationService {
     async getRecords(email: string) {
         try {
             const where = {
-                email,
+                user: email,
                 deleted: false
             }
 

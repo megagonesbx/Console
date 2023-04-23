@@ -78,3 +78,17 @@ export const genericQueryParamIdRule = (
     (required) ? integerRule.exists() : integerRule.optional();
     return integerRule.toInt().isInt();
 };
+
+export const genericQueryParamRule = (
+    field: string | string[],
+    message: FieldIdValidationMessage,
+    required: boolean = true,
+) => {
+    const stringRule = check(field, message);
+    (required) ? stringRule.exists() : stringRule.optional();
+
+    stringRule.notEmpty().isString();
+    if (field === "email") stringRule.isEmail();
+
+    return stringRule;
+};

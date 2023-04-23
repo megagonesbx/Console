@@ -1,4 +1,4 @@
-import { genericQueryParamIdRule, genericStringRule } from "../../helpers";
+import { genericQueryParamIdRule, genericQueryParamRule, genericStringRule } from "../../helpers";
 import { PARAM_LOCATION } from "../../typings";
 
 export const createNotificationValidationRules = (additionalRules: any = null) => {
@@ -20,10 +20,10 @@ export const getNotificationsValidationRules = (additionalRules: any = null) => 
     const newRules = additionalRules || [];
     
     return [
-        genericQueryParamIdRule(
+        genericQueryParamRule(
             'email',
             {
-                warnings: "The email doesn't exist in the queryparam, is not a string or is empty.",
+                warnings: "The email doesn't exist in the queryparam, is not a valid email or is empty.",
                 location: PARAM_LOCATION.QUERY_PARAM
             }
         ),
