@@ -7,7 +7,6 @@ import { AuthGuard } from './modules/auth/auth.guard';
 const mainRoute = getMainRoute();
 
 export const appRoutes: Route[] = [
-    // TODO: VALIDATE THE PATH / TO REDIRECT TO THE MAIN ROUTE THAT DEPENDS ABOUT THE USER ROLE
     {
         path: 'auth',
         component: LayoutComponent,
@@ -52,6 +51,7 @@ export const appRoutes: Route[] = [
     },
     {
         path: 'residente',
+        canActivate: [AuthGuard],
         component: LayoutComponent,
         resolve: {
             initialData: InitialDataResolver,
