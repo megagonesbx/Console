@@ -17,6 +17,7 @@ export class NotificationService {
 
             return id;
         } catch (error) {
+            console.log(error);
             return 0;
         }
     }
@@ -24,7 +25,7 @@ export class NotificationService {
     async getRecords(email: string) {
         try {
             const where = {
-                'user.Email': email,
+                email,
                 deleted: false
             }
 

@@ -18,7 +18,8 @@ import {
     RoleData, 
     UserData, 
     VisitorData,
-    SpreadsheetData
+    SpreadsheetData,
+    NotificationData
 } from '../entities';
 
 
@@ -35,7 +36,7 @@ class GenericDataSource {
             database: SQL_DATABASE,
             cache: SQL_CACHE || SQL_CACHE === 'true' ? true : false,
             synchronize: false,
-            entities: [UserData, HouseData, PaymentData, VisitorData, RoleData, IncidentData, SpreadsheetData, DonationsData],
+            entities: [UserData, HouseData, PaymentData, VisitorData, RoleData, IncidentData, SpreadsheetData, DonationsData, NotificationData],
             options: {
                 useUTC: true
             },

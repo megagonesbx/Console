@@ -1,16 +1,16 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { UserData } from './index';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 
-@Entity()
+@Entity('NotificationLogData')
 export class NotificationData {
+
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ default: () => 'CURRENT_TIMESTAMP', nullable: false })
-  createdAt!: Date;
+  @Column({ length: 255 })
+  user!: string;
 
-  @ManyToOne(() => UserData, userData => userData.Email)
-  user!: UserData;
+  @Column({ length: 500 })
+  message!: string;
 
   @Column({ default: false })
   viewed!: boolean;
@@ -18,6 +18,6 @@ export class NotificationData {
   @Column({ default: false })
   deleted!: boolean;
 
-  @Column({ nullable: false })
-  message!: string;
+  @CreateDateColumn({ type: 'datetime', default: () => 'GETUTCDATE()' })
+  createdAt!: Date;
 }
