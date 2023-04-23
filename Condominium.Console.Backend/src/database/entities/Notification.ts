@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { UserData } from './index';
 
 @Entity()
-export class MyTable {
+export class NotificationData {
   @PrimaryGeneratedColumn()
   id!: number;
 

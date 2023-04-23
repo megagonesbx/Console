@@ -71,6 +71,15 @@ class BaseRepository<T extends ObjectLiteral> {
         const deleted = await this.repository.delete(where)
         return deleted;
     }
+
+    async findAll(
+        where: Array<FindOptionsWhere<T>> | FindOptionsWhere<T> | undefined,
+        select: string[] = []): Promise<T[]> {
+        return this.repository.find({
+            where,
+            select
+        });
+    };    
 }
 
 export default BaseRepository;
