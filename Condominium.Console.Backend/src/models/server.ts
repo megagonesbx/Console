@@ -2,7 +2,7 @@ import express, { Application } from "express";
 import cors from "cors";
 import Swagger from "swagger-ui-express";
 
-import { Auth, Resident, User, Donation, Spreadsheet } from '../routes';
+import { Auth, Resident, User, Donation, Spreadsheet, Notification } from '../routes';
 
 import { PORT, SQL_MAX_SIZE_IMAGE, SQL_PARAMETER_LIMIT_IMAGE } from '../config';
 import { openApiConfig } from "../documentation";
@@ -49,6 +49,7 @@ export class Server {
         this.app.use(Path.AUTH, Auth.default);
         this.app.use(Path.DONATION, Donation.default);
         this.app.use(Path.DOCS, Swagger.serve, Swagger.setup(openApiConfig));
+        this.app.use(Path.NOTIFICATION, Notification.default);
         this.app.use(Path.RESIDENT, Resident.default);
         this.app.use(Path.SPREADSHEET, Spreadsheet.default);
         this.app.use(Path.USER, User.default);

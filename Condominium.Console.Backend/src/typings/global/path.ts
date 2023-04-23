@@ -4,5 +4,6 @@ export enum Path {
     USER = "/api/user",
     RESIDENT = "/api/resident",
     DONATION = "/api/donation",
-    SPREADSHEET = "/api/spreadsheet"
+    SPREADSHEET = "/api/spreadsheet",
+    NOTIFICATION = "/api/notification"
 };
