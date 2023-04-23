@@ -19,6 +19,14 @@ export class SolventsService {
     );
   };
 
+  sendNotification(request: { email: string }) {
+    return this.http.post(`${base_url}/notification/create`, request, this.getHeaders)
+      .pipe(
+        map((res: { statusCode: number, id: number }) => (res.statusCode) ? res.statusCode : 500),
+        catchError((err) => err.status)
+      )
+  };
+
   private get getToken() {
     return localStorage.getItem('x-token') || "";
   };

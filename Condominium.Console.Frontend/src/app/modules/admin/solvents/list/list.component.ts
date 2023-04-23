@@ -71,6 +71,17 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   };
 
+  sendNotificationToResident(email: string) {
+    this._solventService.sendNotification({ email }).pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
+
+      if (res == 200) {
+        return this._snackbarService.open('Se le ha enviado una notificación al residente.');
+      }
+
+      return this._snackbarService.open('Ha ocurrido un error al enviar la notificación al residente.');
+    });
+  };
+
   ngAfterViewInit(): void {
     if (this._sort && this._paginator) {
       this._sort.sort({

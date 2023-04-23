@@ -37,7 +37,8 @@
                         <button
                             matTooltip="Enviar notificación"
                             class="min-w-10 min-h-7 h-7 px-2 leading-6 ml-2"
-                            mat-stroked-button>
+                            mat-stroked-button
+                            (click)="sendNotificationToResident(resident?.ownerName)">
                             <mat-icon svgIcon="mat_outline:mark_email_unread"></mat-icon>
                         </button>
     
