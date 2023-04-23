@@ -6,3 +6,4 @@ export * from './Payment';
 export * from './Role';
 export * from './User';
 export * from './Visitor';
+export * from './Notification';
