@@ -3,7 +3,7 @@ import { Router } from "express";
 import { createIncident, getIncident, updateIncident, deleteIncident, getIncidents } from '../controllers';
 
 import { createIncidentValidationRules, getIncidentValidationRules, getIncidentsValidationRules, updateIncidentValidationRules } from "../validators";
-import { validateFields, validateJWT } from "../middlewares";
+import { haveRoles, validateFields, validateJWT } from "../middlewares";
 
 const router = Router();
 
@@ -12,6 +12,7 @@ router.get(
     '/:incidentId',
     getIncidentValidationRules(),
     validateJWT,
+    haveRoles(1,2),
     validateFields,
     getIncident
 );
@@ -20,6 +21,7 @@ router.post(
     '/create',
     createIncidentValidationRules(),
     validateJWT,
+    haveRoles(1,2),
     validateFields,
     createIncident
 );
@@ -28,6 +30,7 @@ router.put(
     '/update',
     updateIncidentValidationRules(),
     validateJWT,
+    haveRoles(1,2),
     validateFields,
     updateIncident
 );
@@ -36,6 +39,7 @@ router.delete(
     '/:incidentId',
     getIncidentValidationRules(),
     validateJWT,
+    haveRoles(1,2),
     validateFields,
     deleteIncident
 );
@@ -44,6 +48,7 @@ router.post(
     '/incidents',
     getIncidentsValidationRules(),
     validateJWT,
+    haveRoles(1,2),
     validateFields,
     getIncidents
 );
