@@ -51,10 +51,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
     getNotifications() {
         this._userService.user$.subscribe(res => {
-            if (res) {
-                this._notificationsService.getAll(res.email).subscribe(res => {
-
-                })
+            if (res && res?.role === 3) {
+                this._notificationsService.getAll(res.email).subscribe();
             }
         });
     }

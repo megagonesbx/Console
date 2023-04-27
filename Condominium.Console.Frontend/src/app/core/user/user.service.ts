@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable, ReplaySubject, tap } from 'rxjs';
 import { User } from 'app/core/user/user.types';
 import { FuseNavigationItem } from '@fuse/components/navigation';
+import { environment } from 'environments/environment';
+const base_url = environment.base_url;
 
 @Injectable({
     providedIn: 'root'
@@ -64,9 +66,9 @@ export class UserService {
      * Get the current logged in user data
      */
     get(): Observable<User> {
-        return this._httpClient.get<User>('api/common/user').pipe(
-            tap((user) => {
-                this._user.next(user);
+        return this._httpClient.get<any>(`${base_url}/auth/session`, this.getHeaders).pipe(
+            tap((res: any) => {
+                this._user.next(res.user);
             })
         );
     }
@@ -82,5 +84,17 @@ export class UserService {
                 this._user.next(response);
             })
         );
+    }
+
+    get getToken() {
+        return localStorage.getItem('x-token') || "";
+    }
+
+    get getHeaders() {
+        return {
+            'headers': {
+                'x-token': this.getToken
+            }
+        }
     }
 }
