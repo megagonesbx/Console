@@ -2,12 +2,12 @@ import express, { Application } from "express";
 import cors from "cors";
 import Swagger from "swagger-ui-express";
 
-import { Auth, Resident, User, Donation, Spreadsheet, Notification } from '../routes';
+import { Auth, Resident, User, Donation, Spreadsheet, Notification, Incident } from '../routes';
 
 import { PORT, SQL_MAX_SIZE_IMAGE, SQL_PARAMETER_LIMIT_IMAGE } from '../config';
 import { openApiConfig } from "../documentation";
 import { GenericDataSource } from "../database/connection";
-import { UserService, AuthService, ResidentService, DonationService, SpreadsheetService, NotificationService } from '../services';
+import { UserService, AuthService, ResidentService, DonationService, SpreadsheetService, NotificationService, IncidentService } from '../services';
 import { Path } from "../typings";
 export class Server {
     private app: Application;
@@ -33,6 +33,7 @@ export class Server {
             this.app.locals.donationService = await new DonationService(generic.getClient());
             this.app.locals.spreadsheetService = await new SpreadsheetService(generic.getClient());
             this.app.locals.notificationService = await new NotificationService(generic.getClient());
+            this.app.locals.incidentService = await new IncidentService(generic.getClient());
 
             console.log('DB CONNECTED');
         } catch (error) {
@@ -50,6 +51,7 @@ export class Server {
         this.app.use(Path.AUTH, Auth.default);
         this.app.use(Path.DONATION, Donation.default);
         this.app.use(Path.DOCS, Swagger.serve, Swagger.setup(openApiConfig));
+        this.app.use(Path.INCIDENT, Incident.default);
         this.app.use(Path.NOTIFICATION, Notification.default);
         this.app.use(Path.RESIDENT, Resident.default);
         this.app.use(Path.SPREADSHEET, Spreadsheet.default);

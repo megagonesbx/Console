@@ -121,8 +121,6 @@ export const getResidents = async (_req: Request, _res: Response) => {
         const { dpi, pageSize = 10, page = 1 } = _req.body;
         const residentService: ResidentService = _req.app.locals.residentService;
 
-        console.log(residentService)
-
         const { data, totalItems, currentPage, totalPages } = await residentService.getRecords(dpi, page, pageSize);
 
         return _res.status(200).json({
