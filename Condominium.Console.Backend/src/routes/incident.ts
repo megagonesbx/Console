@@ -36,7 +36,7 @@ router.put(
 );
 
 router.delete(
-    '/:incidentId',
+    '/delete/:incidentId',
     getIncidentValidationRules(),
     validateJWT,
     validateRole(1,2),

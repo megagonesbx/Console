@@ -105,7 +105,6 @@ export const deleteIncident = async (_req: Request, _res: Response) => {
         }
     
         return _res.status(200).json({
-            incident,
             statusCode: 200
         });
     } catch (error) {
