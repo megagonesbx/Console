@@ -1,11 +1,9 @@
 import { Router } from "express";
 import { deleteNotification, getNotifications, sendNotification, updateNotification } from "../controllers";
 import { createNotificationValidationRules, notificationValidationRules, getNotificationsValidationRules } from "../validators";
-import { validateAdminRole, validateFields, validateJWT } from "../middlewares";
+import { validateRole, validateFields, validateJWT } from "../middlewares";
 
 const router = Router();
-
-// TODO: CREATE MIDDLEWARE TO VALIDATE RESIDENT ROLE
 
 /**
  * @swagger
@@ -52,7 +50,7 @@ router.post(
     '/create',
     createNotificationValidationRules(),
     validateJWT,
-    validateAdminRole,
+    validateRole(1),
     validateFields,
     sendNotification
 );
@@ -95,6 +93,7 @@ router.get(
     '/:email',
     getNotificationsValidationRules(),
     validateJWT,
+    validateRole(3),
     validateFields,
     getNotifications
 );
@@ -134,6 +133,7 @@ router.put(
     '/viewed/:notificationId',
     notificationValidationRules(),
     validateJWT,
+    validateRole(3),
     validateFields,
     updateNotification);
 
@@ -172,6 +172,7 @@ router.delete(
     '/delete/:notificationId', 
     notificationValidationRules(),
     validateJWT,
+    validateRole(3),
     validateFields,
     deleteNotification
 );

@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import { createSpreadsheet, deleteSpreadsheet, getSpreadsheet, getSpreadsheets, updateSpreadsheet } from "../controllers";
-import { validateAdminRole, validateFields, validateJWT } from "../middlewares";
+    import { validateRole, validateFields, validateJWT } from "../middlewares";
 import { createSpreadsheetValidationRules, getSpreadsheetValidationRules, getSpreadsheetsValidationRules, updateSpreadsheetValidationRules } from "../validators";
 
 const router = Router();
@@ -49,7 +49,7 @@ router.get(
     '/:spreadsheetId',
     getSpreadsheetValidationRules(),
     validateJWT,
-    validateAdminRole,
+    validateRole(1),
     validateFields,
     getSpreadsheet
 );
@@ -114,7 +114,7 @@ router.post(
     '/create',
     createSpreadsheetValidationRules(),
     validateJWT,
-    validateAdminRole,
+    validateRole(1),
     validateFields,
     createSpreadsheet
 );
@@ -179,7 +179,7 @@ router.put(
     '/update',
     updateSpreadsheetValidationRules(),
     validateJWT,
-    validateAdminRole,
+    validateRole(1),
     validateFields,
     updateSpreadsheet
 );
@@ -221,7 +221,7 @@ router.delete(
     '/:spreadsheetId',
     getSpreadsheetValidationRules(),
     validateJWT,
-    validateAdminRole,
+    validateRole(1),
     validateFields,
     deleteSpreadsheet
 );
@@ -279,7 +279,7 @@ router.post(
     '/spreadsheets',
     getSpreadsheetsValidationRules(),
     validateJWT,
-    validateAdminRole,
+    validateRole(1),
     validateFields,
     getSpreadsheets
 );

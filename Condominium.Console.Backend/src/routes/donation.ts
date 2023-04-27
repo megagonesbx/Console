@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { getDonation, createDonation, updateDonation, deleteDonation, getDonations } from '../controllers';
 import { createDonationValidationRules, getDonationValidationRules, getDonationsValidationRules, updateDonationValidationRules } from "../validators";
-import { validateAdminRole, validateFields, validateJWT } from "../middlewares";
+import { validateRole, validateFields, validateJWT } from "../middlewares";
 
 const router = Router();
 
@@ -49,7 +49,7 @@ router.get(
     '/:donationId',
     getDonationValidationRules(),
     validateJWT,
-    validateAdminRole,
+    validateRole(1),
     validateFields,
     getDonation
 );
@@ -118,7 +118,7 @@ router.post(
     '/create',
     createDonationValidationRules(),
     validateJWT,
-    validateAdminRole,
+    validateRole(1),
     validateFields,
     createDonation
 );
@@ -187,7 +187,7 @@ router.put(
     '/update',
     updateDonationValidationRules(),
     validateJWT,
-    validateAdminRole,
+    validateRole(1),
     validateFields,
     updateDonation
 );
@@ -229,7 +229,7 @@ router.delete(
     '/:donationId',
     getDonationValidationRules(),
     validateJWT,
-    validateAdminRole,
+    validateRole(1),
     validateFields,
     deleteDonation
 );
@@ -285,7 +285,7 @@ router.post(
     '/donations',
     getDonationsValidationRules(),
     validateJWT,
-    validateAdminRole,
+    validateRole(1),
     validateFields,
     getDonations
 );
