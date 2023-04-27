@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { createIncident, getIncident, updateIncident, deleteIncident, getIncidents } from '../controllers';
 
-import { createIncidentValidationRules, getIncidentValidationRules, getIncidentsValidationRules, updateIncidentValidationRules } from "../validators/incident/incident-rules";
+import { createIncidentValidationRules, getIncidentValidationRules, getIncidentsValidationRules, updateIncidentValidationRules } from "../validators";
 import { validateFields, validateJWT } from "../middlewares";
 
 const router = Router();
