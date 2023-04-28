@@ -1,7 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
-import { HouseData } from './index';
-
-@Entity('visitor')
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+@Entity('VisitorData')
 export class VisitorData {
   @PrimaryGeneratedColumn()
   id!: number;
@@ -17,7 +15,4 @@ export class VisitorData {
 
   @Column({ default: () => 'CURRENT_TIMESTAMP', nullable: false })
   createdAt!: Date;
-
-  @ManyToOne(() => HouseData, houseData => houseData.visitors)
-  house!: HouseData;
 }

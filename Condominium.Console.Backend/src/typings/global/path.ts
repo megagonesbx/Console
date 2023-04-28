@@ -6,5 +6,6 @@ export enum Path {
     DONATION = "/api/donation",
     SPREADSHEET = "/api/spreadsheet",
     NOTIFICATION = "/api/notification",
-    INCIDENT = "/api/incident"
+    INCIDENT = "/api/incident",
+    VISITOR = "/api/visitor"
 };

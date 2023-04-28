@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { PaymentData, VisitorData } from './index';
+import { PaymentData } from './index';
 
 @Entity('HouseData')
 export class HouseData {
@@ -20,9 +20,6 @@ export class HouseData {
 
   @Column({ default: false, nullable: false })
   solvent!: boolean;
-
-  @OneToMany(() => VisitorData, visitorData => visitorData.house)
-  visitors!: VisitorData[];
 
   @OneToMany(() => PaymentData, paymentData => paymentData.house)
   payments!: PaymentData[];

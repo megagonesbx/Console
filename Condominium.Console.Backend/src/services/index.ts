@@ -5,3 +5,4 @@ export * from './notification-service';
 export * from './resident-service';
 export * from './spreadsheet-service';
 export * from './user-service';
+export * from './visitor-service';

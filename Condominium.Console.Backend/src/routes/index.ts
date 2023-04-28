@@ -5,3 +5,4 @@ export * as Donation from './donation';
 export * as Spreadsheet from './spreadsheet';
 export * as Notification from './notification';
 export * as Incident from './incident';
+export * as Visitor from './visitor';
