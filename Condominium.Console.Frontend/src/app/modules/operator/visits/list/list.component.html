@@ -42,6 +42,7 @@
                         <button
                             class="min-w-10 min-h-7 h-7 px-2 leading-6"
                             mat-stroked-button
+                            (click)="openDialog(visitor)"
                         >
                             <mat-icon
                                 svgIcon="heroicons_outline:pencil-alt"
@@ -51,6 +52,8 @@
                         <button
                             class="min-w-10 min-h-7 h-7 px-2 leading-6 ml-2"
                             mat-stroked-button
+                            (click)="deleteVisitor(visitor?.id)"
+
                         >
                             <mat-icon
                                 svgIcon="heroicons_outline:user-remove"

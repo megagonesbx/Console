@@ -90,11 +90,11 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   };
 
-  deleteDonation(id: number) {
+  deleteVisitor(id: number) {
 
     const confirmation = this._fuseConfirmationService.open({
-      title: 'Eliminar donativo',
-      message: '¿Está seguro de eliminar el donativo?',
+      title: 'Eliminar visitante',
+      message: '¿Está seguro de eliminar el visitante?',
       actions: {
         confirm: {
           label: 'Eliminar'
@@ -122,10 +122,10 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   };
 
-  openDialog(donation: Ivisit) {
+  openDialog(visitor: Ivisit) {
     const dialogRef = this.dialog.open(VisitorDialogComponent, {
       width: '500px',
-      data: { donation }
+      data: { visitor }
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this._unsubscribeAll)).subscribe(result => {
