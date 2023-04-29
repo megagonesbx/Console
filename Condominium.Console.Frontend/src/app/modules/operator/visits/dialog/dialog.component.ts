@@ -29,7 +29,7 @@ import { ResidentsService } from 'app/modules/admin/residents/residents.service'
       font-weight: bold;
       font-style: italic;
     }
-  `]
+  `],
 })
 export class VisitorDialogComponent implements OnInit, OnDestroy, AfterViewChecked {
 
@@ -46,7 +46,7 @@ export class VisitorDialogComponent implements OnInit, OnDestroy, AfterViewCheck
     private _snackBarService: SnackBarService,
     private _residentService: ResidentsService,
     private readonly changeDetectorRef: ChangeDetectorRef
-  ) { console.log(this.data.visitor) }
+  ) { }
 
   ngOnInit(): void {
     this.initForm();
