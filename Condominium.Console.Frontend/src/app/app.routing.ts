@@ -38,6 +38,7 @@ export const appRoutes: Route[] = [
     },
     {
         path: 'operador',
+        canActivate: [AuthGuard],
         component: LayoutComponent,
         resolve: {
             initialData: InitialDataResolver,

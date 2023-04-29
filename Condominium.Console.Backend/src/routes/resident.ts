@@ -295,7 +295,7 @@ router.post(
     '/residents',
     getHousesValidationRules(),
     validateJWT,
-    validateRole(1),
+    validateRole(1,2),
     validateFields,
     getResidents
 );
