@@ -1,1 +1,74 @@
-<p>list works!</p>
+<ng-container>
+    <div class="grid">
+        <!-- HEADER -->
+        <div
+            class="inventory-grid-visitor z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+            matSort
+            matSortDisableClear
+        >
+            <div>Nombre</div>
+            <div class="hidden sm:block">DPI</div>
+            <div>Residencia</div>
+            <div>Opciones</div>
+        </div>
+        <!-- /HEADER -->
+
+        <!-- MAIN -->
+        <ng-container *ngIf="visitors$ | async as visitors">
+            <ng-container *ngFor="let visitor of visitors; trackBy: trackByFn">
+                <div
+                    class="inventory-grid-visitor grid items-center gap-4 py-3 px-6 md:px-8 border-b"
+                >
+                    <!-- NAME -->
+                    <div class="truncate">
+                        {{ visitor?.name }}
+                    </div>
+                    <!-- /NAME -->
+
+                    <!-- DPI -->
+                    <div class="truncate">
+                        {{ visitor?.dpi }}
+                    </div>
+                    <!-- /DPI -->
+
+                    <!-- HOME ADDRESS -->
+                    <div class="truncate">
+                        {{ visitor?.homeAddress }}
+                    </div>
+                    <!-- /HOME ADDRESS -->
+
+                    <!-- OPTIONS -->
+                    <div>
+                        <button
+                            class="min-w-10 min-h-7 h-7 px-2 leading-6"
+                            mat-stroked-button
+                        >
+                            <mat-icon
+                                svgIcon="heroicons_outline:pencil-alt"
+                            ></mat-icon>
+                        </button>
+
+                        <button
+                            class="min-w-10 min-h-7 h-7 px-2 leading-6 ml-2"
+                            mat-stroked-button
+                        >
+                            <mat-icon
+                                svgIcon="heroicons_outline:user-remove"
+                            ></mat-icon>
+                        </button>
+                    </div>
+                    <!-- /OPTIONS -->
+                </div>
+            </ng-container>
+        </ng-container>
+        <!-- /MAIN -->
+    </div>
+
+    <mat-paginator
+        class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+        [ngClass]="{ 'pointer-events-none': loading }"
+        [length]="count"
+        [pageSizeOptions]="pageSizeOptions"
+    >
+    </mat-paginator>
+</ng-container>

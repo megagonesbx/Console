@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { VisitsRoutingModule } from './visits-routing.module';
 import { VisitsComponent } from './visits.component';
-import { DialogComponent } from './dialog/dialog.component';
+import { VisitorDialogComponent } from './dialog/dialog.component';
 import { ListComponent } from './list/list.component';
 
 import { SharedModule } from 'app/shared/shared.module';
@@ -27,7 +27,7 @@ import { ResidentsService } from 'app/modules/admin/residents/residents.service'
 @NgModule({
   declarations: [
     VisitsComponent,
-    DialogComponent,
+    VisitorDialogComponent,
     ListComponent
   ],
   imports: [

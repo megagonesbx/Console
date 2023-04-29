@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class DialogComponent implements OnInit {
+export class VisitorDialogComponent implements OnInit {
 
   constructor() { }
 
