@@ -1,6 +1,9 @@
 <ng-container>
     <mat-grid-list cols="10" rowHeight="100px">
-        <mat-grid-tile *ngFor="let resident of residents$ | async; let i = index;" [ngClass]="{ 'mat-grid-tile-solvent': resident.solvent }">
+        <mat-grid-tile 
+            *ngFor="let resident of residents$ | async; let i = index;" 
+            [ngClass]="{ 'mat-grid-tile-solvent': resident.solvent }"
+            (click)="openDialog(resident)">
             <mat-icon 
                 [svgIcon]="'heroicons_outline:home'" 
                 [ngClass]="{ 'color-green': resident.solvent, 'color-red': !resident.solvent }">

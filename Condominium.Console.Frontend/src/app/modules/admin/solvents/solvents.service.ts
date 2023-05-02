@@ -9,6 +9,8 @@ const base_url = environment.base_url;
 })
 export class SolventsService {
 
+  private onlistenSubject = new Subject<void>();
+
   constructor(private http: HttpClient) { }
 
   setSolventResident(id: string) {
@@ -37,5 +39,13 @@ export class SolventsService {
         'x-token': this.getToken
       }
     }
+  };
+
+  listenDialog() {
+    this.onlistenSubject.next();
+  };
+
+  get dialogStatus() {
+    return this.onlistenSubject.asObservable();
   };
 };

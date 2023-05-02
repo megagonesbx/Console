@@ -24,11 +24,13 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { SnackBarService } from 'app/utils';
 import { SolventsService } from './solvents.service';
 import { ResidentsService } from '../residents/residents.service';
+import { SolventDialogComponent } from './dialog/dialog.component';
 
 @NgModule({
   declarations: [
     SolventsComponent,
-    ListComponent
+    ListComponent,
+    SolventDialogComponent
   ],
   imports: [
     SharedModule,

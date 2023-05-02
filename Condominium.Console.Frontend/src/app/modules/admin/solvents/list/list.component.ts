@@ -8,6 +8,8 @@ import { fuseAnimations } from '@fuse/animations';
 import { merge } from 'lodash';
 import { SolventsService } from '../solvents.service';
 import { SnackBarService } from 'app/utils';
+import { MatDialog } from '@angular/material/dialog';
+import { SolventDialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'solvent-list',
@@ -26,7 +28,6 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
   public residents$: Observable<IResident[]>;
   public residents: IResident[] = [];
   public loading: boolean;
-  public items = Array(100).fill(0).map((_, i) => i + 1);
 
   // MAT PAGINATOR
   public pageSize: number = 10;
@@ -38,12 +39,12 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private _residentService: ResidentsService,
     private _changeDetectorRef: ChangeDetectorRef,
-    private _solventService: SolventsService,
-    private _snackbarService: SnackBarService
+    private _matdialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.getResidents();
+    this.onListenDialog();
   }
 
   getResidents(dpi?: string, page: number = 1, pageSize: number = 100) {
@@ -57,29 +58,6 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.loading = false;
       this._changeDetectorRef.markForCheck();
-    });
-  };
-
-  setSolvent(id: string, i: number) {
-    this._solventService.setSolventResident(id).pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
-
-      if (res == 200) {
-        this.getResidents();
-        return this._snackbarService.open('Se ha actualizado el estado de la residencia');
-      }
-
-      return this._snackbarService.open('Ha ocurrido un error al actualizar el estado de la residencia');
-    })
-  };
-
-  sendNotificationToResident(email: string) {
-    this._solventService.sendNotification({ email }).pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
-
-      if (res == 200) {
-        return this._snackbarService.open('Se le ha enviado una notificación al residente.');
-      }
-
-      return this._snackbarService.open('Ha ocurrido un error al enviar la notificación al residente.');
     });
   };
 
@@ -109,4 +87,17 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
+
+  openDialog(resident: IResident) {
+    const dialogRef = this._matdialog.open(SolventDialogComponent, {
+      width: '500px',
+      data: { resident }
+    });
+  }
+
+  onListenDialog() {
+    this._residentService.onFoo.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
+      this.getResidents();
+    });
+  };
 }
