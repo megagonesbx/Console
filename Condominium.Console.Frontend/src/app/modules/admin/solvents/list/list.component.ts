@@ -26,6 +26,7 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
   public residents$: Observable<IResident[]>;
   public residents: IResident[] = [];
   public loading: boolean;
+  public items = Array(100).fill(0).map((_, i) => i + 1);
 
   // MAT PAGINATOR
   public pageSize: number = 10;
@@ -45,7 +46,7 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getResidents();
   }
 
-  getResidents(dpi?: string, page: number = 1, pageSize: number = 10) {
+  getResidents(dpi?: string, page: number = 1, pageSize: number = 100) {
     this.loading = true;
     this._residentService.getResidents({ dpi, page, pageSize }).pipe(takeUntil(this._unsubscribeAll)).subscribe((res) => {
       this.residents$ = this._residentService.residents$;

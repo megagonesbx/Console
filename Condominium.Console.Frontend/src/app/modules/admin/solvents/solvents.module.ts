@@ -19,10 +19,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { SnackBarService } from 'app/utils';
 import { SolventsService } from './solvents.service';
 import { ResidentsService } from '../residents/residents.service';
+
 @NgModule({
   declarations: [
     SolventsComponent,
@@ -45,6 +47,7 @@ import { ResidentsService } from '../residents/residents.service';
     MatSlideToggleModule,
     MatTooltipModule,
     MatDialogModule,
+    MatGridListModule
   ],
   providers: [
     SnackBarService,

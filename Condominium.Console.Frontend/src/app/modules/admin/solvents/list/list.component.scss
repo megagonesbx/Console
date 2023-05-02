@@ -21,3 +21,29 @@
 .pending {
     color: red;
 }
+
+.mat-grid-tile {
+    border: 1px solid red;
+
+    .mat-grid-tile-content {
+        flex-direction: column;
+    }
+
+    .text-muted {
+        margin: 0;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+}
+
+.mat-grid-tile-solvent {
+    border: 1px solid green;
+}
+
+.color-green {
+    color: green;
+}
+
+.color-red {
+    color: red;
+}
