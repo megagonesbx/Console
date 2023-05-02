@@ -3,7 +3,7 @@
 
     <div mat-dialog-content class="button-container">
         <button mat-flat-button [color]="'primary'" (click)="sendNotificationToResident()">Enviar notificación al residente</button>
-        <button mat-stroked-button [color]="'primary'" class="mt-4" (click)="setSolvent()">Marcar como solvente</button>
+        <button mat-stroked-button [color]="'primary'" [disabled]="resident.solvent" class="mt-4" (click)="setSolvent()">Marcar como solvente</button>
     </div>
 
     <div mat-dialog-actions>

@@ -21,7 +21,7 @@ import { ResidentsService } from '../../residents/residents.service';
 export class SolventDialogComponent implements OnDestroy {
 
   private _unsubscribeAll: Subject<any> = new Subject();
-  private resident: IResident;
+  public resident: IResident;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
