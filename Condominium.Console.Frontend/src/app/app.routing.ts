@@ -59,7 +59,6 @@ export const appRoutes: Route[] = [
         },
         children: [
             { path: 'pagos', canActivate: [AuthGuard], loadChildren: () => import('app/modules/resident/payments/payments.module').then(m => m.PaymentsModule) },
-            { path: 'historial-pagos', canActivate: [AuthGuard], loadChildren: () => import('app/modules/resident/history/history.module').then(m => m.HistoryModule) },
             { path: '', pathMatch: 'full', redirectTo: 'pagos' },
             { path: '**', pathMatch: 'full', redirectTo: 'pagos' }
         ]
