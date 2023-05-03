@@ -95,12 +95,6 @@ export const getMenuByRole = (role: number): MenuItem[] => {
                             title: 'Realizar pago',
                             type: 'basic',
                             link: '/residente/pagos'
-                        },
-                        {
-                            id: 'apps.residente.history',
-                            title: 'Historial de pagos',
-                            type: 'basic',
-                            link: '/residente/historial-pagos'
                         }
                     ]
                 }
@@ -145,12 +139,6 @@ export const getMenuByRole = (role: number): MenuItem[] => {
                             title: 'Realizar pago',
                             type: 'basic',
                             link: '/residente/pagos'
-                        },
-                        {
-                            id: 'apps.residente.history',
-                            title: 'Historial de pagos',
-                            type: 'basic',
-                            link: '/residente/historial-pagos'
                         }
                     ]
                 }
