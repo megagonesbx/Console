@@ -1,5 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { PaymentData } from './index';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('HouseData')
 export class HouseData {
@@ -20,7 +19,4 @@ export class HouseData {
 
   @Column({ default: false, nullable: false })
   solvent!: boolean;
-
-  @OneToMany(() => PaymentData, paymentData => paymentData.house)
-  payments!: PaymentData[];
 }
