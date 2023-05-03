@@ -2,12 +2,12 @@ import express, { Application } from "express";
 import cors from "cors";
 import Swagger from "swagger-ui-express";
 
-import { Auth, Resident, User, Donation, Spreadsheet, Notification, Incident, Visitor } from '../routes';
+import { Auth, Resident, User, Donation, Spreadsheet, Notification, Incident, Visitor, Payment } from '../routes';
 
 import { PORT, SQL_MAX_SIZE_IMAGE, SQL_PARAMETER_LIMIT_IMAGE } from '../config';
 import { openApiConfig } from "../documentation";
 import { GenericDataSource } from "../database/connection";
-import { UserService, AuthService, ResidentService, DonationService, SpreadsheetService, NotificationService, IncidentService, VisitorService } from '../services';
+import { UserService, AuthService, ResidentService, DonationService, SpreadsheetService, NotificationService, IncidentService, VisitorService, PaymentService } from '../services';
 import { Path } from "../typings";
 export class Server {
     private app: Application;
@@ -35,6 +35,7 @@ export class Server {
             this.app.locals.notificationService = await new NotificationService(generic.getClient());
             this.app.locals.incidentService = await new IncidentService(generic.getClient());
             this.app.locals.visitorService = await new VisitorService(generic.getClient());
+            this.app.locals.paymentService = await new PaymentService(generic.getClient());
 
             console.log('DB CONNECTED');
         } catch (error) {
@@ -57,6 +58,7 @@ export class Server {
         this.app.use(Path.RESIDENT, Resident.default);
         this.app.use(Path.SPREADSHEET, Spreadsheet.default);
         this.app.use(Path.USER, User.default);
+        this.app.use(Path.PAYMENT, Payment.default);
         this.app.use(Path.VISITOR, Visitor.default);
     };
 

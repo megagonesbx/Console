@@ -1,7 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
-import { HouseData } from './index';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('payment')
+@Entity('PaymentData')
 export class PaymentData {
   @PrimaryGeneratedColumn()
   id!: number;
@@ -18,6 +17,9 @@ export class PaymentData {
   @Column({ default: () => 'CURRENT_TIMESTAMP', nullable: false })
   payedAt!: Date;
 
-  @ManyToOne(() => HouseData, houseData => houseData.payments)
-  house!: HouseData;
+  @Column({ nullable: false })
+  description!: string;
+
+  @Column()
+  photo!: string;
 }
