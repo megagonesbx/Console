@@ -7,10 +7,13 @@
                 <mat-option
                     *ngFor="let resident of residents$ | async"
                     [value]="resident.ownerDPI"
-                    >{{ resident.homeAddress }}</mat-option>
+                    >{{ resident.homeAddress }}</mat-option
+                >
             </mat-select>
             <mat-error
-                *ngIf="form.get('ownerDPI').invalid && form.get('ownerDPI').touched"
+                *ngIf="
+                    form.get('ownerDPI').invalid && form.get('ownerDPI').touched
+                "
             >
                 Este campo es requerido.
             </mat-error>
@@ -33,7 +36,7 @@
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput placeholder="Monto" formControlName="amount" />
+            <input matInput placeholder="Monto" formControlName="amount" (keypress)="onlyPositiveNumbers($event)"/>
             <mat-error
                 *ngIf="form.get('amount').invalid && form.get('amount').touched"
             >
@@ -46,7 +49,8 @@
                 <mat-option
                     *ngFor="let month of months"
                     [value]="month.value"
-                    >{{ month.description }}</mat-option>
+                    >{{ month.description }}</mat-option
+                >
             </mat-select>
             <mat-error
                 *ngIf="form.get('month').invalid && form.get('month').touched"
@@ -99,7 +103,9 @@
                 type="submit"
                 [disabled]="
                     form.invalid ||
-                    form.pristine
+                    (form.pristine && noImageChanged) ||
+                    invalidExtention ||
+                    invalidSize
                 "
             >
                 Crear
