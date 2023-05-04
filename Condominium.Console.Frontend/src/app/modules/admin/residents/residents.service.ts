@@ -14,7 +14,7 @@ export class ResidentsService {
   private _residents: BehaviorSubject<IResident[] | null> = new BehaviorSubject(null);
   private path: string;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.path = `${base_url}/resident`
   };
 
@@ -25,7 +25,7 @@ export class ResidentsService {
   getResidents(request: { dpi?: string, page: number, pageSize: number }) {
     return this.http.post(`${this.path}/residents`, request, this.getHeaders).pipe(
       map((res: IGetResidentsResponse) => {
-        
+
         if (res.statusCode && res.statusCode == 200) {
           this._residents.next(res.data);
           return {
@@ -63,6 +63,19 @@ export class ResidentsService {
       catchError(err => of(err.status))
     )
   }
+
+  getHousesByUser(email: string) {
+    return this.http.get(`${this.path}/houses/${email}`, this.getHeaders).pipe(
+      map((res: { statusCode: number, data: IResident[] }) => {
+        if (res && res.statusCode == 200) {
+          this._residents.next(res.data);
+          return res;
+        }
+        return null;
+      }),
+      catchError(err => of(null))
+    );
+  };
 
   // INTERNAL
   get getToken() {
