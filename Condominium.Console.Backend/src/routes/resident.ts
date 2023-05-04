@@ -6,15 +6,6 @@ import { createHouseValidationRules, getHouseValidationRules, getHousesByUserVal
 
 const router = Router();
 
-router.get(
-    '/houses/:email',
-    getHousesByUserValidationRules(),
-    validateJWT,
-    validateRole(1),
-    validateFields,
-    getResidencesByUser
-);
-
 /**
  * @swagger
  * /api/resident/{id}:
@@ -386,6 +377,49 @@ router.patch(
     validateRole(1),
     validateFields,
     setSolvent
+);
+
+/**
+ * @swagger
+ * /api/resident/houses/{email}:
+ *   get:
+ *     summary: Get houses by user
+ *     tags: [Resident]
+ *     parameters:
+ *     - name: email
+ *       in: path
+ *       description: User email
+ *       required: true
+ *       schema:
+ *        type: string
+ *     responses:
+ *       200:
+ *         description:  
+ *         content:
+ *           application/json:
+ *             example:
+ *               data: [{"homeAddress":"Casa 1","ownerDPI":"3639933470703","id":1}]
+ *               statusCode: 200
+ *       400:
+ *         description: Unkown error
+ *       422:
+ *         description: Fields Error
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                errors:
+ *                  type: object
+ *                  example: {"errors":[{"field":"email","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or is empty."}}]}
+ */
+router.get(
+    '/houses/:email',
+    getHousesByUserValidationRules(),
+    validateJWT,
+    validateRole(3),
+    validateFields,
+    getResidencesByUser
 );
 
 export default router;
