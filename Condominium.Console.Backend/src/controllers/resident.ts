@@ -171,7 +171,7 @@ export const restartSolvent = async (_req: Request, _res: Response) => {
 
         const residentService: ResidentService = _req.app.locals.residentService;
         const wasUpdated = await residentService.resetSolvent();
-        
+
         if (!wasUpdated) {
             return _res.status(400).json({
                 statusCode: 400
@@ -184,6 +184,28 @@ export const restartSolvent = async (_req: Request, _res: Response) => {
     } catch (error) {
         return _res.status(500).json({
             statusCode: 500
+        });
+    }
+};
+
+export const getResidencesByUser = async (_req: Request, _res: Response) => {
+    try {
+        const { email } = _req.params;
+        const residentService: ResidentService = _req.app.locals.residentService;
+
+        const data = await residentService.getResidencesByUser(email, 1, 100);
+
+
+        return _res.status(200).json({
+            data,
+            statusCode: 200
+        });
+
+    } catch (error) {
+        return _res.status(400).json({
+            data: [],
+            count: 0,
+            statusCode: 400
         });
     }
 };

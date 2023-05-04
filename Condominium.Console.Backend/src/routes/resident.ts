@@ -1,10 +1,19 @@
 import { Router } from "express";
 
-import { getResident, getResidents, createResident, updateResident, deleteResident, setSolvent, restartSolvent } from "../controllers/resident";
+import { getResident, getResidents, createResident, updateResident, deleteResident, setSolvent, restartSolvent, getResidencesByUser } from "../controllers/resident";
 import { validateRole, validateFields, validateJWT } from '../middlewares';
-import { createHouseValidationRules, getHouseValidationRules, getHousesValidationRules, updateHouseValidationRules } from "../validators";
+import { createHouseValidationRules, getHouseValidationRules, getHousesByUserValidationRules, getHousesValidationRules, updateHouseValidationRules } from "../validators";
 
 const router = Router();
+
+router.get(
+    '/houses/:email',
+    getHousesByUserValidationRules(),
+    validateJWT,
+    validateRole(1),
+    validateFields,
+    getResidencesByUser
+);
 
 /**
  * @swagger
@@ -378,6 +387,5 @@ router.patch(
     validateFields,
     setSolvent
 );
-
 
 export default router;

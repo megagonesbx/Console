@@ -1,4 +1,4 @@
-import { genericBooleanRule, genericIntegerRule, genericQueryParamIdRule, genericStringRule } from "../../helpers";
+import { genericBooleanRule, genericIntegerRule, genericQueryParamIdRule, genericQueryParamRule, genericStringRule } from "../../helpers";
 import { PARAM_LOCATION } from "../../typings";
 
 export const createHouseValidationRules = (additionalRules: any = null) => {
@@ -88,6 +88,21 @@ export const getHousesValidationRules = (additionalRules: any = null) => {
             },
             {},
             false
+        ),
+        ...newRules
+    ]
+};
+
+export const getHousesByUserValidationRules = (additionalRules: any = null) => {
+    const newRules = additionalRules || [];
+
+    return [
+        genericQueryParamRule(
+            "email",
+            {
+                location: PARAM_LOCATION.HEADER,
+                warnings: "This field doesn't exist, is not a string or is empty."
+            },
         ),
         ...newRules
     ]

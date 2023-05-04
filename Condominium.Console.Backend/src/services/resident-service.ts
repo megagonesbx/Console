@@ -105,4 +105,27 @@ export class ResidentService {
             return false;
         };
     };
+
+    async getResidencesByUser(email: string, page: number, size: number) {
+        try {
+            const skip = (page - 1) * size;
+            const take = size;
+
+            const { data } = await this.residentRepository.findWithPagination(
+                {
+                    ownerName: email
+                },
+                {
+                    id: 'DESC'
+                },
+                take,
+                skip,
+                ["id", "homeAddress", "ownerDPI"]);
+
+            return data;
+        } catch (error) {
+            console.log(error)
+            throw error;
+        }
+    };
 };
