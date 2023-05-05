@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getPayments, savePayment } from '../controllers';
-import { createPaymentValidationRules } from '../validators';
+import { createPaymentValidationRules, getPaymentsValidationRules } from '../validators';
 import { validateFields, validateJWT, validateRole } from '../middlewares';
 
 const router = Router();
@@ -128,7 +128,7 @@ router.post(
  */
 router.post(
     '/payments',
-    createPaymentValidationRules(),
+    getPaymentsValidationRules(),
     validateJWT,
     validateRole(3),
     validateFields,

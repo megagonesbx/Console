@@ -12,14 +12,19 @@ export class PaymentService {
 
   private onlistenSubject = new Subject<void>();
   private _payments: BehaviorSubject<IPayment[] | null> = new BehaviorSubject(null);
+  public onListenDPI = new Subject<string>();
 
   constructor(private _http: HttpClient) { }
+
+  get dpi$(): Observable<string> {
+    return this.onListenDPI.asObservable()
+  }
 
   get payments$(): Observable<IPayment[]> {
     return this._payments.asObservable();
   };
 
-  getPayments(request: { page: number, pageSize: number, dpi: number }): Observable<IGetPayments | null> {
+  getPayments(request: { page: number, pageSize: number, dpi: string }): Observable<IGetPayments | null> {
     return this._http.post(`${base_url}/payment/payments`, request, this.getHeaders).pipe(
       map((res: IGetPaymentsResponse) => {
 

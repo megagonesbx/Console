@@ -34,6 +34,8 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
   public pages: number = 0;
   public pageSizeOptions: number[] = [10, 15, 25];
 
+  public dpi: string;
+
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
     public dialog: MatDialog,
@@ -43,6 +45,7 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.onChangeResidence();
   }
 
   ngAfterViewInit(): void {
@@ -61,7 +64,7 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
           this.loading = true;
           this.pageSize = this._paginator.pageSize
 
-          return this._paymentService.getPayments({ dpi: 3639933470101, page: this.page, pageSize: this.pageSize })
+          return this._paymentService.getPayments({ dpi: this.dpi, page: this.page, pageSize: this.pageSize })
         }),
         map(() => this.loading = false)
       ).pipe(takeUntil(this._unsubscribeAll)).subscribe();
@@ -72,13 +75,12 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
     throw new Error('Method not implemented.');
   };
 
-  async getReports(dpi: number, page: number = 1, pageSize: number = 10) {
+  async getPayments(dpi: string, page: number = 1, pageSize: number = 10) {
     try {
       this.loading = true;
       this._paymentService.getPayments({ page, pageSize, dpi }).pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
         this.payments$ = this._paymentService.payments$;
         this.payments = res.payments;
-        console.log(this.payments)
         this.page = res.page;
         this.count = res.total;
         this.pages = res.pages;
@@ -91,15 +93,10 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   };
 
-  async onListenDialog() {
-    try {
-      const user = await this._userService.user$.pipe(take(1)).toPromise();
-      // this._paymentService.dialogStatus.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
-      //   this.getReports(user?.);
-      // });
-
-    } catch (error) {
-      console.log(error)
-    }
-  };
+  async onChangeResidence() {
+    this._paymentService.dpi$.subscribe(res => {
+      this.getPayments(res);
+      this.dpi = res;
+    })
+  }
 };

@@ -35,9 +35,9 @@ export const getPayments = async (_req: Request, _res: Response) => {
 
         return _res.json({
             data,
-            totalItems,
-            currentPage,
-            totalPages,
+            count: totalItems,
+            page: currentPage,
+            pages: totalPages,
             statusCode: 200
         });
 

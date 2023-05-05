@@ -39,13 +39,14 @@ export class PaymentsComponent implements OnInit, OnDestroy {
       const { data } = await this._residentService.getHousesByUser(user?.email).pipe(take(1)).toPromise();
       this.residents$ = this._residentService.residents$;
       this.searchInputControl.patchValue(data[0].ownerDPI);
+      this._paymentService.onListenDPI.next(data[0].ownerDPI);
     } catch (error) {
       console.error('Error obteniendo residencias', error);
     }
   }
 
   onOptionSelection(event: MatSelectChange) {
-    console.log(event.value);
+    this._paymentService.onListenDPI.next(event.value);
   }
 
   openDialog() {
