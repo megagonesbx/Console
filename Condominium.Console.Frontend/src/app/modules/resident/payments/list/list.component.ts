@@ -4,7 +4,7 @@ import { Observable, Subject, map, merge, switchMap, take, takeUntil } from 'rxj
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { SnackBarService } from 'app/utils';
+import { SnackBarService, transformDate } from 'app/utils';
 import { PaymentService } from '../payment.service';
 import { IPayment } from 'app/interfaces';
 import { UserService } from 'app/core/user/user.service';
@@ -98,5 +98,14 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getPayments(res);
       this.dpi = res;
     })
+  };
+
+  convertDate(date: string): string {
+    return transformDate(date);
+  };
+
+  convertMonth(month: number): string {
+    const months = this._paymentService.getMonths();
+    return months.find(m => m.value == month)?.description;
   }
 };
