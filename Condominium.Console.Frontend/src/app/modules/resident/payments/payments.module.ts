@@ -46,7 +46,7 @@ import { ResidentsService } from 'app/modules/admin/residents/residents.service'
     MatSelectModule,
     MatSlideToggleModule,
     MatTooltipModule,
-    MatDialogModule,
+    MatDialogModule
   ],
   providers: [
     SnackBarService,

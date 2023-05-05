@@ -19,7 +19,7 @@ export class PaymentService {
     return this._payments.asObservable();
   };
 
-  getPayments(request: { page: number, pageSize: number }): Observable<IGetPayments | null> {
+  getPayments(request: { page: number, pageSize: number, dpi: number }): Observable<IGetPayments | null> {
     return this._http.post(`${base_url}/payment/payments`, request, this.getHeaders).pipe(
       map((res: IGetPaymentsResponse) => {
 
