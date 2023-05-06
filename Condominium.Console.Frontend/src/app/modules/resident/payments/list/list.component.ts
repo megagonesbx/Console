@@ -35,6 +35,7 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
   public pageSizeOptions: number[] = [10, 15, 25];
 
   public dpi: string;
+  // TODO: Crear una columna llamada HomeAddress y luego crear un constraint para validar que solo exista un pago por mes para cada residencia
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,

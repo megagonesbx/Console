@@ -44,6 +44,10 @@ const router = Router();
  *                   type: string
  *                   description: Image in base64 format
  *                   example: base64...
+ *               homeAddress:
+ *                   type: string
+ *                   description: Home Address.
+ *                   example: Casa 40
  *                  
  *     responses:
  *       200:

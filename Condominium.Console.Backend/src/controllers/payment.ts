@@ -1,17 +1,28 @@
 import { Request, Response } from 'express';
 import { PaymentService } from '../services';
+import { validatePayment } from '../helpers/payment';
 
 export const savePayment = async (_req: Request, _res: Response) => {
     try {
-        const { ownerDPI, amount, month, description, photo } = _req.body;
+        const { ownerDPI, amount, month, description, photo, homeAddress } = _req.body;
 
         const paymentService: PaymentService = _req.app.locals.paymentService;
+
+        const isValidPayment = await validatePayment(paymentService, ownerDPI, month, homeAddress);
+
+        if (!isValidPayment) {
+            return _res.status(403).json({
+                statusCode: 403
+            });
+        }
+
         const id = await paymentService.insertRecord({
             ownerDPI,
             amount,
             month,
             description,
-            photo
+            photo,
+            homeAddress
         });
 
         return _res.json({

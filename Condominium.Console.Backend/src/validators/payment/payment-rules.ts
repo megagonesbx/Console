@@ -5,7 +5,7 @@ export const createPaymentValidationRules = (additionalRules: any = null) => {
 
     return [
         genericStringRule(
-            ["ownerDPI", "description"],
+            ["ownerDPI", "description","homeAddress"],
             {
                 requiredType: "string",
                 warnings: "This field doesn't exist, is not a string or is empty."
