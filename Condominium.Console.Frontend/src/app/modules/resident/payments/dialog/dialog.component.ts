@@ -3,10 +3,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject, take } from 'rxjs';
 import { PaymentService } from '../payment.service';
-import { SnackBarService } from 'app/utils';
+import { SnackBarService, transformDate } from 'app/utils';
 import { IPayment, IResident } from 'app/interfaces';
 import { UserService } from 'app/core/user/user.service';
 import { ResidentsService } from 'app/modules/admin/residents/residents.service';
+import { MatSelectChange } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
 
 @Component({
   selector: 'app-dialog',
@@ -27,6 +29,8 @@ export class PaymentDialogComponent implements OnInit {
   public base64Image: string | undefined;
   public invalidExtention: boolean = false;
   public invalidSize: boolean = false;
+
+  public homeAddress: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -112,10 +116,20 @@ export class PaymentDialogComponent implements OnInit {
     }
   }
 
+  onOptionSelection(event: MatSelectChange) {
+    const homeAddress = event.source.triggerValue;
+    this.form.addControl('homeAddress', this._formBuilder.control(homeAddress));
+  };
+
   registerPayment() {
     if (this.form.invalid) Object.values(this.form.controls).forEach(c => c.markAsTouched());
 
     this._paymentService.createPayment(this.form.value).subscribe(res => {
+
+      if (res == 403) {
+        const month = this.months.find(m => m.value == this.form.controls.month?.value).description;
+        return this._snackBarService.open(`Ya existe un pago registrado para esa residencia para el mes de ${month}.`);
+      }
 
       if (res == 200) {
         this.onClose();
