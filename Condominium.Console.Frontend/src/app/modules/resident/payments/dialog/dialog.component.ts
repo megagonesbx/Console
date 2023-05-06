@@ -74,14 +74,14 @@ export class PaymentDialogComponent implements OnInit {
       id: payment.id,
       ownerDPI: payment.ownerDPI,
       amount: payment.amount,
-      month: payment.month,
+      month: parseInt(payment.month),
       description: payment.description,
-      payedAt: payment.payedAt,
+      payedAt: this.convertDate(payment.payedAt)
     });
 
     if (payment?.photo) {
       this.base64Image = payment?.photo;
-    }
+    };
   };
 
   onKeyDown(event: KeyboardEvent) {
@@ -169,5 +169,9 @@ export class PaymentDialogComponent implements OnInit {
 
       reader.readAsDataURL(event.target.files[0]);
     }
+  };
+
+  convertDate(date: string): string {
+    return transformDate(date);
   };
 };

@@ -2,7 +2,7 @@ export interface IPayment {
     id?: number;
     ownerDPI: string;
     amount: number;
-    month: number;
+    month: string;
     payedAt?: string;
     description: string;
     photo?: string;

@@ -6,8 +6,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackBarService, transformDate } from 'app/utils';
 import { PaymentService } from '../payment.service';
-import { IPayment } from 'app/interfaces';
+import { IPayment, IResident } from 'app/interfaces';
 import { UserService } from 'app/core/user/user.service';
+import { PaymentDialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'payment-list',
@@ -39,7 +40,6 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
     public dialog: MatDialog,
-    private _snackBarService: SnackBarService,
     private _paymentService: PaymentService,
     private _userService: UserService
   ) { }
@@ -73,7 +73,8 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
   };
 
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    this._unsubscribeAll.next(null);
+    this._unsubscribeAll.complete();
   };
 
   async getPayments(dpi: string, page: number = 1, pageSize: number = 10) {
@@ -115,4 +116,11 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getPayments(this.dpi, this.page, this.pageSize);
     });
   };
+
+  openDialog(payment: IPayment) {
+    this.dialog.open(PaymentDialogComponent, {
+      width: '500px',
+      data: { payment }
+    })
+  }
 };
