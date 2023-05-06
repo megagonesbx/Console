@@ -35,7 +35,6 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
   public pageSizeOptions: number[] = [10, 15, 25];
 
   public dpi: string;
-  // TODO: Crear una columna llamada HomeAddress y luego crear un constraint para validar que solo exista un pago por mes para cada residencia
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
@@ -47,6 +46,7 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.onChangeResidence();
+    this.onListenDialog();
   }
 
   ngAfterViewInit(): void {
@@ -108,5 +108,11 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy {
   convertMonth(month: number): string {
     const months = this._paymentService.getMonths();
     return months.find(m => m.value == month)?.description;
-  }
+  };
+
+  onListenDialog() {
+    this._paymentService.dialogStatus.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
+      this.getPayments(this.dpi, this.page, this.pageSize);
+    });
+  };
 };
