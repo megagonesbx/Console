@@ -31,6 +31,7 @@ export class PaymentDialogComponent implements OnInit {
   public invalidSize: boolean = false;
 
   public homeAddress: string;
+  public amounts: { description: string; value: number; }[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -46,6 +47,7 @@ export class PaymentDialogComponent implements OnInit {
   ngOnInit(): void {
     this.getResidences();
     this.getMoths();
+    this.getAmounts();
     this.initForm();
 
     if (this.data?.payment) {
@@ -99,6 +101,10 @@ export class PaymentDialogComponent implements OnInit {
 
   getMoths() {
     this.months = this._paymentService.getMonths();
+  }
+
+  getAmounts() {
+    this.amounts = this._paymentService.getAmounts();
   }
 
   onClose() {

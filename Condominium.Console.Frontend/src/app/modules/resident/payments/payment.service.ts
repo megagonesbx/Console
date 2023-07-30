@@ -68,6 +68,12 @@ export class PaymentService {
     ];
   }
 
+  getAmounts() {
+    return [
+      { description: "Q 800.00", value: 800 },
+    ];
+  };
+
   // INTERNAL
   private get getToken() {
     return localStorage.getItem('x-token') || "";

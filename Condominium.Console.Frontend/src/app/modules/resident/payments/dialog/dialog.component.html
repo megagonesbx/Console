@@ -40,12 +40,13 @@
         </mat-form-field>
 
         <mat-form-field>
-            <input
-                matInput
-                placeholder="Monto"
-                formControlName="amount"
-                (keypress)="onlyPositiveNumbers($event)"
-            />
+            <mat-select placeholder="Monto" formControlName="amount">
+                <mat-option
+                    *ngFor="let amount of amounts"
+                    [value]="amount.value"
+                    >{{ amount.description }}</mat-option
+                >
+            </mat-select>
             <mat-error
                 *ngIf="form.get('amount').invalid && form.get('amount').touched"
             >
