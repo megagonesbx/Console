@@ -45,6 +45,18 @@ export class ResidentService {
         }
     };
 
+    async getRecordGeneric(ownerDPI: string, homeAddress: string, select: string[] = []): Promise<HouseData | null> {
+        try {
+            const user: HouseData | null = await this.residentRepository.findOne({ ownerDPI, homeAddress }, false, select);
+            if (!user) return null;
+
+            return user;
+
+        } catch (error) {
+            return null;
+        }
+    };
+
     async deleteRecord(id: number): Promise<boolean> {
         try {
             const deleted = await this.residentRepository.delete({ id: id });
@@ -93,6 +105,7 @@ export class ResidentService {
             await this.residentRepository.update({ id }, { solvent: true });
             return true;
         } catch (error) {
+            console.log("error ----------------------->", error)
             return false;
         };
     };

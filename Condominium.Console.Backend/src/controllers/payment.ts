@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { PaymentService } from '../services';
+import { PaymentService, ResidentService } from '../services';
 import { validatePayment } from '../helpers/payment';
 
 export const savePayment = async (_req: Request, _res: Response) => {
@@ -7,6 +7,7 @@ export const savePayment = async (_req: Request, _res: Response) => {
         const { ownerDPI, amount, month, description, photo, homeAddress } = _req.body;
 
         const paymentService: PaymentService = _req.app.locals.paymentService;
+        const residentService: ResidentService = _req.app.locals.residentService;
 
         const isValidPayment = await validatePayment(paymentService, ownerDPI, month, homeAddress);
 
@@ -24,6 +25,16 @@ export const savePayment = async (_req: Request, _res: Response) => {
             photo,
             homeAddress
         });
+
+        const currentMonth: number = new Date().getMonth() + 1;
+        if (currentMonth == month) {
+            const houseId: any = await residentService.getRecordGeneric(ownerDPI, homeAddress, ["id"]);
+            const solvent = await residentService.setSolventResident(parseInt(houseId.id));
+
+            if (!solvent) return _res.json({
+                statusCode: 400
+            });
+        };
 
         return _res.json({
             id,
