@@ -83,20 +83,6 @@ export const getMenuByRole = (role: number): MenuItem[] => {
                             link: '/operador/reportes-incidentes'
                         }
                     ]
-                },
-                {
-                    id: 'apps.resident',
-                    title: 'Residente',
-                    type: 'collapsable',
-                    icon: 'heroicons_outline:home',
-                    children: [
-                        {
-                            id: 'apps.residente.payments',
-                            title: 'Realizar pago',
-                            type: 'basic',
-                            link: '/residente/pagos'
-                        }
-                    ]
                 }
             );
             break;
