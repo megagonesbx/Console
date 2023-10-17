@@ -4,6 +4,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { FuseConfigService } from '@fuse/services/config';
 import { AppConfig, Scheme, Theme, Themes } from 'app/core/config/app.config';
 import { Layout } from 'app/layout/layout.types';
+import { environment } from "environments/environment.base";
+const bot_number = environment.bot_number;
 
 @Component({
     selector     : 'settings',
@@ -22,6 +24,7 @@ import { Layout } from 'app/layout/layout.types';
 })
 export class SettingsComponent implements OnInit, OnDestroy
 {
+    botLink: string;
     config: AppConfig;
     layout: Layout;
     scheme: 'dark' | 'light';
@@ -37,6 +40,7 @@ export class SettingsComponent implements OnInit, OnDestroy
         private _fuseConfigService: FuseConfigService
     )
     {
+        this.botLink = `https://api.whatsapp.com/send?phone=502${bot_number}&text=Hola%20bot%20%F0%9F%A4%96%2C%20necesito%20ayuda!`;
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -110,5 +114,9 @@ export class SettingsComponent implements OnInit, OnDestroy
     setTheme(theme: Theme): void
     {
         this._fuseConfigService.config = {theme};
+    }
+
+    openBotLink() {
+        window.open(this.botLink, '_blank');
     }
 }

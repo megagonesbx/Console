@@ -17,12 +17,13 @@ import { ShortcutsModule } from 'app/layout/common/shortcuts/shortcuts.module';
 import { UserModule } from 'app/layout/common/user/user.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { ClassyLayoutComponent } from 'app/layout/layouts/vertical/classy/classy.component';
+import { SettingsModule } from 'app/layout/common/settings/settings.module';
 
 @NgModule({
     declarations: [
         ClassyLayoutComponent
     ],
-    imports     : [
+    imports: [
         HttpClientModule,
         RouterModule,
         MatButtonModule,
@@ -39,12 +40,12 @@ import { ClassyLayoutComponent } from 'app/layout/layouts/vertical/classy/classy
         SearchModule,
         ShortcutsModule,
         UserModule,
-        SharedModule
+        SharedModule,
+        SettingsModule
     ],
-    exports     : [
+    exports: [
         ClassyLayoutComponent
     ]
 })
-export class ClassyLayoutModule
-{
+export class ClassyLayoutModule {
 }

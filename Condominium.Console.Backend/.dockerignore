@@ -1,0 +1,10 @@
+/dist
+/node_modules
+/pipelines
+/typeorm
+
+# Visual
+/.vs
+/vs
+/vscode
+/.vscode
