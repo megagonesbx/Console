@@ -6,6 +6,7 @@ export interface IPayment {
     payedAt?: string;
     description: string;
     photo?: string;
+    homeAddress?: string;
 };
 
 export interface IGetPayments {
