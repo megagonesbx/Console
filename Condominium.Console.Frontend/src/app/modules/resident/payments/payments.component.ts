@@ -126,6 +126,9 @@ export class PaymentsComponent implements OnInit, OnDestroy {
         },
         onError: err => {
           return this._snackBarService.open("Ha ocurrido un error realizar el pago.");
+        },
+        onCancel: (data, actions) => {
+          
         }
       })
       .render(this.paypalElement.nativeElement);
