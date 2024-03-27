@@ -1,0 +1,50 @@
+.inventory-grid-solvent {
+    grid-template-columns: 1fr 0.5fr 1fr;
+
+    @screen sm {
+        grid-template-columns: 1fr 1fr 0.5fr 1fr;
+    }
+
+    @screen md {
+        grid-template-columns: 1fr 1fr 0.5fr 1fr;
+    }
+
+    @screen lg {
+        grid-template-columns: 2fr 1fr 0.5fr 1fr;
+    }
+}
+
+.solvent {
+    color: green;
+}
+
+.pending {
+    color: red;
+}
+
+.mat-grid-tile {
+    border: 1px solid red;
+    cursor: pointer;
+
+    .mat-grid-tile-content {
+        flex-direction: column;
+    }
+
+    .text-muted {
+        margin: 0;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+}
+
+.mat-grid-tile-solvent {
+    border: 1px solid green;
+}
+
+.color-green {
+    color: green;
+}
+
+.color-red {
+    color: red;
+}

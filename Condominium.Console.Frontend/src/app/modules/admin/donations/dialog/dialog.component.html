@@ -1,0 +1,107 @@
+<ng-container *ngIf="isNew">
+    <h2 mat-dialog-title>Datos de donativo</h2>
+
+    <form name="form" [formGroup]="form" (ngSubmit)="createDonation()">
+
+        <mat-form-field>
+            <input matInput placeholder="Donativo" formControlName="description">
+            <mat-error *ngIf="form.get('description').invalid && form.get('description').touched">
+              Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Cantidad" formControlName="quantity" (keypress)="onlyPositiveNumbers($event)">
+            <mat-error *ngIf="form.get('quantity').invalid && form.get('quantity').touched">
+              Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Utilización" formControlName="utilization">
+            <mat-error *ngIf="form.get('utilization').invalid && form.get('utilization').touched">
+              Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <div class="aspect-w-9 aspect-h-6 mt-4">
+            <div class="flex items-center justify-center border rounded-lg bg-gray-50 dark:bg-card">  
+                <img *ngIf="base64Image" [src]="base64Image" class="donation-image">
+                <!-- <mat-icon *ngIf="!base64Image" class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon> -->
+                <div *ngIf="!base64Image" class="relative">
+                    <mat-icon class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                    <div class="bg-amber-600 doc-file">JPG</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <input 
+                type="file" 
+                name="image" 
+                (change)="onFileSelected($event)" 
+                accept=".jpeg,.jpg,.png"/>
+            <mat-error *ngIf="invalidExtention">La imágen debe ser en extensión .jpg, .png o .jpeg</mat-error>
+            <mat-error *ngIf="invalidSize">La imágen debe pesar menos o igual a 7mb</mat-error>
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button type="button" (click)="onClose()">Cancelar</button>
+            <button mat-flat-button [color]="'primary'" type="submit" [disabled]="form.invalid || form.pristine || invalidExtention || invalidSize">Crear</button>
+        </div>
+    </form>
+</ng-container>
+
+<ng-container *ngIf="!isNew">
+    <h2 mat-dialog-title>Actualizar datos de donativo</h2>
+
+    <form name="form" [formGroup]="form" (ngSubmit)="updateDonation()">
+
+        <mat-form-field>
+            <input matInput placeholder="Donativo" formControlName="description">
+            <mat-error *ngIf="form.get('description').invalid && form.get('description').touched">
+              Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Cantidad" formControlName="quantity" (keypress)="onlyPositiveNumbers($event)">
+            <mat-error *ngIf="form.get('quantity').invalid && form.get('quantity').touched">
+              Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Utilización" formControlName="utilization">
+            <mat-error *ngIf="form.get('utilization').invalid && form.get('utilization').touched">
+              Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <div class="aspect-w-9 aspect-h-6 mt-4">
+            <div class="flex items-center justify-center border rounded-lg bg-gray-50 dark:bg-card">  
+                <img *ngIf="base64Image" [src]="base64Image" class="donation-image">
+
+                <div *ngIf="!base64Image" class="relative">
+                    <mat-icon class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                    <div class="bg-amber-600 doc-file">JPG</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <input 
+                type="file" 
+                name="image" 
+                (change)="onFileSelected($event)" 
+                accept=".jpeg,.jpg,.png"/>
+            <mat-error *ngIf="invalidExtention">La imágen debe ser en extensión .jpg, .png o .jpeg</mat-error>
+            <mat-error *ngIf="invalidSize">La imágen debe pesar menos o igual a 7mb</mat-error>
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button type="button" (click)="onClose()">Cancelar</button>
+            <button mat-flat-button [color]="'primary'" type="submit" [disabled]="form.invalid || form.pristine && noImageChanged || invalidExtention || invalidSize">Actualizar</button>
+        </div>
+    </form>
+</ng-container>

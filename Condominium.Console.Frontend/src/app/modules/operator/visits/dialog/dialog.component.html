@@ -1,0 +1,76 @@
+<ng-container *ngIf="isNew">
+    <h2 mat-dialog-title>Datos del visitante</h2>
+
+    <form name="form" [formGroup]="form" (ngSubmit)="createVisitor()">
+
+        <mat-form-field>
+            <input matInput placeholder="Nombre del residente" formControlName="name">
+            <mat-error *ngIf="form.get('name').invalid && form.get('name').touched">
+              Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="DPI" formControlName="dpi" (keypress)="onlyPositiveNumbers($event)">
+            <mat-error *ngIf="form.get('dpi').invalid && form.get('dpi').touched">
+              Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="Residencia" formControlName="homeAddress">
+              <mat-option *ngFor="let resident of residents$ | async" [value]="resident.homeAddress">{{ resident.homeAddress }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('homeAddress').invalid && form.get('homeAddress').touched">
+              Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <div mat-dialog-actions>
+            <button mat-button type="button" (click)="onClose()">Cancelar</button>
+            <button mat-flat-button [color]="'primary'" type="submit" [disabled]="form.invalid || form.pristine">Crear</button>
+        </div>
+    </form>
+</ng-container>
+
+<ng-container *ngIf="!isNew">
+  <h2 mat-dialog-title>Actualizar datos del visitante</h2>
+
+  <form name="form" [formGroup]="form" (ngSubmit)="updateVisitor()">
+
+      <mat-form-field>
+          <input matInput placeholder="Nombre del residente" formControlName="name">
+          <mat-error *ngIf="form.get('name').invalid && form.get('name').touched">
+            Este campo es requerido.
+          </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+          <input matInput placeholder="DPI" formControlName="dpi" (keypress)="onlyPositiveNumbers($event)">
+          <mat-error *ngIf="form.get('dpi').invalid && form.get('dpi').touched">
+            Este campo es requerido.
+          </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+          <mat-select placeholder="Residencia" formControlName="homeAddress">
+            <mat-option *ngFor="let resident of residents$ | async" [value]="resident.homeAddress">{{ resident.homeAddress }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('homeAddress').invalid && form.get('homeAddress').touched">
+            Este campo es requerido.
+          </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Fecha de entrada" formControlName="createdAt" readonly>
+        <mat-error *ngIf="form.get('createdAt').invalid && form.get('createdAt').touched">
+          Este campo es requerido.
+        </mat-error>
+      </mat-form-field>
+
+      <div mat-dialog-actions>
+          <button mat-button type="button" (click)="onClose()">Cancelar</button>
+          <button mat-flat-button [color]="'primary'" type="submit" [disabled]="form.invalid || form.pristine">Actualizar</button>
+      </div>
+  </form>
+</ng-container>

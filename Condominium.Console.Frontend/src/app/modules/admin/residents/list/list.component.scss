@@ -1,0 +1,16 @@
+.inventory-grid-resident {
+    height: 72.5px;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    @screen sm {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    @screen md {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    @screen lg {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+    }
+}
