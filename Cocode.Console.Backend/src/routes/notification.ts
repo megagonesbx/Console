@@ -1,6 +1,15 @@
 import { Router } from "express";
-import { deleteNotification, getNotifications, sendNotification, updateNotification } from "../controllers";
-import { createNotificationValidationRules, notificationValidationRules, getNotificationsValidationRules } from "../validators";
+import {
+  deleteNotification,
+  getNotifications,
+  sendNotification,
+  updateNotification,
+} from "../controllers";
+import {
+  createNotificationValidationRules,
+  notificationValidationRules,
+  getNotificationsValidationRules,
+} from "../validators";
 import { validateRole, validateFields, validateJWT } from "../middlewares";
 
 const router = Router();
@@ -23,11 +32,11 @@ const router = Router();
  *               email:
  *                   type: string
  *                   description: Resident email to send notification.
- *                   example: swagger@condominium.com
- *                  
+ *                   example: swagger@cocode.com
+ *
  *     responses:
  *       200:
- *         description:  
+ *         description:
  *         content:
  *           application/json:
  *             example:
@@ -47,12 +56,12 @@ const router = Router();
  *                  example: {"errors":[{"field":"email","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or is empty."}}]}
  */
 router.post(
-    '/create',
-    createNotificationValidationRules(),
-    validateJWT,
-    validateRole(1),
-    validateFields,
-    sendNotification
+  "/create",
+  createNotificationValidationRules(),
+  validateJWT,
+  validateRole(1),
+  validateFields,
+  sendNotification
 );
 
 /**
@@ -70,7 +79,7 @@ router.post(
  *        type: string
  *     responses:
  *       200:
- *         description:  
+ *         description:
  *         content:
  *           application/json:
  *             example::
@@ -90,12 +99,12 @@ router.post(
  *                  example: {"errors":[{"field":"email","message":{"requiredType":"string","warnings":"The email doesn't exist in the queryparam, is not a valid email or is empty."}}]}
  */
 router.get(
-    '/:email',
-    getNotificationsValidationRules(),
-    validateJWT,
-    validateRole(3),
-    validateFields,
-    getNotifications
+  "/:email",
+  getNotificationsValidationRules(),
+  validateJWT,
+  validateRole(3),
+  validateFields,
+  getNotifications
 );
 
 /**
@@ -113,7 +122,7 @@ router.get(
  *        type: string
  *     responses:
  *       200:
- *         description:  
+ *         description:
  *         content:
  *           application/json:
  *             example:
@@ -130,12 +139,13 @@ router.get(
  *                  example: {"errors":[{"field":"ID","message":{"requiredType":"string","warnings":"The ID doesn't exist in the queryparam, is not a integer or is empty."}}]}
  */
 router.put(
-    '/viewed/:notificationId',
-    notificationValidationRules(),
-    validateJWT,
-    validateRole(3),
-    validateFields,
-    updateNotification);
+  "/viewed/:notificationId",
+  notificationValidationRules(),
+  validateJWT,
+  validateRole(3),
+  validateFields,
+  updateNotification
+);
 
 /**
  * @swagger
@@ -152,7 +162,7 @@ router.put(
  *        type: string
  *     responses:
  *       200:
- *         description:  
+ *         description:
  *         content:
  *           application/json:
  *             example:
@@ -169,12 +179,12 @@ router.put(
  *                  example: {"errors":[{"field":"ID","message":{"requiredType":"string","warnings":"The ID doesn't exist in the queryparam, is not a integer or is empty."}}]}
  */
 router.delete(
-    '/delete/:notificationId', 
-    notificationValidationRules(),
-    validateJWT,
-    validateRole(3),
-    validateFields,
-    deleteNotification
+  "/delete/:notificationId",
+  notificationValidationRules(),
+  validateJWT,
+  validateRole(3),
+  validateFields,
+  deleteNotification
 );
 
 export default router;

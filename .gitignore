@@ -1,18 +1,18 @@
 # BACKEND
-Condominium.Console.Backend/node_modules
-Condominium.Console.Backend/.env
-Condominium.Console.Backend/dist
+Cocode.Console.Backend/node_modules
+Cocode.Console.Backend/.env
+Cocode.Console.Backend/dist
 
 # Compiled output
-Condominium.Console.Frontend/dist
-Condominium.Console.Frontend/tmp
-Condominium.Console.Frontend/out-tsc
-Condominium.Console.Frontend/bazel-out
+Cocode.Console.Frontend/dist
+Cocode.Console.Frontend/tmp
+Cocode.Console.Frontend/out-tsc
+Cocode.Console.Frontend/bazel-out
 
 # Node
-Condominium.Console.Frontend/node_modules
-Condominium.Console.Frontend/npm-debug.log
-Condominium.Console.Frontend/yarn-error.log
+Cocode.Console.Frontend/node_modules
+Cocode.Console.Frontend/npm-debug.log
+Cocode.Console.Frontend/yarn-error.log
 
 # IDEs and editors
 .idea/
@@ -24,22 +24,22 @@ Condominium.Console.Frontend/yarn-error.log
 *.sublime-workspace
 
 # Visual Studio Code
-Condominium.Console.Frontend/.vscode/*
-Condominium.Console.Frontend/!.vscode/settings.json
-Condominium.Console.Frontend/!.vscode/tasks.json
-Condominium.Console.Frontend/!.vscode/launch.json
-Condominium.Console.Frontend/!.vscode/extensions.json
-Condominium.Console.Frontend/.history/*
+Cocode.Console.Frontend/.vscode/*
+Cocode.Console.Frontend/!.vscode/settings.json
+Cocode.Console.Frontend/!.vscode/tasks.json
+Cocode.Console.Frontend/!.vscode/launch.json
+Cocode.Console.Frontend/!.vscode/extensions.json
+Cocode.Console.Frontend/.history/*
 
 # Miscellaneous
-Condominium.Console.Frontend/.angular/cache
+Cocode.Console.Frontend/.angular/cache
 .sass-cache/
-Condominium.Console.Frontend/connect.lock
-Condominium.Console.Frontend/coverage
-Condominium.Console.Frontend/libpeerconnection.log
+Cocode.Console.Frontend/connect.lock
+Cocode.Console.Frontend/coverage
+Cocode.Console.Frontend/libpeerconnection.log
 testem.log
-Condominium.Console.Frontend/typings
+Cocode.Console.Frontend/typings
 
 # System files
-Condominium.Console.Frontend/.DS_Store
-Condominium.Console.Frontend/Thumbs.db
+Cocode.Console.Frontend/.DS_Store
+Cocode.Console.Frontend/Thumbs.db
