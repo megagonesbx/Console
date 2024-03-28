@@ -1,9 +1,7 @@
-export * as Auth from './auth';
-export * as User from './users';
-export * as Resident from './resident';
-export * as Donation from './donation';
-export * as Spreadsheet from './spreadsheet';
-export * as Notification from './notification';
-export * as Incident from './incident';
-export * as Payment from './payment';
-export * as Visitor from './visitor';
+export * as Auth from "./auth";
+export * as User from "./users";
+export * as Resident from "./resident";
+export * as Spreadsheet from "./spreadsheet";
+export * as Notification from "./notification";
+export * as Incident from "./incident";
+export * as Payment from "./payment";
