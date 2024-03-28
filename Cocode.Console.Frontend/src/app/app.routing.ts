@@ -41,14 +41,6 @@ export const appRoutes: Route[] = [
                         (m) => m.UsersModule
                     ),
             },
-            {
-                path: 'residentes-solventes',
-                canActivate: [AuthGuard],
-                loadChildren: () =>
-                    import('app/modules/admin/solvents/solvents.module').then(
-                        (m) => m.SolventsModule
-                    ),
-            },
             { path: '', pathMatch: 'full', redirectTo: 'usuarios' },
             { path: '**', pathMatch: 'full', redirectTo: 'usuarios' },
         ],
@@ -65,9 +57,9 @@ export const appRoutes: Route[] = [
                 path: 'pagos',
                 canActivate: [AuthGuard],
                 loadChildren: () =>
-                    import(
-                        'app/modules/resident/payments/payments.module'
-                    ).then((m) => m.PaymentsModule),
+                    import('app/modules/neighbor/payment/payment.module').then(
+                        (m) => m.PaymentModule
+                    ),
             },
             { path: '', pathMatch: 'full', redirectTo: 'pagos' },
             { path: '**', pathMatch: 'full', redirectTo: 'pagos' },

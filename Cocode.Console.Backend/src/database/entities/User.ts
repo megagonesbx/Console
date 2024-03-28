@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('UserData')
+@Entity("UserData")
 export class UserData {
   @PrimaryGeneratedColumn()
   id!: number;
@@ -17,6 +17,9 @@ export class UserData {
   @Column({ nullable: false })
   Password!: string;
 
-  @Column({ default: () => 'CURRENT_TIMESTAMP', nullable: false })
+  @Column({ default: () => "CURRENT_TIMESTAMP", nullable: false })
   createdAt!: Date;
+
+  @Column({ default: () => false, nullable: false })
+  IsSolvent!: boolean;
 }

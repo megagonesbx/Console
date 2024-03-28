@@ -40,12 +40,6 @@ export const getMenuByRole = (role: number): MenuItem[] => {
             type: "basic",
             link: "/administrador/usuarios",
           },
-          {
-            id: "apps.administrador.solvent",
-            title: "Residentes solventes",
-            type: "basic",
-            link: "/administrador/residentes-solventes",
-          },
         ],
       });
       break;
