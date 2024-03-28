@@ -4,7 +4,6 @@ import Swagger from "swagger-ui-express";
 
 import {
   Auth,
-  Resident,
   User,
   Spreadsheet,
   Notification,
@@ -18,7 +17,6 @@ import { GenericDataSource } from "../database/connection";
 import {
   UserService,
   AuthService,
-  ResidentService,
   SpreadsheetService,
   NotificationService,
   IncidentService,
@@ -45,9 +43,6 @@ export class Server {
 
       this.app.locals.userService = await new UserService(generic.getClient());
       this.app.locals.authService = await new AuthService(generic.getClient());
-      this.app.locals.residentService = await new ResidentService(
-        generic.getClient()
-      );
       this.app.locals.spreadsheetService = await new SpreadsheetService(
         generic.getClient()
       );
@@ -84,7 +79,6 @@ export class Server {
     this.app.use(Path.DOCS, Swagger.serve, Swagger.setup(openApiConfig));
     this.app.use(Path.INCIDENT, Incident.default);
     this.app.use(Path.NOTIFICATION, Notification.default);
-    this.app.use(Path.RESIDENT, Resident.default);
     this.app.use(Path.SPREADSHEET, Spreadsheet.default);
     this.app.use(Path.USER, User.default);
     this.app.use(Path.PAYMENT, Payment.default);

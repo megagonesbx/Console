@@ -11,7 +11,6 @@ import {
 } from "../../config";
 
 import {
-  HouseData,
   IncidentData,
   PaymentData,
   RoleData,
@@ -35,7 +34,6 @@ class GenericDataSource {
       synchronize: false,
       entities: [
         UserData,
-        HouseData,
         PaymentData,
         RoleData,
         IncidentData,

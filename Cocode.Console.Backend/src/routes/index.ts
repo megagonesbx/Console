@@ -1,6 +1,5 @@
 export * as Auth from "./auth";
 export * as User from "./users";
-export * as Resident from "./resident";
 export * as Spreadsheet from "./spreadsheet";
 export * as Notification from "./notification";
 export * as Incident from "./incident";
