@@ -2,14 +2,7 @@ import express, { Application } from "express";
 import cors from "cors";
 import Swagger from "swagger-ui-express";
 
-import {
-  Auth,
-  User,
-  Spreadsheet,
-  Notification,
-  Incident,
-  Payment,
-} from "../routes";
+import { Auth, User, Payment, Incident, Notification } from "../routes";
 
 import { PORT, SQL_MAX_SIZE_IMAGE, SQL_PARAMETER_LIMIT_IMAGE } from "../config";
 import { openApiConfig } from "../documentation";
@@ -17,10 +10,9 @@ import { GenericDataSource } from "../database/connection";
 import {
   UserService,
   AuthService,
-  SpreadsheetService,
-  NotificationService,
-  IncidentService,
   PaymentService,
+  IncidentService,
+  NotificationService,
 } from "../services";
 import { Path } from "../typings";
 export class Server {
@@ -43,9 +35,6 @@ export class Server {
 
       this.app.locals.userService = await new UserService(generic.getClient());
       this.app.locals.authService = await new AuthService(generic.getClient());
-      this.app.locals.spreadsheetService = await new SpreadsheetService(
-        generic.getClient()
-      );
       this.app.locals.notificationService = await new NotificationService(
         generic.getClient()
       );
@@ -76,12 +65,11 @@ export class Server {
 
   private routes() {
     this.app.use(Path.AUTH, Auth.default);
-    this.app.use(Path.DOCS, Swagger.serve, Swagger.setup(openApiConfig));
-    this.app.use(Path.INCIDENT, Incident.default);
-    this.app.use(Path.NOTIFICATION, Notification.default);
-    this.app.use(Path.SPREADSHEET, Spreadsheet.default);
     this.app.use(Path.USER, User.default);
     this.app.use(Path.PAYMENT, Payment.default);
+    this.app.use(Path.INCIDENT, Incident.default);
+    this.app.use(Path.NOTIFICATION, Notification.default);
+    this.app.use(Path.DOCS, Swagger.serve, Swagger.setup(openApiConfig));
   }
 
   public listen() {

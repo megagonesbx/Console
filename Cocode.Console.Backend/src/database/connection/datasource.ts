@@ -15,7 +15,6 @@ import {
   PaymentData,
   RoleData,
   UserData,
-  SpreadsheetData,
   NotificationData,
 } from "../entities";
 
@@ -31,13 +30,12 @@ class GenericDataSource {
       password: SQL_PASSWORD,
       database: SQL_DATABASE,
       cache: SQL_CACHE || SQL_CACHE === "true" ? true : false,
-      synchronize: false,
+      synchronize: true,
       entities: [
         UserData,
-        PaymentData,
         RoleData,
+        PaymentData,
         IncidentData,
-        SpreadsheetData,
         NotificationData,
       ],
       options: {

@@ -1,4 +1,4 @@
 export * from './auth';
 export * from './global';
-export * from './spreadsheet';
+export * from './payment';
 export * from './validators';
