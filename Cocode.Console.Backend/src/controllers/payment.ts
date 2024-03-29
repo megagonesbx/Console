@@ -4,17 +4,11 @@ import { validatePayment } from "../helpers/payment";
 
 export const savePayment = async (_req: Request, _res: Response) => {
   try {
-    const { ownerDPI, amount, month, description, photo, homeAddress } =
-      _req.body;
+    const { userId, amount, month, description, photo } = _req.body;
 
     const paymentService: PaymentService = _req.app.locals.paymentService;
 
-    const isValidPayment = await validatePayment(
-      paymentService,
-      ownerDPI,
-      month,
-      homeAddress
-    );
+    const isValidPayment = await validatePayment(paymentService, userId, month);
 
     if (!isValidPayment) {
       return _res.status(403).json({
@@ -23,12 +17,11 @@ export const savePayment = async (_req: Request, _res: Response) => {
     }
 
     const id = await paymentService.insertRecord({
-      ownerDPI,
-      amount,
       month,
-      description,
       photo,
-      homeAddress,
+      userId,
+      amount,
+      description,
     });
 
     return _res.json({

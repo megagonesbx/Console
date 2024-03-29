@@ -20,6 +20,6 @@ export class UserData {
   @Column({ default: () => "CURRENT_TIMESTAMP", nullable: false })
   createdAt!: Date;
 
-  @Column({ default: () => false, nullable: false })
+  @Column({ default: false, nullable: false })
   IsSolvent!: boolean;
 }

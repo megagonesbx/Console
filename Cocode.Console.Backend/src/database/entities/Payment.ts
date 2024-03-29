@@ -1,12 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('PaymentData')
+@Entity("PaymentData")
 export class PaymentData {
   @PrimaryGeneratedColumn()
   id!: number;
 
   @Column({ nullable: false })
-  ownerDPI!: string;
+  userId!: string;
 
   @Column({ nullable: false })
   amount!: number;
@@ -14,7 +14,7 @@ export class PaymentData {
   @Column({ nullable: false })
   month!: string;
 
-  @Column({ default: () => 'CURRENT_TIMESTAMP', nullable: false })
+  @Column({ default: () => "CURRENT_TIMESTAMP", nullable: false })
   payedAt!: Date;
 
   @Column({ nullable: false })
@@ -22,7 +22,4 @@ export class PaymentData {
 
   @Column()
   photo!: string;
-
-  @Column()
-  homeAddress!: string;
 }
