@@ -1,8 +1,8 @@
 export interface IUser {
     data: User[];
-    count: number;
-    page: number;
-    pages: number;
+    count?: number;
+    page?: number;
+    pages?: number;
     statusCode: number;
 }
 
@@ -13,6 +13,7 @@ export interface User {
     Email: string;
     CreatedAt: Date;
     name?: string;
+    IsSolvent: boolean;
 }
 
 export interface Users {
@@ -24,16 +25,16 @@ export interface Users {
 
 export interface INewUser {
     firstName: string;
-    lastName:  string;
-    role:      number;
-    email:     string;
-    password?:  string;
+    lastName: string;
+    role: number;
+    email: string;
+    password?: string;
 }
 
 export interface INewUserResponse {
     user: User;
     statusCode: number;
-};
+}
 
 export interface UsersPagination {
     length: number;

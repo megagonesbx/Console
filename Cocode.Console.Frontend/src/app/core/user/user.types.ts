@@ -1,5 +1,4 @@
-export interface User
-{
+export interface User {
     id: string;
     name: string;
     email: string;
@@ -7,4 +6,5 @@ export interface User
     status?: string;
     createdAt: string;
     role: number;
+    isSolvent: boolean;
 }

@@ -86,4 +86,24 @@ export class UserService {
       throw error;
     }
   }
+
+  public async listAll(role: number) {
+    try {
+      const data = await this.userRepository.findAll(
+        {
+          Role: role,
+        },
+        {
+          createdAt: "DESC",
+        },
+        ["id", "Email"]
+      );
+
+      if (!data.length) return null;
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

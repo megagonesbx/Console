@@ -1,11 +1,49 @@
 import { Router } from "express";
 
-import { createUser, deleteUser, getUser, getUsers, updateUser } from '../controllers';
+import {
+  createUser,
+  deleteUser,
+  getNeighbors,
+  getUser,
+  getUsers,
+  updateUser,
+} from "../controllers";
 
-import { validateRole, validateFields, validateJWT } from '../middlewares';
-import { createUserValidationRules, getUsersValidationRules, getUserValidationRules, updateUserValidationRules } from "../validators";
+import { validateRole, validateFields, validateJWT } from "../middlewares";
+import {
+  createUserValidationRules,
+  getUsersValidationRules,
+  getUserValidationRules,
+  updateUserValidationRules,
+} from "../validators";
 
 const router = Router();
+
+/**
+ * @swagger
+ * /api/user/neighbors:
+ *   get:
+ *     summary: Get all neighbors
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description:
+ *         content:
+ *           application/json:
+ *             example:
+ *               data: [{"id": 1, "Email": "john.smith@example.com",},{"id": 2, "Email": "john.doe@example.com"}]
+ *               count: 10
+ *               page: 1
+ *               pages: 3
+ *               statusCode: 200
+ */
+router.get(
+  "/neighbors",
+  validateJWT,
+  validateRole(3),
+  validateFields,
+  getNeighbors
+);
 
 /**
  * @swagger
@@ -22,7 +60,7 @@ const router = Router();
  *        type: string
  *     responses:
  *       200:
- *         description:  
+ *         description:
  *         content:
  *           application/json:
  *             example:
@@ -46,12 +84,12 @@ const router = Router();
  *                  example: {"errors":[{"field":"email","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or must be greater than 0."}}]}
  */
 router.get(
-    '/:userId',
-    getUserValidationRules(),
-    validateJWT,
-    validateRole(1),
-    validateFields,
-    getUser
+  "/:userId",
+  getUserValidationRules(),
+  validateJWT,
+  validateRole(1),
+  validateFields,
+  getUser
 );
 
 /**
@@ -93,10 +131,10 @@ router.get(
  *                   type: string
  *                   description: User password.
  *                   example: 87G!8g3xrF3Hif@H!5&Xx$QkbT8
- *                  
+ *
  *     responses:
  *       200:
- *         description:  
+ *         description:
  *         content:
  *           application/json:
  *             example:
@@ -120,12 +158,12 @@ router.get(
  *                  example: {"errors":[{"field":"email","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or must be greater than 0."}}]}
  */
 router.post(
-    '/create',
-    createUserValidationRules(),
-    validateJWT,
-    validateRole(1),
-    validateFields,
-    createUser
+  "/create",
+  createUserValidationRules(),
+  validateJWT,
+  validateRole(1),
+  validateFields,
+  createUser
 );
 
 /**
@@ -170,10 +208,10 @@ router.post(
  *               id:
  *                   type: integer
  *                   example: 1
- *                  
+ *
  *     responses:
  *       200:
- *         description:  
+ *         description:
  *         content:
  *           application/json:
  *             example:
@@ -192,12 +230,12 @@ router.post(
  *                  example: {"errors":[{"field":"id","message":{"requiredType":"integer","warnings":"The field does not exist, is not a integer or must be greater than 0."}}]}
  */
 router.put(
-    '/update',
-    updateUserValidationRules(),
-    validateJWT,
-    validateRole(1),
-    validateFields,
-    updateUser
+  "/update",
+  updateUserValidationRules(),
+  validateJWT,
+  validateRole(1),
+  validateFields,
+  updateUser
 );
 
 /**
@@ -215,7 +253,7 @@ router.put(
  *        type: string
  *     responses:
  *       200:
- *         description:  
+ *         description:
  *         content:
  *           application/json:
  *             example:
@@ -234,13 +272,13 @@ router.put(
  *                  example: {"errors":[{"field":"Id","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or must be greater than 0."}}]}
  */
 router.delete(
-    '/:userId',
-    getUserValidationRules(),
-    validateJWT,
-    validateRole(1),
-    validateFields,
-    deleteUser
-)
+  "/:userId",
+  getUserValidationRules(),
+  validateJWT,
+  validateRole(1),
+  validateFields,
+  deleteUser
+);
 
 /**
  * @swagger
@@ -271,12 +309,12 @@ router.delete(
  *                   example: 1
  *     responses:
  *       200:
- *         description:  
+ *         description:
  *         content:
  *           application/json:
  *             example:
  *               data: [{"DisplayName":"John Smith","Role": 2,"Email": "john.smith@example.com","CreatedAt": "2023-03-20 06:00:00.000"},{"DisplayName":"John Doe","Role": 1,"Email": "john.doe@example.com","CreatedAt": "2023-03-21 06:00:00.000"}]
- *               count: 10 
+ *               count: 10
  *               page: 1
  *               pages: 3
  *               statusCode: 200
@@ -294,12 +332,12 @@ router.delete(
  *                  example: {"errors":[{"field":"roleId","message":{"requiredType":"int","warnings":"The field does not exist, is not a number or must be greater than 0."}}]}
  */
 router.post(
-    '/users',
-    getUsersValidationRules(),
-    validateJWT,
-    validateRole(1),
-    validateFields,
-    getUsers
-)
+  "/users",
+  getUsersValidationRules(),
+  validateJWT,
+  validateRole(1),
+  validateFields,
+  getUsers
+);
 
 export default router;
