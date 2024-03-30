@@ -106,4 +106,19 @@ export class UserService {
       throw error;
     }
   }
+
+  public async updateMany(options: Partial<UserData>) {
+    try {
+      const { affected } = await this.userRepository.updateMany(
+        { IsSolvent: false },
+        "Role = :Role",
+        options
+      );
+
+      return affected ? true : false;
+    } catch (error) {
+      console.log("------------->", error);
+      throw error;
+    }
+  }
 }

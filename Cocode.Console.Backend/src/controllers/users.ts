@@ -176,3 +176,22 @@ export const getNeighbors = async (_req: Request, _res: Response) => {
     });
   }
 };
+
+export const setInsolventNeighbors = async (_req: Request, _res: Response) => {
+  try {
+    const userService: UserService = _req.app.locals.userService;
+
+    const wasUpdated = await userService.updateMany({
+      Role: 3,
+    });
+
+    return _res.status(200).json({
+      statusCode: 200,
+      wasUpdated,
+    });
+  } catch (error) {
+    return _res.status(500).json({
+      statusCode: 500,
+    });
+  }
+};

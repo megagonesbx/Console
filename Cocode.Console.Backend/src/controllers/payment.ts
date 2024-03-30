@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
-import { PaymentService } from "../services";
-import { validatePayment } from "../helpers/payment";
+import { PaymentService, UserService } from "../services";
+import { validatePayment, validateSolvent } from "../helpers/payment";
 
 export const savePayment = async (_req: Request, _res: Response) => {
   try {
     const { userId, amount, month, description, photo } = _req.body;
 
     const paymentService: PaymentService = _req.app.locals.paymentService;
+    const userService: UserService = _req.app.locals.userService;
 
     const isValidPayment = await validatePayment(paymentService, userId, month);
 
@@ -23,6 +24,15 @@ export const savePayment = async (_req: Request, _res: Response) => {
       amount,
       description,
     });
+
+    const { totalItems } = await paymentService.getRecords(1, 12, userId);
+    const isSolvent = validateSolvent(totalItems);
+
+    if (isSolvent) {
+      await userService.updateRecord(userId, {
+        IsSolvent: true,
+      });
+    }
 
     return _res.json({
       id,

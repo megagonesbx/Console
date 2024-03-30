@@ -6,6 +6,7 @@ import {
   getNeighbors,
   getUser,
   getUsers,
+  setInsolventNeighbors,
   updateUser,
 } from "../controllers";
 
@@ -240,7 +241,33 @@ router.put(
 
 /**
  * @swagger
- * /api/user/{id}:
+ * /api/user/neighbors:
+ *   put:
+ *     summary: Update neighbors
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Successfully update
+ *         content:
+ *           application/json:
+ *             example:
+ *                 statusCode: 200
+ *       400:
+ *         description: Was not updated
+ *       500:
+ *         description: Unknown error
+ */
+router.put(
+  "/neighbors",
+  validateJWT,
+  validateRole(1),
+  validateFields,
+  setInsolventNeighbors
+);
+
+/**
+ * @swagger
+ * /api/user/updateN:
  *   delete:
  *     summary: Delete user by Id
  *     tags: [User]

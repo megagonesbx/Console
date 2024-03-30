@@ -71,7 +71,10 @@ export class PaymentService {
     }
 
     public getMonths() {
-        return [
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth() + 1;
+
+        const months = [
             { description: 'Enero', value: 1 },
             { description: 'Febrero', value: 2 },
             { description: 'Marzo', value: 3 },
@@ -85,6 +88,8 @@ export class PaymentService {
             { description: 'Noviembre', value: 11 },
             { description: 'Diciembre', value: 12 },
         ];
+
+        return months.slice(0, currentMonth);
     }
 
     public getAmounts() {
