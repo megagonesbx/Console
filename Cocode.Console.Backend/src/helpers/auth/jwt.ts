@@ -40,6 +40,12 @@ export const getMenuByRole = (role: number): MenuItem[] => {
             type: "basic",
             link: "/administrador/usuarios",
           },
+          {
+            id: "apps.administrador.payments",
+            title: "Historial de pagos",
+            type: "basic",
+            link: "/administrador/historial-pagos",
+          },
         ],
       });
       break;
@@ -47,13 +53,13 @@ export const getMenuByRole = (role: number): MenuItem[] => {
     case 3:
       menu.push({
         id: "apps.resident",
-        title: "Residente",
+        title: "Vecino",
         type: "collapsable",
         icon: "heroicons_outline:home",
         children: [
           {
             id: "apps.residente.payments",
-            title: "Realizar pago",
+            title: "Pagos",
             type: "basic",
             link: "/residente/pagos",
           },

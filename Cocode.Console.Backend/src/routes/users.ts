@@ -40,7 +40,7 @@ const router = Router();
 router.get(
   "/neighbors",
   validateJWT,
-  validateRole(3),
+  validateRole(1),
   validateFields,
   getNeighbors
 );

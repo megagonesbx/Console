@@ -12,57 +12,19 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 id: 'apps.administrador.users',
                 title: 'Usuarios',
                 type: 'basic',
-                link: '/usuarios'
+                link: '/usuarios',
             },
             {
-                id: 'apps.administrador.residents',
-                title: 'Residentes',
+                id: 'apps.administrador.payments',
+                title: 'Pagos',
                 type: 'basic',
-                link: '/residentes'
+                link: '/historial-pagos',
             },
-            {
-                id: 'apps.administrador.donations',
-                title: 'Donaciones',
-                type: 'basic',
-                link: '/donaciones'
-            },
-            {
-                id: 'apps.administrador.form',
-                title: 'Planilla',
-                type: 'basic',
-                link: '/planilla'
-            },
-            {
-                id: 'apps.administrador.solvent',
-                title: 'Residentes solventes',
-                type: 'basic',
-                link: '/residentes-solventes'
-            }
-        ]
-    },
-    {
-        id: 'apps.operador',
-        title: 'Operador',
-        type: 'collapsable',
-        icon: 'heroicons_outline:user-group',
-        children: [
-            {
-                id: 'apps.operador.visits',
-                title: 'Visitas',
-                type: 'basic',
-                link: '/visitas'
-            },
-            {
-                id: 'apps.operador.reports',
-                title: 'Reportes',
-                type: 'basic',
-                link: '/reportes'
-            }
-        ]
+        ],
     },
     {
         id: 'apps.resident',
-        title: 'Residente',
+        title: 'Vecino',
         type: 'collapsable',
         icon: 'heroicons_outline:home',
         children: [
@@ -70,16 +32,10 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 id: 'apps.residente.payments',
                 title: 'Realizar pago',
                 type: 'basic',
-                link: '/pagos'
+                link: '/pagos',
             },
-            {
-                id: 'apps.residente.history',
-                title: 'Historial de pagos',
-                type: 'basic',
-                link: '/historial-pagos'
-            }
-        ]
-    }
+        ],
+    },
 ];
 export const compactNavigation: FuseNavigationItem[] = [
     {
@@ -87,8 +43,8 @@ export const compactNavigation: FuseNavigationItem[] = [
         title: 'Example',
         type: 'basic',
         icon: 'heroicons_outline:chart-pie',
-        link: '/example'
-    }
+        link: '/example',
+    },
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
     {
@@ -96,8 +52,8 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         title: 'Example',
         type: 'basic',
         icon: 'heroicons_outline:chart-pie',
-        link: '/example'
-    }
+        link: '/example',
+    },
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
     {
@@ -105,6 +61,6 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         title: 'Example',
         type: 'basic',
         icon: 'heroicons_outline:chart-pie',
-        link: '/example'
-    }
+        link: '/example',
+    },
 ];

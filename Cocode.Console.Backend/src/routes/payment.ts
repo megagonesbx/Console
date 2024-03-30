@@ -1,7 +1,10 @@
-import { Router } from 'express';
-import { getPayments, savePayment } from '../controllers';
-import { createPaymentValidationRules, getPaymentsValidationRules } from '../validators';
-import { validateFields, validateJWT, validateRole } from '../middlewares';
+import { Router } from "express";
+import { getPayments, savePayment } from "../controllers";
+import {
+  createPaymentValidationRules,
+  getPaymentsValidationRules,
+} from "../validators";
+import { validateFields, validateJWT, validateRole } from "../middlewares";
 
 const router = Router();
 
@@ -48,10 +51,10 @@ const router = Router();
  *                   type: string
  *                   description: Home Address.
  *                   example: Casa 40
- *                  
+ *
  *     responses:
  *       200:
- *         description:  
+ *         description:
  *         content:
  *           application/json:
  *             example:
@@ -71,12 +74,12 @@ const router = Router();
  *                  example: {"errors":[{"field":"ownerDPI","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or is empty."}}]}
  */
 router.post(
-    '/create', 
-    createPaymentValidationRules(),
-    validateJWT,
-    validateRole(3),
-    validateFields,
-    savePayment    
+  "/create",
+  createPaymentValidationRules(),
+  validateJWT,
+  validateRole(3),
+  validateFields,
+  savePayment
 );
 
 /**
@@ -108,12 +111,12 @@ router.post(
  *                   example: 1
  *     responses:
  *       200:
- *         description:  
+ *         description:
  *         content:
  *           application/json:
  *             example:
  *               data: [{"homeAddress":"Casa 1","ownerName":"admin","ownerDPI":"3639933470703","phoneNumber":"24106130","solvent":false}]
- *               count: 10 
+ *               count: 10
  *               page: 1
  *               pages: 3
  *               statusCode: 200
@@ -131,13 +134,12 @@ router.post(
  *                  example: {"errors":[{"field":"dpi","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or is empty."}}]}
  */
 router.post(
-    '/payments',
-    getPaymentsValidationRules(),
-    validateJWT,
-    validateRole(3),
-    validateFields,
-    getPayments    
+  "/payments",
+  getPaymentsValidationRules(),
+  validateJWT,
+  validateRole(1, 3),
+  validateFields,
+  getPayments
 );
-
 
 export default router;
