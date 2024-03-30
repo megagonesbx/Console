@@ -30,7 +30,7 @@ class GenericDataSource {
       password: SQL_PASSWORD,
       database: SQL_DATABASE,
       cache: SQL_CACHE || SQL_CACHE === "true" ? true : false,
-      synchronize: true,
+      synchronize: false,
       entities: [
         UserData,
         RoleData,

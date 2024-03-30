@@ -1,4 +1,4 @@
-<ng-container>
+<ng-container *ngIf="count">
     <div class="grid">
         <!-- HEADER -->
         <div
@@ -82,4 +82,19 @@
         [pageSizeOptions]="pageSizeOptions"
     >
     </mat-paginator>
+</ng-container>
+
+<ng-container *ngIf="!count">
+    <div
+        class="flex flex-col flex-auto items-center justify-center"
+        style="margin-top: 17%"
+    >
+        <mat-icon
+            class="icon-size-24"
+            [svgIcon]="'heroicons_outline:document'"
+        ></mat-icon>
+        <div class="mt-4 text-2xl font-semibold tracking-tight text-secondary">
+            No se han encontrado pagos realizados.
+        </div>
+    </div>
 </ng-container>

@@ -8,6 +8,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { PaymentService } from './payment.service';
 import { User } from 'app/core/user/user.types';
 import { MatSelectChange } from '@angular/material/select';
+import { PaymentDialog } from './dialog/dialog.component';
 
 @Component({
     selector: 'app-payment',
@@ -48,8 +49,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
             .subscribe((user) => {
                 this.user = user;
 
-                // TODO: CHANGE TO VALIDATE IF NOT ADMIN 1
-                if (user?.role !== 3) return;
+                if (user?.role !== 1) return;
 
                 this.onGetNeighbor();
             });
@@ -69,5 +69,16 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
     public onOptionSelection($event: MatSelectChange) {
         this._payments.userId.next($event.value);
+    }
+
+    public openDialog() {
+        const dialogRef = this._dialog.open(PaymentDialog, {
+            width: '500px',
+        });
+
+        dialogRef
+            .afterClosed()
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((res) => this._payments.listenDialog());
     }
 }

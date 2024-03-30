@@ -20,6 +20,6 @@ export class PaymentData {
   @Column({ nullable: false })
   description!: string;
 
-  @Column()
+  @Column({ nullable: true })
   photo!: string;
 }

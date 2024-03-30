@@ -1,20 +1,19 @@
 export interface IPayment {
     id?: number;
-    ownerDPI: string;
-    amount: number;
     month: string;
+    amount: number;
+    photo?: string;
+    userId?: number;
     payedAt?: string;
     description: string;
-    photo?: string;
-    homeAddress?: string;
-};
+}
 
 export interface IGetPayments {
     payments: IPayment[];
     total: number;
     page: number;
     pages: number;
-};
+}
 
 export interface IGetPaymentsResponse {
     data: IPayment[];
@@ -22,4 +21,4 @@ export interface IGetPaymentsResponse {
     page: number;
     pages: number;
     statusCode: number;
-};
+}

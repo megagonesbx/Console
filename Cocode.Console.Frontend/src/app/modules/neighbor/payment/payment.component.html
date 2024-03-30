@@ -12,9 +12,9 @@
         <!-- Add product button -->
         <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
             <mat-form-field
+                *ngIf="user?.role === 1"
                 class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64"
             >
-                <!-- *ngIf="user?.role === 1" -->
                 <mat-icon
                     class="icon-size-5"
                     matPrefix
@@ -34,7 +34,13 @@
                 </mat-select>
             </mat-form-field>
 
-            <button class="ml-4 mr-4" mat-flat-button [color]="'primary'">
+            <button
+                mat-flat-button
+                class="ml-4 mr-4"
+                [color]="'primary'"
+                (click)="openDialog()"
+                *ngIf="user?.role === 3"
+            >
                 <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                 <span class="ml-2 mr-1">Realizar pago</span>
             </button>

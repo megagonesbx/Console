@@ -2,6 +2,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    OnDestroy,
     OnInit,
     ViewChild,
     ViewEncapsulation,
@@ -14,6 +15,9 @@ import { UserService } from 'app/core/user/user.service';
 import { IPayment } from 'app/interfaces';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { PaymentService } from '../payment.service';
+import { transformDate } from 'app/utils';
+import { PaymentDialog } from '../dialog/dialog.component';
+import { User } from 'app/core/user/user.types';
 
 @Component({
     selector: 'payment-list',
@@ -23,7 +27,7 @@ import { PaymentService } from '../payment.service';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject();
 
     @ViewChild(MatPaginator) public _paginator: MatPaginator;
@@ -41,6 +45,7 @@ export class ListComponent implements OnInit {
     public pageSizeOptions: number[] = [10, 15, 25];
 
     public userId: number;
+    public user: User;
 
     constructor(
         public dialog: MatDialog,
@@ -50,7 +55,58 @@ export class ListComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        this._onGetSession();
+        this.onListenDialog();
         this.onChangeNeighbors();
+        this.getPayments();
+    }
+
+    ngOnDestroy(): void {
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+
+    private getPayments(
+        userId?: number,
+        page: number = 1,
+        pageSize: number = 10
+    ) {
+        try {
+            const user: number = !userId ? parseInt(this.user?.id) : userId;
+
+            this.loading = true;
+            this._payment
+                .getPayments({ page, pageSize, userId: user })
+                .pipe(takeUntil(this._unsubscribeAll))
+                .subscribe((res) => {
+                    this.payments = res.payments;
+                    this.page = res.page;
+                    this.count = res.total;
+                    this.pages = res.pages;
+                    this.loading = false;
+                    this._changeDetectorRef.markForCheck();
+                });
+
+            this.payments$ = this._payment.payments$;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    private _onGetSession() {
+        this._user.user$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((user) => {
+                this.user = user;
+            });
+    }
+
+    private onListenDialog() {
+        this._payment.dialogStatus
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((res) => {
+                this.getPayments(this.userId, this.page, this.pageSize);
+            });
     }
 
     public onChangeNeighbors() {
@@ -58,6 +114,23 @@ export class ListComponent implements OnInit {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((res) => {
                 this.userId = res;
+                this.getPayments(res);
             });
+    }
+
+    public convertDate(date: string): string {
+        return transformDate(date);
+    }
+
+    public convertMonth(month: number): string {
+        const months = this._payment.getMonths();
+        return months.find((m) => m.value == month)?.description;
+    }
+
+    public openDialog(payment: IPayment) {
+        this.dialog.open(PaymentDialog, {
+            width: '500px',
+            data: { payment },
+        });
     }
 }

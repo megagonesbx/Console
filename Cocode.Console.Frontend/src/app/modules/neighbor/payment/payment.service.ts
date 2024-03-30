@@ -30,9 +30,13 @@ export class PaymentService {
         return this.userId.asObservable();
     }
 
+    public get payments$(): Observable<IPayment[]> {
+        return this._payments.asObservable();
+    }
+
     public getPayments(request: {
         page: number;
-        userId: string;
+        userId: number;
         pageSize: number;
     }): Observable<IGetPayments | null> {
         return this._http
@@ -52,6 +56,17 @@ export class PaymentService {
                     return null;
                 }),
                 catchError((err) => of(null))
+            );
+    }
+
+    public createPayment(payment: IPayment): Observable<number> {
+        return this._http
+            .post(`${base_url}/payment/create`, payment, this.getHeaders)
+            .pipe(
+                map((res: { id: number; statusCode: number }) =>
+                    res.statusCode ? res.statusCode : 500
+                ),
+                catchError((err) => of(err.status))
             );
     }
 

@@ -37,11 +37,11 @@ export const savePayment = async (_req: Request, _res: Response) => {
 
 export const getPayments = async (_req: Request, _res: Response) => {
   try {
-    const { dpi, pageSize = 10, page = 1 } = _req.body;
+    const { userId, pageSize = 10, page = 1 } = _req.body;
 
     const paymentService: PaymentService = _req.app.locals.paymentService;
     const { data, totalItems, currentPage, totalPages } =
-      await paymentService.getRecords(page, pageSize, dpi);
+      await paymentService.getRecords(page, pageSize, userId);
 
     return _res.json({
       data,
