@@ -64,7 +64,10 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     getNotifications() {
         this._userService.user$.subscribe((res) => {
             if (res && res?.role === 3) {
-                // this._notificationsService.getAll(res.email).subscribe();
+                this._notificationsService
+                    .getAll(res.email)
+                    .pipe(takeUntil(this._unsubscribeAll))
+                    .subscribe();
             }
         });
     }
@@ -143,7 +146,19 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     toggleRead(notification: INotification): void {
         this._notificationsService
             .updateNotification(notification.id)
-            .subscribe();
+            .subscribe((status) => {
+                if (status !== 200) return;
+
+                const index = this.notifications.findIndex(
+                    (n) => n.id === notification.id
+                );
+
+                if (index !== -1) {
+                    this.notifications[index].viewed =
+                        !this.notifications[index].viewed;
+                }
+            });
+        this.unreadCount -= 1;
     }
 
     /**
@@ -152,7 +167,18 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     delete(notification: INotification): void {
         this._notificationsService
             .deleteNotification(notification.id)
-            .subscribe();
+            .subscribe((res) => {
+                if (res !== 200) return;
+
+                const index = this.notifications.findIndex(
+                    (n) => n.id === notification.id
+                );
+
+                if (index !== -1) {
+                    this.notifications.splice(index, 1);
+                }
+            });
+        this.unreadCount -= 1;
     }
 
     /**
