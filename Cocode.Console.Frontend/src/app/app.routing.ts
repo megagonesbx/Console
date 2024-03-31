@@ -49,6 +49,14 @@ export const appRoutes: Route[] = [
                         (m) => m.PaymentModule
                     ),
             },
+            {
+                path: 'reportes',
+                canActivate: [AuthGuard],
+                loadChildren: () =>
+                    import('app/modules/admin/reports/reports.module').then(
+                        (m) => m.ReportsModule
+                    ),
+            },
             { path: '', pathMatch: 'full', redirectTo: 'usuarios' },
             { path: '**', pathMatch: 'full', redirectTo: 'usuarios' },
         ],

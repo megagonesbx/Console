@@ -88,3 +88,87 @@
         </div>
     </form>
 </ng-container>
+
+<ng-container *ngIf="!isNew">
+    <h2 mat-dialog-title>Detalles del reporte</h2>
+
+    <form name="form" [formGroup]="form">
+        <mat-form-field>
+            <input
+                readonly
+                matInput
+                placeholder="Título del reporte"
+                formControlName="incidentName"
+            />
+            <mat-error
+                *ngIf="
+                    form.get('incidentName').invalid &&
+                    form.get('incidentName').touched
+                "
+            >
+                Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input
+                readonly
+                matInput
+                placeholder="Descripción"
+                formControlName="description"
+            />
+            <mat-error
+                *ngIf="
+                    form.get('description').invalid &&
+                    form.get('description').touched
+                "
+            >
+                Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input
+                readonly
+                matInput
+                placeholder="Usuario"
+                formControlName="user"
+            />
+            <mat-error
+                *ngIf="form.get('user').invalid && form.get('user').touched"
+            >
+                Este campo es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <div class="aspect-w-9 aspect-h-6 mt-4">
+            <div
+                class="flex items-center justify-center border rounded-lg bg-gray-50 dark:bg-card"
+            >
+                <img
+                    *ngIf="base64Image"
+                    [src]="base64Image"
+                    class="donation-image"
+                />
+                <div *ngIf="!base64Image" class="relative">
+                    <mat-icon
+                        class="icon-size-14 text-hint"
+                        [svgIcon]="'iconsmind:file'"
+                    ></mat-icon>
+                    <div class="bg-amber-600 doc-file">JPG</div>
+                </div>
+            </div>
+        </div>
+
+        <div mat-dialog-actions>
+            <button
+                type="submit"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="onClose()"
+            >
+                Cancelar
+            </button>
+        </div>
+    </form>
+</ng-container>

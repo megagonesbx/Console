@@ -1,6 +1,7 @@
 import {
     ChangeDetectorRef,
     Component,
+    Inject,
     OnInit,
     ViewEncapsulation,
 } from '@angular/core';
@@ -11,6 +12,8 @@ import { User } from 'app/core/user/user.types';
 import { fuseAnimations } from '@fuse/animations';
 import { SuggestionService } from './suggestion.service';
 import { SnackBarService } from 'app/utils';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { IReport } from 'app/interfaces';
 
 @Component({
     selector: 'app-suggestion',
@@ -33,6 +36,7 @@ export class SuggestionComponent implements OnInit {
     public base64Image: string | undefined;
 
     constructor(
+        @Inject(MAT_DIALOG_DATA) private data: IReport,
         private readonly _fb: FormBuilder,
         private readonly _session: SessionService,
         private readonly _snackbar: SnackBarService,
@@ -49,14 +53,33 @@ export class SuggestionComponent implements OnInit {
     ngOnInit(): void {
         this._initForm();
         this.onGetSession();
+
+        if (this.data) this.setForm(this.data);
     }
 
     private _initForm() {
         this.isNew = true;
         this.form = this._fb.group({
+            user: [],
             description: ['', [Validators.required]],
             incidentName: ['', [Validators.required]],
         });
+    }
+
+    private setForm(report: IReport) {
+        this.isNew = false;
+        this.noImageChanged = true;
+
+        this.form.patchValue({
+            id: report.id,
+            user: report.user,
+            incidentName: report.incidentName,
+            description: report.description,
+        });
+
+        if (report?.incidentEvidence) {
+            this.base64Image = report?.incidentEvidence;
+        }
     }
 
     private onGetSession() {

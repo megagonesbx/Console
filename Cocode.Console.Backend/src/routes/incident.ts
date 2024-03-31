@@ -1,18 +1,11 @@
 import { Router } from "express";
 
-import {
-  createIncident,
-  getIncident,
-  updateIncident,
-  deleteIncident,
-  getIncidents,
-} from "../controllers";
+import { createIncident, getIncident, getIncidents } from "../controllers";
 
 import {
   createIncidentValidationRules,
   getIncidentValidationRules,
   getIncidentsValidationRules,
-  updateIncidentValidationRules,
 } from "../validators";
 import { validateRole, validateFields, validateJWT } from "../middlewares";
 
@@ -122,106 +115,6 @@ router.post(
   validateRole(3),
   validateFields,
   createIncident
-);
-
-/**
- * @swagger
- * /api/incident/update:
- *   put:
- *     summary: Update report
- *     tags: [Report]
- *     requestBody:
- *       required: true
- *       content:
- *          application/json:
- *            schema:
- *              type: object
- *              required:
- *                - incidentName
- *                - description
- *              properties:
- *               incidentName:
- *                   type: string
- *                   description: Title about the report.
- *                   example: Basura tirada en casa 401
- *               description:
- *                   type: string
- *                   description: Details about the report.
- *                   example: Basura regada en casa 401
- *               incidentEvidence:
- *                   type: Integer
- *                   description: Photo about the incident reported. Is optional.
- *                   example: base64...
- *
- *     responses:
- *       200:
- *         description:
- *         content:
- *           application/json:
- *             example:
- *               statusCode: 200
- *       400:
- *         description: Unkwon error
- *       422:
- *         description: Fields Error
- *         content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                errors:
- *                  type: object
- *                  example: {"errors":[{"field":"description","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or is empty."}}]}
- */
-router.put(
-  "/update",
-  updateIncidentValidationRules(),
-  validateJWT,
-  validateRole(1, 2),
-  validateFields,
-  updateIncident
-);
-
-/**
- * @swagger
- * /api/incident/{id}:
- *   delete:
- *     summary: Delete report by Id
- *     tags: [Report]
- *     parameters:
- *     - name: id
- *       in: path
- *       description: Report ID.
- *       required: true
- *       schema:
- *        type: string
- *     responses:
- *       200:
- *         description:
- *         content:
- *           application/json:
- *             example:
- *               statusCode: 200
- *       400:
- *         description: Unkwon error
- *       422:
- *         description: Fields Error
- *         content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                errors:
- *                  type: object
- *                  example: {"errors":[{"field":"Id","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or is empty."}}]}
- */
-router.delete(
-  "/delete/:incidentId",
-  getIncidentValidationRules(),
-  validateJWT,
-  validateRole(1, 2),
-  validateFields,
-  deleteIncident
 );
 
 /**

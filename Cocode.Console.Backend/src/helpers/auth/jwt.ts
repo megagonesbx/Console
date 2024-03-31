@@ -41,6 +41,12 @@ export const getMenuByRole = (role: number): MenuItem[] => {
             link: "/administrador/usuarios",
           },
           {
+            id: "apps.administrador.reports",
+            title: "Reportes",
+            type: "basic",
+            link: "/administrador/reportes",
+          },
+          {
             id: "apps.administrador.payments",
             title: "Historial de pagos",
             type: "basic",

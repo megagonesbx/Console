@@ -121,6 +121,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private onListenDialog() {
         this._service.onGetDialog
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((res) => this._dialogRef.close());
+            .subscribe((res) => {
+                this._dialogRef.close();
+            });
     }
 }
