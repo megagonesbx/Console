@@ -6,23 +6,21 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FuseDrawerModule } from '@fuse/components/drawer';
 import { SettingsComponent } from 'app/layout/common/settings/settings.component';
 import { MatButtonModule } from '@angular/material/button';
+import { SuggestionModule } from 'app/modules/neighbor/suggestion/suggestion.module';
+import { SuggestionService } from 'app/modules/neighbor/suggestion/suggestion.service';
 
 @NgModule({
-    declarations: [
-        SettingsComponent
-    ],
-    imports     : [
+    declarations: [SettingsComponent],
+    imports: [
         CommonModule,
         RouterModule,
         MatIconModule,
         MatTooltipModule,
         FuseDrawerModule,
-        MatButtonModule
+        MatButtonModule,
+        SuggestionModule,
     ],
-    exports     : [
-        SettingsComponent
-    ]
+    exports: [SettingsComponent],
+    providers: [SuggestionService],
 })
-export class SettingsModule
-{
-}
+export class SettingsModule {}

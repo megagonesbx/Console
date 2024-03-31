@@ -4,6 +4,9 @@ import { Subject, takeUntil } from 'rxjs';
 import { FuseConfigService } from '@fuse/services/config';
 import { AppConfig, Scheme, Theme, Themes } from 'app/core/config/app.config';
 import { Layout } from 'app/layout/layout.types';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { SuggestionComponent } from 'app/modules/neighbor/suggestion/suggestion.component';
+import { SuggestionService } from 'app/modules/neighbor/suggestion/suggestion.service';
 
 @Component({
     selector: 'settings',
@@ -21,20 +24,22 @@ import { Layout } from 'app/layout/layout.types';
     encapsulation: ViewEncapsulation.None,
 })
 export class SettingsComponent implements OnInit, OnDestroy {
-    botLink: string;
     config: AppConfig;
     layout: Layout;
     scheme: 'dark' | 'light';
     theme: string;
     themes: Themes;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    private _dialogRef: MatDialogRef<SuggestionComponent, any>;
 
     /**
      * Constructor
      */
     constructor(
         private _router: Router,
-        private _fuseConfigService: FuseConfigService
+        private _fuseConfigService: FuseConfigService,
+        private readonly _dialog: MatDialog,
+        private readonly _service: SuggestionService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -52,6 +57,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
                 // Store the config
                 this.config = config;
             });
+
+        this.onListenDialog();
     }
 
     /**
@@ -105,7 +112,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this._fuseConfigService.config = { theme };
     }
 
-    openBotLink() {
-        window.open(this.botLink, '_blank');
+    public onAddSuggestion() {
+        this._dialogRef = this._dialog.open(SuggestionComponent, {
+            width: '500px',
+        });
+    }
+
+    private onListenDialog() {
+        this._service.onGetDialog
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((res) => this._dialogRef.close());
     }
 }

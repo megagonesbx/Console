@@ -3,6 +3,7 @@ export interface IReport {
     incidentName: string;
     description: string;
     incidentEvidence: string;
+    user: string;
 }
 
 export interface IGetReports {
@@ -10,7 +11,7 @@ export interface IGetReports {
     total: number;
     page: number;
     pages: number;
-};
+}
 
 export interface IGetReportsResponse {
     data: IReport[];
@@ -18,4 +19,4 @@ export interface IGetReportsResponse {
     page: number;
     pages: number;
     statusCode: number;
-};
+}

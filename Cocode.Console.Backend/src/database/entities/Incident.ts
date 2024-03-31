@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('IncidentData')
+@Entity("IncidentData")
 export class IncidentData {
   @PrimaryGeneratedColumn()
   id!: number;
@@ -11,6 +11,9 @@ export class IncidentData {
   @Column({ nullable: false })
   description!: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: false, length: 30 })
+  user!: string;
+
+  @Column({ nullable: true, length: "max" })
   incidentEvidence!: string;
 }

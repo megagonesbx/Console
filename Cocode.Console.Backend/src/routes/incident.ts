@@ -1,8 +1,19 @@
 import { Router } from "express";
 
-import { createIncident, getIncident, updateIncident, deleteIncident, getIncidents } from '../controllers';
+import {
+  createIncident,
+  getIncident,
+  updateIncident,
+  deleteIncident,
+  getIncidents,
+} from "../controllers";
 
-import { createIncidentValidationRules, getIncidentValidationRules, getIncidentsValidationRules, updateIncidentValidationRules } from "../validators";
+import {
+  createIncidentValidationRules,
+  getIncidentValidationRules,
+  getIncidentsValidationRules,
+  updateIncidentValidationRules,
+} from "../validators";
 import { validateRole, validateFields, validateJWT } from "../middlewares";
 
 const router = Router();
@@ -22,7 +33,7 @@ const router = Router();
  *        type: string
  *     responses:
  *       200:
- *         description:  
+ *         description:
  *         content:
  *           application/json:
  *             example:
@@ -46,12 +57,12 @@ const router = Router();
  *                  example: {"errors":[{"field":"Id","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or is empty."}}]}
  */
 router.get(
-    '/:incidentId',
-    getIncidentValidationRules(),
-    validateJWT,
-    validateRole(1,2),
-    validateFields,
-    getIncident
+  "/:incidentId",
+  getIncidentValidationRules(),
+  validateJWT,
+  validateRole(1, 2),
+  validateFields,
+  getIncident
 );
 
 /**
@@ -82,10 +93,10 @@ router.get(
  *                   type: Integer
  *                   description: Photo about the incident reported. Is optional.
  *                   example: base64...
- *                  
+ *
  *     responses:
  *       200:
- *         description:  
+ *         description:
  *         content:
  *           application/json:
  *             example:
@@ -105,12 +116,12 @@ router.get(
  *                  example: {"errors":[{"field":"description","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or is empty."}}]}
  */
 router.post(
-    '/create',
-    createIncidentValidationRules(),
-    validateJWT,
-    validateRole(1,2),
-    validateFields,
-    createIncident
+  "/create",
+  createIncidentValidationRules(),
+  validateJWT,
+  validateRole(3),
+  validateFields,
+  createIncident
 );
 
 /**
@@ -141,10 +152,10 @@ router.post(
  *                   type: Integer
  *                   description: Photo about the incident reported. Is optional.
  *                   example: base64...
- *                  
+ *
  *     responses:
  *       200:
- *         description:  
+ *         description:
  *         content:
  *           application/json:
  *             example:
@@ -163,12 +174,12 @@ router.post(
  *                  example: {"errors":[{"field":"description","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or is empty."}}]}
  */
 router.put(
-    '/update',
-    updateIncidentValidationRules(),
-    validateJWT,
-    validateRole(1,2),
-    validateFields,
-    updateIncident
+  "/update",
+  updateIncidentValidationRules(),
+  validateJWT,
+  validateRole(1, 2),
+  validateFields,
+  updateIncident
 );
 
 /**
@@ -186,7 +197,7 @@ router.put(
  *        type: string
  *     responses:
  *       200:
- *         description:  
+ *         description:
  *         content:
  *           application/json:
  *             example:
@@ -205,12 +216,12 @@ router.put(
  *                  example: {"errors":[{"field":"Id","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or is empty."}}]}
  */
 router.delete(
-    '/delete/:incidentId',
-    getIncidentValidationRules(),
-    validateJWT,
-    validateRole(1,2),
-    validateFields,
-    deleteIncident
+  "/delete/:incidentId",
+  getIncidentValidationRules(),
+  validateJWT,
+  validateRole(1, 2),
+  validateFields,
+  deleteIncident
 );
 
 /**
@@ -236,12 +247,12 @@ router.delete(
  *                   example: 1
  *     responses:
  *       200:
- *         description:  
+ *         description:
  *         content:
  *           application/json:
  *             example:
  *               data: [{"id":3,"incidentName":"test","description":"test","incidentEvidence":"test 3"},{"id":1,"incidentName":"test","description":"test","incidentEvidence":null}]
- *               count: 10 
+ *               count: 10
  *               page: 1
  *               pages: 3
  *               statusCode: 200
@@ -259,12 +270,12 @@ router.delete(
  *                  example: {"errors":[{"field":"pageSize","message":{"requiredType":"string","warnings":"The field does not exist, is not a string or is empty."}}]}
  */
 router.post(
-    '/incidents',
-    getIncidentsValidationRules(),
-    validateJWT,
-    validateRole(1,2),
-    validateFields,
-    getIncidents
+  "/incidents",
+  getIncidentsValidationRules(),
+  validateJWT,
+  validateRole(1, 2),
+  validateFields,
+  getIncidents
 );
 
 export default router;
