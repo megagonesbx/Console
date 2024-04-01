@@ -67,7 +67,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
                 this._notificationsService
                     .getAll(res.email)
                     .pipe(takeUntil(this._unsubscribeAll))
-                    .subscribe((res) => console.log(res));
+                    .subscribe();
             }
         });
     }
@@ -157,8 +157,9 @@ export class NotificationsComponent implements OnInit, OnDestroy {
                     this.notifications[index].viewed =
                         !this.notifications[index].viewed;
                 }
+
+                this._calculateUnreadCount();
             });
-        this.unreadCount -= 1;
     }
 
     translateNotificationType(type: number): string {
@@ -178,11 +179,10 @@ export class NotificationsComponent implements OnInit, OnDestroy {
                     (n) => n.id === notification.id
                 );
 
-                if (index !== -1) {
-                    this.notifications.splice(index, 1);
-                }
+                if (index !== -1) this.notifications.splice(index, 1);
+
+                this._calculateUnreadCount();
             });
-        this.unreadCount -= 1;
     }
 
     /**
@@ -264,5 +264,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         }
 
         this.unreadCount = count;
+        this._changeDetectorRef.markForCheck();
+        // this._changeDetectorRef.detectChanges();
     }
 }
