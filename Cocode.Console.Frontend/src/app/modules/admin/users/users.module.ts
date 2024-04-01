@@ -18,6 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
+import { NotificationsModule } from 'app/layout/common/notifications/notifications.module';
 
 import { ListComponent } from './list/list.component';
 import { UserDialogComponent } from './dialog/dialog.component';
@@ -25,31 +26,26 @@ import { SharedModule } from 'app/shared/shared.module';
 import { SnackBarService } from 'app/utils';
 
 @NgModule({
-  declarations: [ 
-    UsersComponent, 
-    ListComponent, 
-    UserDialogComponent
-  ],
-  imports: [
-    SharedModule,
-    UsersRoutingModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatMenuModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatRippleModule,
-    MatSortModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    MatTooltipModule,
-    MatDialogModule,
-  ],
-  providers: [
-    SnackBarService
-  ]
+    declarations: [UsersComponent, ListComponent, UserDialogComponent],
+    imports: [
+        SharedModule,
+        UsersRoutingModule,
+        MatButtonModule,
+        MatCheckboxModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatMenuModule,
+        MatPaginatorModule,
+        MatProgressBarModule,
+        MatRippleModule,
+        MatSortModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatTooltipModule,
+        MatDialogModule,
+        NotificationsModule,
+    ],
+    providers: [SnackBarService],
 })
-export class UsersModule { }
+export class UsersModule {}

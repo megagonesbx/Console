@@ -1,18 +1,17 @@
 import { Request, Response } from "express";
 import { NotificationService } from "../services";
-import { getCurrentDate } from "../helpers";
 
 export const sendNotification = async (_req: Request, _res: Response) => {
   try {
     const { email } = _req.body;
-    const date = getCurrentDate();
 
     const notificationService: NotificationService =
       _req.app.locals.notificationService;
 
     const id = await notificationService.insertRecord({
-      message: `Le recordamos que su pago mensual de residencia correspondiente a ${date} aún no ha sido recibido. Por favor, realice el pago lo antes posible para evitar cargos adicionales y posibles suspensiones de servicio.`,
+      message: `Le solicitamos ponerse al corriente con los pagos pendientes.`,
       user: email,
+      type: 1,
     });
 
     return _res.status(200).json({

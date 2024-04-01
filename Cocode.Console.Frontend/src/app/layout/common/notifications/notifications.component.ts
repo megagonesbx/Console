@@ -67,7 +67,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
                 this._notificationsService
                     .getAll(res.email)
                     .pipe(takeUntil(this._unsubscribeAll))
-                    .subscribe();
+                    .subscribe((res) => console.log(res));
             }
         });
     }
@@ -159,6 +159,10 @@ export class NotificationsComponent implements OnInit, OnDestroy {
                 }
             });
         this.unreadCount -= 1;
+    }
+
+    translateNotificationType(type: number): string {
+        return this._notificationsService.translateNotificationType(type);
     }
 
     /**

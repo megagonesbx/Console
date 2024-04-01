@@ -61,6 +61,7 @@ export class PaymentDialog implements OnInit {
             month: ['', [Validators.required]],
             description: ['', [Validators.required]],
             payedAt: [''],
+            email: [this.user?.email],
         });
     }
 

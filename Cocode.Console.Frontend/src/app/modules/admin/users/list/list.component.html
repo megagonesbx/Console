@@ -73,9 +73,10 @@
                     <!-- OPTIONS -->
                     <div>
                         <button
-                            class="min-w-10 min-h-7 h-7 px-2 leading-6"
                             mat-stroked-button
                             (click)="openDialog(user)"
+                            [matTooltip]="'Editar usuario'"
+                            class="min-w-10 min-h-7 h-7 px-2 leading-6"
                         >
                             <mat-icon
                                 svgIcon="heroicons_outline:pencil-alt"
@@ -83,9 +84,22 @@
                         </button>
 
                         <button
+                            mat-stroked-button
+                            [disabled]="user?.IsSolvent"
+                            (click)="sendNotifiation(user.Email)"
+                            [matTooltip]="'Enviar recordatorio de pago'"
                             class="min-w-10 min-h-7 h-7 px-2 leading-6 ml-2"
+                        >
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:bell'"
+                            ></mat-icon>
+                        </button>
+
+                        <button
                             mat-stroked-button
                             (click)="deleteUser(user.id)"
+                            [matTooltip]="'Eliminar usuario'"
+                            class="min-w-10 min-h-7 h-7 px-2 leading-6 ml-2"
                         >
                             <mat-icon
                                 svgIcon="heroicons_outline:user-remove"

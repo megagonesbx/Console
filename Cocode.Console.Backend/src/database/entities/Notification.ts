@@ -1,8 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+} from "typeorm";
 
-@Entity('NotificationLogData')
+@Entity("NotificationLogData")
 export class NotificationData {
-
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -18,6 +22,9 @@ export class NotificationData {
   @Column({ default: false })
   deleted!: boolean;
 
-  @CreateDateColumn({ type: 'datetime', default: () => 'GETUTCDATE()' })
+  @CreateDateColumn({ type: "datetime", default: () => "GETUTCDATE()" })
   createdAt!: Date;
+
+  @Column({ nullable: false })
+  type!: number;
 }

@@ -11,6 +11,7 @@ export interface Notification {
     viewed?: boolean;
     delete?: boolean;
     message?: string;
+    type?: number;
 }
 
 export interface IGetNotifications {
@@ -19,8 +20,9 @@ export interface IGetNotifications {
 }
 
 export interface INotification {
+    createdAt: string;
     message: string;
     viewed: boolean;
-    createdAt: string;
+    type: number;
     id: number;
 }

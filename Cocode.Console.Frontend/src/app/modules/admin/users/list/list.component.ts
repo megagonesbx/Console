@@ -18,6 +18,7 @@ import { SnackBarService, translateRole } from 'app/utils';
 import { MatDialog } from '@angular/material/dialog';
 import { UserDialogComponent } from '../dialog/dialog.component';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { NotificationsService } from 'app/layout/common/notifications/notifications.service';
 
 @Component({
     selector: 'user-list',
@@ -51,7 +52,8 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
         private _changeDetectorRef: ChangeDetectorRef,
         public dialog: MatDialog,
         public _fuseConfirmationService: FuseConfirmationService,
-        private _snackBarService: SnackBarService
+        private _snackBarService: SnackBarService,
+        private readonly _notification: NotificationsService
     ) {}
 
     ngOnInit(): void {
@@ -137,6 +139,23 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
                             );
                         });
                 }
+            });
+    }
+
+    sendNotifiation(email: string) {
+        this._notification
+            .sendNotification({ email })
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((res) => {
+                if (res == 200) {
+                    return this._snackBarService.open(
+                        'Se le ha enviado un recordatorio de pago al vecino.'
+                    );
+                }
+
+                return this._snackBarService.open(
+                    'Ha ocurrido un error al enviar el recordatorio al vecino.'
+                );
             });
     }
 

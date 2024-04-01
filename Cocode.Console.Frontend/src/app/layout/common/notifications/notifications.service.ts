@@ -83,6 +83,26 @@ export class NotificationsService {
             );
     }
 
+    sendNotification(request: { email: string }) {
+        return this._httpClient
+            .post(`${base_url}/notification/create`, request, this.getHeaders)
+            .pipe(
+                map((res: { statusCode: number; id: number }) =>
+                    res.statusCode ? res.statusCode : 500
+                ),
+                catchError((err) => err.status)
+            );
+    }
+
+    translateNotificationType(type: number): string {
+        switch (type) {
+            case (type = 2):
+                return 'Confirmación de pago';
+            default:
+                return 'Recordatorio de pago';
+        }
+    }
+
     private get getToken() {
         return localStorage.getItem('x-token') || '';
     }
